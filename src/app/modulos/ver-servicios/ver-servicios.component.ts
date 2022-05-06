@@ -9,7 +9,7 @@ import {MatTableDataSource} from "@angular/material/table";
 })
 export class VerServiciosComponent implements OnInit {
 
-  columnas: string[] = ['codigo', 'descripcion', 'precio','Editar','Eliminar'];
+  columnas: string[] = ['codigo', 'descripcion', 'precio'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
