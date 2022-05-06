@@ -1,0 +1,140 @@
+header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 4rem;
+}
+mat-toolbar{
+  background-color: #0e375d;
+}
+
+.btninicio{
+  background-color: transparent;
+  border: transparent;
+}
+.btniniciarSesion{
+  background-color: #2ecc71;
+}
+
+.btniniciarSesion:hover{
+  color: #2ecc60;
+}
+.btniniciarS{
+  background-color: transparent;
+  border: transparent;
+  color: white;
+  font-size: 15px;
+}
+
+.hover:hover{
+  color: #428bca;
+  transition: .5s;
+}
+
+
+.logo{
+  padding: 2% 0;
+  line-height: 5%;
+}
+
+.logo img{
+  width: 30%;
+  float: left;
+}
+
+
+body{
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  height: auto;
+}
+
+.tool{
+  color: white;
+}
+html{
+  /*background-image: url("src/assets/images/fondo.jpg");*/
+  background-size: cover;
+}
+
+footer{
+  position: fixed;
+  height: 4rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-button-container {
+  flex: 1 1 auto;
+}
+.botton-header{
+  margin-right: 10px;
+}
+.pie-pagina{
+  width: 100%;
+  background-color: rgb(30,30,30);
+}
+.pie-pagina .grupo-1{
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap:50px;
+  padding: 45px 0px;
+}
+.pie-pagina .grupo-1 .box figure{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pie-pagina .grupo-1 .box figure img{
+  width: 250px;
+}
+.pie-pagina .grupo-1 .box h2{
+  color: #fff;
+  margin-bottom: 25px;
+  font-size: 20px;
+}
+.pie-pagina .grupo-1 .box p{
+  color: #efefef;
+  margin-bottom: 10px;
+}
+.pie-pagina .grupo-1 .red-social a{
+  display: inline-block;
+  text-decoration: none;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  color: #fff;
+  margin-right: 10px;
+  background-color: rgb(30,30,30);
+  text-align: center;
+  transition: all 300ms ease;
+}
+.pie-pagina .grupo-1 .red-social a:hover{
+  color: aqua;
+}
+.pie-pagina .grupo-2{
+  background-color: #0e375d;
+  padding: 20px 10px;
+  text-align: center;
+  color: #fff;
+}
+.pie-pagina .grupo-2 small{
+  font-size: 15px;
+}
+@media screen and (max-width:800px){
+  .pie-pagina .grupo-1{
+    width: 90%;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap:30px;
+    padding: 35px 0px;
+  }
+}

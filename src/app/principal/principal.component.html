@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<header>
+  <mat-toolbar>
+      <button class="btninicio" [routerLink]="['']"><span class="tool logo"><img src="/assets/Imagenes/apecs.png" alt=""></span></button>
+      <span class="example-spacer"></span>
+
+        <div>
+          <button class="btniniciarS hover" [matMenuTriggerFor]="servicios" >
+            <mat-icon>supervised_user_circle</mat-icon>
+            SERVICIOS
+          </button>
+          <mat-menu #servicios="matMenu">
+            <button mat-menu-item [routerLink]="['/verservicios']">Listar Servicios</button>
+            <button mat-menu-item [routerLink]="['/nuevoservicio']">Nuevo Servicio</button>
+          </mat-menu>
+
+          <button class="btniniciarS hover" [matMenuTriggerFor]="clientes" >
+            <mat-icon> person_pin</mat-icon>
+            CLIENTES
+          </button>
+          <mat-menu #clientes="matMenu">
+            <button mat-menu-item [routerLink]="['/verclientes']">Listar Clientes</button>
+            <button mat-menu-item [routerLink]="['']">Nuevo Cliente</button>
+          </mat-menu>
+
+          <button class="btniniciarS hover" [matMenuTriggerFor]="vehiculos" >
+            <mat-icon> directions_car</mat-icon>
+            VEHICULOS
+          </button>
+          <mat-menu #vehiculos="matMenu">
+            <button mat-menu-item [routerLink]="['vervehiculos']">Listar Vehículos</button>
+            <button mat-menu-item [routerLink]="['']">Nuevo Vehiculo</button>
+          </mat-menu>
+
+          <button class="btniniciarS hover" [matMenuTriggerFor]="gpss">
+            <mat-icon>gps_fixed</mat-icon>
+            GPS
+          </button>
+          <mat-menu #gpss="matMenu">
+            <button mat-menu-item [routerLink]="['/vergps']">Listar GPS</button>
+            <button mat-menu-item [routerLink]="['']">Nuevo GPS</button>
+            <button mat-menu-item [routerLink]="['/nuevomodelogps']">Nuevo Modelo GPS</button>
+          </mat-menu>
+
+        </div>
+
+        <div>
+          <button class="btniniciarS hover" [routerLink]="['/iniciasesion']">
+            <mat-icon>supervised_user_circle</mat-icon>
+            INICIAR SESION
+          </button>
+        </div>
+
+      <button class="tool" mat-menu-item color="secundary" *ngIf="false">
+          CERRAR SESIÓN
+          <mat-icon>exit_to_app</mat-icon>
+      </button>
+
+    <!--<button mat-icon-button class="tool">
+        <mat-icon >menu</mat-icon>
+      </button>-->
+  </mat-toolbar>
+</header>
+<body>
+<router-outlet></router-outlet>
+</body>
+<footer class="pie-pagina">
+  <div class="grupo-2">
+    <small>&copy; 2022 <b>APECS </b> - Todos los Derechos Reservados.</small>
+  </div>
+</footer>
+</html>

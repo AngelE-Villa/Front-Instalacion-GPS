@@ -1,0 +1,60 @@
+<div>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar style="background-image: url('assets/mario.png'); background-size: cover"></div>
+      <mat-card-title class="centrar">Registro de Usuarios</mat-card-title>
+      <mat-card-subtitle>Datos del usuario</mat-card-subtitle>
+    </mat-card-header>
+    <form  [formGroup]="profileFormPaciente">
+      <mat-card-content>
+        <mat-grid-list cols="1" rowHeight="8:1">
+          <mat-grid-tile>
+            <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+              <mat-label>Nombres completos</mat-label>
+              <input matInput placeholder="Ex. Angel Villa" formControlName="nombre">
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="2" rowHeight="5:1">
+          <mat-grid-tile>
+            <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+              <mat-label>Dirección</mat-label>
+              <input matInput placeholder="Ex. AV Americas"  formControlName="direccion">
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+              <mat-label>Teléfono</mat-label>
+              <input matInput placeholder="Ex. 0000087383"  formControlName="telefono" >
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+              <mat-label>Correo</mat-label>
+              <input matInput placeholder="Ex. ejemplo@gmail.com"  formControlName="correo">
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+              <mat-label>Contraseña</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'"   formControlName="contra">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-card-actions style="width: 100%; text-align: center">
+          <button *ngIf="accion==true" mat-raised-button color="accent" (click)="a()" [disabled]="profileFormPaciente.invalid">REGISTRASE</button>
+          <button *ngIf="accion==false" mat-raised-button color="accent" (click)="a()" [disabled]="profileFormPaciente.invalid">GUARDAR</button>
+        </mat-card-actions>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
+
+<ng-container *ngIf="false">
+  <div class="bss-loader" style="margin: 0 auto;">
+    <mat-progress-bar color="warn" mode="indeterminate"></mat-progress-bar>
+  </div>
+</ng-container>

@@ -1,0 +1,45 @@
+<body>
+<div>
+</div>
+<div >
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar style="background-image: url('assets/mario.png'); background-size: cover"></div>
+      <mat-card-title>INICIO DE SESION</mat-card-title>
+      <mat-card-subtitle>Usuarios del APECS</mat-card-subtitle>
+    </mat-card-header>
+    <a href=""></a>
+    <mat-card-content>
+      <mat-divider></mat-divider>
+      <br>
+      <form [formGroup]="profileFormPaciente">
+        <p>CREDENCIALES:</p>
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>EMAIL</mat-label>
+          <mat-icon matSuffix>email</mat-icon>
+          <input matInput placeholder="pat@example.com" formControlName="email" >
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>CONTRASEÑA</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'"  formControlName="contrasena" >
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-card-actions style="text-align: center">
+          <button  mat-raised-button class="btniniciarSesion" (click)="a()" >INICAR SESION</button>
+        </mat-card-actions>
+      </form>
+      <div style="text-align: center">
+        <p >Si no tienes cuenta regiatrate <a href="/registrousuario">AQUI</a> </p>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+<ng-container *ngIf="false">
+  <div class="bss-loader" style="margin: 0 auto;">
+    <mat-progress-bar color="warn" mode="indeterminate"></mat-progress-bar>
+  </div>
+</ng-container>

@@ -1,0 +1,14 @@
+table {
+  width: 100%;
+}
+.center{
+  width: 80%;
+  text-align: center;
+  margin: 3% auto;
+}
+
+.titulo{
+  text-align: center;
+  font-weight: bold;
+  font-size: 100%;
+}
