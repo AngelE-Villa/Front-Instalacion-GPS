@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
-import {ArticulosCl} from "../ver-clientes/ver-clientes.component";
-import {Articulo} from "../ver-servicios/ver-servicios.component";
 import {MatTableDataSource} from "@angular/material/table";
+import {Cliente} from "../../modelos/Cliente";
+import {ClienteService} from "../../servicios/ClienteService";
 
 @Component({
   selector: 'app-ver-gps',
@@ -11,26 +11,30 @@ import {MatTableDataSource} from "@angular/material/table";
 })
 export class VerGpsComponent implements OnInit {
 
-  columnas: string[] = ['codigo', 'descripcion', 'precio'];
+  columnas: string[] = ['codigo', 'descripcion', 'precio', 'precios','correo','editar','eliminar'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  datos: Articulosgps[] = [];
+  datos: Cliente[] = [];
   dataSource:any;
+  listaUsers:Array<Cliente>=[];
 
-  constructor() { }
+  constructor(private service:ClienteService) { }
 
   ngOnInit(): void {
-    for (let x = 1; x <= 100; x++)
-      this.datos.push(new Articulo(x, `artículo ${x}`, Math.trunc(Math.random() * 1000)));
-    this.dataSource = new MatTableDataSource<Articulo>(this.datos);
-    this.dataSource.paginator = this.paginator;
+    this.service.getUser().subscribe((x:any) =>{
+      this.listaUsers=x
+      for (let a of this.listaUsers){
+        this.datos.push(a);
+        this.dataSource = new MatTableDataSource<any>(this.datos);
+        this.dataSource.paginator = this.paginator;
+      }
+    })
   }
-
 }
 
-export class Articulosgps {
-  constructor(public codigo: number, public descripcion: string, public precio: number) {
+export class ArticulosVh {
+  constructor(public cliente: Cliente) {
+    console.log(cliente)
   }
-
 }

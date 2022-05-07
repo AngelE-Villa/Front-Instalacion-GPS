@@ -15,6 +15,11 @@ import { VerClientesComponent } from './modulos/ver-clientes/ver-clientes.compon
 import { VerVehiculosComponent } from './modulos/ver-vehiculos/ver-vehiculos.component';
 import { VerGpsComponent } from './modulos/ver-gps/ver-gps.component';
 import { NuevoModeloGpsComponent } from './modulos/nuevo-modelo-gps/nuevo-modelo-gps.component';
+import {HttpClientModule} from "@angular/common/http";
+import { NuevoServicioComponent } from './modulos/nuevo-servicio/nuevo-servicio.component';
+import { NuevoClienteComponent } from './modulos/nuevo-cliente/nuevo-cliente.component';
+import { NuevoGpsComponent } from './modulos/nuevo-gps/nuevo-gps.component';
+import { NuevoVehiculoComponent } from './modulos/nuevo-vehiculo/nuevo-vehiculo.component';
 
 const routes: Routes = [
   {path:'', component:CuerpoComponent},
@@ -25,6 +30,10 @@ const routes: Routes = [
   {path:'vervehiculos', component:VerVehiculosComponent},
   {path:'vergps', component:VerGpsComponent},
   {path:'nuevomodelogps', component:NuevoModeloGpsComponent},
+  {path:'nuevoservicio', component:NuevoServicioComponent},
+  {path:'nuevocliente', component:NuevoClienteComponent},
+  {path:'nuevovehiculo', component:NuevoVehiculoComponent},
+  {path:'nuevogps', component:NuevoGpsComponent},
 ];
 
 @NgModule({
@@ -38,7 +47,11 @@ const routes: Routes = [
     VerClientesComponent,
     VerVehiculosComponent,
     VerGpsComponent,
-    NuevoModeloGpsComponent
+    NuevoModeloGpsComponent,
+    NuevoServicioComponent,
+    NuevoClienteComponent,
+    NuevoGpsComponent,
+    NuevoVehiculoComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +59,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

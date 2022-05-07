@@ -11,47 +11,56 @@
       <button class="btninicio" [routerLink]="['']"><span class="tool logo"><img src="/assets/Imagenes/apecs.png" alt=""></span></button>
       <span class="example-spacer"></span>
 
-        <div>
-          <button class="btniniciarS hover" [matMenuTriggerFor]="servicios" >
-            <mat-icon>supervised_user_circle</mat-icon>
-            SERVICIOS
-          </button>
-          <mat-menu #servicios="matMenu">
-            <button mat-menu-item [routerLink]="['/verservicios']">Listar Servicios</button>
-            <button mat-menu-item [routerLink]="['/nuevoservicio']">Nuevo Servicio</button>
-          </mat-menu>
+        <div class="mediaUbt">
+            <button class="btniniciarS hover" [matMenuTriggerFor]="servicios" >
+              <mat-icon class="sep">supervised_user_circle</mat-icon>
+              <span class="medath">SERVICIOS</span>
+            </button>
+            <mat-menu #servicios="matMenu">
+              <button mat-menu-item [routerLink]="['/verservicios']">Listar Servicios</button>
+              <button mat-menu-item [routerLink]="['/nuevoservicio']">Nuevo Servicio</button>
+            </mat-menu>
 
-          <button class="btniniciarS hover" [matMenuTriggerFor]="clientes" >
-            <mat-icon> person_pin</mat-icon>
-            CLIENTES
-          </button>
-          <mat-menu #clientes="matMenu">
-            <button mat-menu-item [routerLink]="['/verclientes']">Listar Clientes</button>
-            <button mat-menu-item [routerLink]="['']">Nuevo Cliente</button>
-          </mat-menu>
+            <button class="btniniciarS hover" [matMenuTriggerFor]="clientes" >
+              <mat-icon class="sep"> person_pin</mat-icon>
+              <span class="medath">CLIENTES</span>
+            </button>
+            <mat-menu #clientes="matMenu">
+              <button mat-menu-item [routerLink]="['/verclientes']">Listar Clientes</button>
+              <button mat-menu-item [routerLink]="['/nuevocliente']">Nuevo Cliente</button>
+            </mat-menu>
 
           <button class="btniniciarS hover" [matMenuTriggerFor]="vehiculos" >
-            <mat-icon> directions_car</mat-icon>
-            VEHICULOS
+            <mat-icon class="sep"> directions_car</mat-icon>
+            <span class="medath">VEHICULOS</span>
           </button>
           <mat-menu #vehiculos="matMenu">
-            <button mat-menu-item [routerLink]="['vervehiculos']">Listar Vehículos</button>
-            <button mat-menu-item [routerLink]="['']">Nuevo Vehiculo</button>
+            <button mat-menu-item [routerLink]="['/vervehiculos']">Listar Vehículos</button>
+            <button mat-menu-item [routerLink]="['/nuevovehiculo']">Nuevo Vehiculo</button>
           </mat-menu>
 
           <button class="btniniciarS hover" [matMenuTriggerFor]="gpss">
-            <mat-icon>gps_fixed</mat-icon>
-            GPS
+            <mat-icon class="sep">gps_fixed</mat-icon>
+            <span class="medath" >GPS</span>
           </button>
           <mat-menu #gpss="matMenu">
             <button mat-menu-item [routerLink]="['/vergps']">Listar GPS</button>
-            <button mat-menu-item [routerLink]="['']">Nuevo GPS</button>
+            <button mat-menu-item [routerLink]="['/nuevogps']">Nuevo GPS</button>
             <button mat-menu-item [routerLink]="['/nuevomodelogps']">Nuevo Modelo GPS</button>
           </mat-menu>
 
         </div>
 
-        <div>
+        <button class="btniniciarS hover" [matMenuTriggerFor]="perfil">
+          <span class="medath" >Angel Villa</span>
+          <mat-icon>gps_fixed</mat-icon>
+        </button>
+        <mat-menu #perfil="matMenu">
+          <button mat-menu-item [routerLink]="['/vergps']">Perfil</button>
+          <button mat-menu-item [routerLink]="['']">Cerrar Sesión</button>
+        </mat-menu>
+
+        <div *ngIf="false">
           <button class="btniniciarS hover" [routerLink]="['/iniciasesion']">
             <mat-icon>supervised_user_circle</mat-icon>
             INICIAR SESION
