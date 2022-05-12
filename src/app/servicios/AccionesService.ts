@@ -12,7 +12,7 @@ export class AccionesService{
   constructor(private httpClient:HttpClient) {
   }
 
-  getAcciones():Observable<Acciones>{
-    return this.httpClient.get<Acciones>(this.base_url);
+  getAcciones():Observable<Acciones[]>{
+    return this.httpClient.get<Acciones[]>(this.base_url);
   }
 }

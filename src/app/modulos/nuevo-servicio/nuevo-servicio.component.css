@@ -4,6 +4,12 @@
   margin: 1% auto;
 }
 
+.titulo{
+  text-align: center;
+  font-weight: bold;
+  font-size: 100%;
+}
+
 mat-form-field {
   width: 60%;
 }

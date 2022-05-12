@@ -2,6 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Servicio} from "../modelos/Servicio";
+import {Cliente} from "../modelos/Cliente";
 
 @Injectable({
   providedIn:"root"
@@ -14,6 +15,10 @@ export class ServicioService{
 
   getServices():Observable<Servicio[]>{
     return this.httpClient.get<Servicio[]>(this.base_url);
+  }
+
+  crearService(servicio:Servicio){
+    return this.httpClient.put(this.base_url+"create-docservicio/", servicio);
   }
 
 }
