@@ -1,0 +1,30 @@
+.center{
+  width: 80%;
+  text-align: center;
+  margin: 1% auto;
+}
+
+mat-form-field {
+  width: 60%;
+}
+
+.mediat{
+  display: none;
+}
+@media (max-width: 800px) {
+  .mediat{
+    display: block;
+  }
+  .mediast{
+    display: none;
+  }
+  .center{
+    width: 100%;
+    text-align: center;
+    margin: 1% auto;
+  }
+
+  mat-form-field {
+    width: 80%;
+  }
+}

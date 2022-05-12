@@ -1,0 +1,111 @@
+<div class="center">
+  <mat-card-title>GENERAR DOCUMENTO</mat-card-title>
+  <br>
+  <mat-card-subtitle>Documento de instalación de GPS de APECS</mat-card-subtitle>
+</div>
+<div class="center">
+  <div class="example-card">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <mat-card class="example-card ">
+              <mat-card-title class="mediat">Datos Cliente</mat-card-title>
+                <ng-template matStepLabel ><div class="mediast">Datos Cliente</div></ng-template>
+              <mat-form-field>
+                <input matInput placeholder="Cedula" formControlName="firstCtrl" required/>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <input matInput placeholder="Nombre" formControlName="firstCtrl" required/>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <input matInput placeholder="Dirección" formControlName="firstCtrl" required/>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <input matInput placeholder="Telefono" formControlName="firstCtrl" required/>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <input matInput placeholder="Correo" formControlName="firstCtrl" required/>
+              </mat-form-field>
+            </mat-card>
+            <br>
+            <div>
+              <button mat-button matStepperNext >Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup" class="todostepper">
+            <ng-template matStepLabel><div class="mediast">Datos Vehiculo</div></ng-template>
+            <mat-card-title class="mediat">Datos Vehiculo</mat-card-title>
+            <mat-card class="example-card ">
+            <mat-form-field>
+              <input matInput placeholder="Placa" formControlName="secondCtrl" name="placa"  [(ngModel)]="vehiculo.placa"  required/>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="clave" formControlName="secondCtrl" name="clave" [(ngModel)]="vehiculo.clave" required/>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput  placeholder="Año" formControlName="secondCtrl" name="inio" [(ngModel)]="vehiculo.anio" required/>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Kilometro" formControlName="secondCtrl" name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Vehiculo" formControlName="secondCtrl" name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Cliente" formControlName="secondCtrl" name="cliente" [(ngModel)]="vehiculo.cliente.nombre" required/>
+            </mat-form-field>
+            <br>
+            </mat-card>
+            <br>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup" class="todostepper">
+            <ng-template matStepLabel><div class="mediast">Datos GPS</div></ng-template>
+            <mat-card-title class="mediat">Datos GPS</mat-card-title>
+            <br><br>
+            <h4>Seleccione el modelo de GPS</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Modelo GPS</mat-label>
+              <mat-select [(ngModel)]="selectedValue" name="modelo" formControlName="firstCtrl">
+                <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id_modelo" (onSelectionChange)="AccionesSeleccion(modelo.id_modelo)">
+                  {{modelo.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <tr *ngFor="let accion of acciones">
+              <div>{{accion.nombre}}</div>
+            </tr>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel><div class="mediast">Confirmación</div></ng-template>
+          <mat-card-title class="mediat">Confirmación</mat-card-title>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>
+
+

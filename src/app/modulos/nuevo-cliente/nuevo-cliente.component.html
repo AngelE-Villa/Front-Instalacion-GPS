@@ -1,0 +1,34 @@
+<br>
+<div class="center">
+<form>
+  <mat-card class="example-card ">
+    <mat-card-title class="mediat">Datos Cliente</mat-card-title>
+    <ng-template matStepLabel >Datos Cliente</ng-template>
+    <mat-form-field>
+      <input matInput placeholder="Cedula" name="cedula" [(ngModel)]="cliente.cedula" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Nombre" name="nombre" [(ngModel)]="cliente.nombre"  required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Dirección" name="direccion" [(ngModel)]="cliente.direccion" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Telefono" name="telefono" [(ngModel)]="cliente.telefono" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Correo" name="correo" [(ngModel)]="cliente.correo" required/>
+    </mat-form-field>
+    <br>
+    <mat-card-actions style="text-align: center">
+      <button  mat-raised-button class="btniniciarSesion" (click)="Guardar()" >GUARDAR</button>
+    </mat-card-actions>
+    <br>
+  </mat-card>
+
+</form>
+</div>
