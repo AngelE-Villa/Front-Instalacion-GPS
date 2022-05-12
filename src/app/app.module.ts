@@ -32,7 +32,9 @@ const routes: Routes = [
   {path:'nuevomodelogps', component:NuevoModeloGpsComponent},
   {path:'nuevoservicio', component:NuevoServicioComponent},
   {path:'nuevocliente', component:NuevoClienteComponent},
+  {path:'nuevocliente/:id', component:NuevoClienteComponent},
   {path:'nuevovehiculo', component:NuevoVehiculoComponent},
+  {path:'nuevovehiculo/:id', component:NuevoVehiculoComponent},
   {path:'nuevogps', component:NuevoGpsComponent},
 ];
 

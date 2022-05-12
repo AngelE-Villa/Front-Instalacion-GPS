@@ -11,20 +11,21 @@ import {ClienteService} from "../../servicios/ClienteService";
 })
 export class VerGpsComponent implements OnInit {
 
-  columnas: string[] = ['codigo', 'descripcion', 'precio', 'precios','correo','editar','eliminar'];
+  columnas: string[] = ['id', 'cedula', 'nombre', 'direccion','correo','editar','eliminar'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   datos: Cliente[] = [];
   dataSource:any;
-  listaUsers:Array<Cliente>=[];
+
+  listaClients:Array<Cliente>=[];
 
   constructor(private service:ClienteService) { }
 
   ngOnInit(): void {
-    this.service.getUser().subscribe((x:any) =>{
-      this.listaUsers=x
-      for (let a of this.listaUsers){
+    this.service.getClient().subscribe((x:any) =>{
+      this.listaClients=x
+      for (let a of this.listaClients){
         this.datos.push(a);
         this.dataSource = new MatTableDataSource<any>(this.datos);
         this.dataSource.paginator = this.paginator;

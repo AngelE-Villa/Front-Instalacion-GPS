@@ -51,16 +51,19 @@
 
         </div>
 
-        <button class="btniniciarS hover" [matMenuTriggerFor]="perfil">
-          <span class="medath" >Angel Villa</span>
-          <mat-icon>gps_fixed</mat-icon>
-        </button>
-        <mat-menu #perfil="matMenu">
-          <button mat-menu-item [routerLink]="['/vergps']">Perfil</button>
-          <button mat-menu-item [routerLink]="['']">Cerrar Sesión</button>
-        </mat-menu>
-
         <div *ngIf="false">
+          <button class="btniniciarS hover" [matMenuTriggerFor]="perfil">
+            <span class="medath" >Angel Villa</span>
+            <mat-icon>gps_fixed</mat-icon>
+          </button>
+          <mat-menu #perfil="matMenu">
+            <button mat-menu-item [routerLink]="['/vergps']">Perfil</button>
+            <button mat-menu-item [routerLink]="['']">Cerrar Sesión</button>
+          </mat-menu>
+        </div>
+
+
+        <div >
           <button class="btniniciarS hover" [routerLink]="['/iniciasesion']">
             <mat-icon>supervised_user_circle</mat-icon>
             INICIAR SESION

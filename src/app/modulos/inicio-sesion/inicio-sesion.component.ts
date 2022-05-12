@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../../servicios/UserService";
+import {User} from "../../modelos/User";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -8,29 +12,49 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class InicioSesionComponent implements OnInit {
 
-  constructor() { }
+  correoU?:String;
+  pswU?:String;
+  user?:User = new User();
+
+  constructor(private snackBar: MatSnackBar, private userService:UserService,private router:Router) { }
 
   ab:boolean=true;
   b:String="";
   hide = true;
   ngOnInit(): void {
   }
+  issloading:boolean=false;
 
-  profileFormAdmin = new FormGroup({
-    cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+  profileFormUser = new FormGroup({
     email: new FormControl('',[Validators.required, Validators.email]),
     contrasena: new FormControl('',Validators.required),
   });
 
-  profileFormPaciente = new FormGroup({
-    email: new FormControl('',[Validators.required, Validators.email]),
-    contrasena: new FormControl('',Validators.required),
-  });
 
-  profileFormDoctor = new FormGroup({
-    cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
-    contrasena: new FormControl('',Validators.required),
-  });
-
-  a(){}
+  iniciarSesion(){
+    this.userService.getUsers().subscribe(value => {
+      if(value.filter(value1 => value1.correo==this.correoU&&value1.password==this.pswU).length==0){
+        this.snackBar.open("Usuario no existe, los credenciales ingresados no se encontraron", "",{
+          duration: 1 * 1000,
+        });
+        this.issloading=false;
+        console.log("Usuario no existe")
+      }else {
+        this.user=value.filter(value1 => value1.correo==this.correoU&&value1.password==this.pswU)[0];
+        if(this.user.correo==this.correoU && this.user.password==this.pswU){
+          sessionStorage.clear;
+          sessionStorage.setItem('user', JSON.stringify(this.user));
+          this.issloading=true;
+          this.router.navigate(['']).then(() => {
+            window.location.reload();
+          });
+        }else{
+          this.snackBar.open("Las credenciales ingresadas son incorrectas", "",{
+            duration: 1 * 1000,
+          });
+          this.issloading=false;
+        }
+      }
+    })
+  }
 }

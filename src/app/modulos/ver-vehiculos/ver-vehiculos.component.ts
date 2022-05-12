@@ -3,6 +3,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {Cliente} from "../../modelos/Cliente";
 import {ClienteService} from "../../servicios/ClienteService";
+import {VehiculoService} from "../../servicios/VehiculoService";
+import {Vehiculo} from "../../modelos/Vehiculo";
 
 @Component({
   selector: 'app-ver-vehiculos',
@@ -11,20 +13,21 @@ import {ClienteService} from "../../servicios/ClienteService";
 })
 export class VerVehiculosComponent implements OnInit {
 
-  columnas: string[] = ['codigo', 'descripcion', 'precio', 'precios','correo','editar','eliminar'];
+  columnas: string[] = ['id', 'placa', 'clave', 'vehiculo', 'año','kilometraje','cliente','editar','eliminar'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  datos: Cliente[] = [];
+  datos: Vehiculo[] = [];
   dataSource:any;
-  listaUsers:Array<Cliente>=[];
 
-  constructor(private service:ClienteService) { }
+  listaVehiculos:Array<Vehiculo>=[];
+
+  constructor(private vehiculoservice:VehiculoService) { }
 
   ngOnInit(): void {
-    this.service.getUser().subscribe((x: any) => {
-      this.listaUsers = x
-      for (let a of this.listaUsers) {
+    this.vehiculoservice.getVehiculos().subscribe((x: any) => {
+      this.listaVehiculos = x
+      for (let a of this.listaVehiculos) {
         this.datos.push(a);
         this.dataSource = new MatTableDataSource<any>(this.datos);
         this.dataSource.paginator = this.paginator;
@@ -33,8 +36,8 @@ export class VerVehiculosComponent implements OnInit {
   }
 
 }
-export class ArticulosVs {
-  constructor(public cliente: Cliente) {
-    console.log(cliente)
+export class ArticulosVv {
+  constructor(public vehiculo: Vehiculo) {
+    console.log(vehiculo)
   }
 }

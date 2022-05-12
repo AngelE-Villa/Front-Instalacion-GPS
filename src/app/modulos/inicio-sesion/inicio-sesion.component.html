@@ -12,22 +12,22 @@
     <mat-card-content>
       <mat-divider></mat-divider>
       <br>
-      <form [formGroup]="profileFormPaciente">
+      <form [formGroup]="profileFormUser">
         <p>CREDENCIALES:</p>
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-label>EMAIL</mat-label>
           <mat-icon matSuffix>email</mat-icon>
-          <input matInput placeholder="pat@example.com" formControlName="email" >
+          <input matInput placeholder="pat@example.com" formControlName="email" [(ngModel)]="correoU">
         </mat-form-field>
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-label>CONTRASEÑA</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'"  formControlName="contrasena" >
+          <input matInput [type]="hide ? 'password' : 'text'"  formControlName="contrasena" [(ngModel)]="pswU">
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
         <mat-card-actions style="text-align: center">
-          <button  mat-raised-button class="btniniciarSesion" (click)="a()" >INICAR SESION</button>
+          <button  mat-raised-button class="btniniciarSesion" (click)="iniciarSesion()" >INICAR SESION</button>
         </mat-card-actions>
       </form>
       <div style="text-align: center">

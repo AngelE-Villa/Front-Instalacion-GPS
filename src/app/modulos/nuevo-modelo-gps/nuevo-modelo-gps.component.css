@@ -1,0 +1,78 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+table {
+  width: 100%;
+}
+.center{
+  width: 80%;
+  text-align: center;
+  margin: 3% auto;
+}
+
+.center1{
+  width: 100%;
+  text-align: center;
+}
+
+
+.titulo{
+  text-align: center;
+  font-weight: bold;
+  font-size: 100%;
+}
+.btnEdi{
+  background: #428bca;
+  border-radius: 5px;
+}
+
+.btnEdi:hover{
+  background: blue;
+  cursor: pointer;
+  transition: .5s;
+}
+
+button{
+  border: transparent;
+  background-color: transparent;
+}
+
+.btnEli{
+  background: #F65B3A;
+  border-radius: 5px;
+}
+
+.btnEli:hover{
+  background: red;
+  cursor: pointer;
+  transition: .5s;
+}
+
+@media (max-width: 800px) {
+
+  .media1 {
+    display: none;
+  }
+
+  .textmedia {
+    font-size: 14px;
+  }
+
+  .btnEdi {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .btnEli {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .titulo {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .center1 {
+    width: 100%;
+  }
+}

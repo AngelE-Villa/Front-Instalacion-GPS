@@ -3,6 +3,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {Cliente} from "../../modelos/Cliente";
 import {ClienteService} from "../../servicios/ClienteService";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-ver-clientes',
@@ -11,31 +12,42 @@ import {ClienteService} from "../../servicios/ClienteService";
 })
 export class VerClientesComponent implements OnInit {
 
-  columnas: string[] = ['codigo', 'descripcion', 'precio', 'precios','correo','editar','eliminar'];
+  columnas: string[] = ['id', 'cedula', 'nombre', 'direccion','correo','editar','eliminar'];
 
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  // @ts-ignore
+  dataSource: MatTableDataSource<Cliente>;
+
+  // @ts-ignore
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ts-ignore
+  @ViewChild(MatSort) sort: MatSort;
 
   datos: Cliente[] = [];
-  dataSource:any;
 
-  listaUsers:Array<Cliente>=[];
-  constructor(private service:ClienteService) { }
+
+  constructor(private clienteservice:ClienteService) { }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
   ngOnInit(): void {
-    this.service.getUser().subscribe((x:any) =>{
-      this.listaUsers=x
-      for (let a of this.listaUsers){
-        this.datos.push(a);
-        this.dataSource = new MatTableDataSource<any>(this.datos);
-        this.dataSource.paginator = this.paginator;
-      }
+    this.listaClientes();
+  }
+
+
+  listaClientes(){
+    this.clienteservice.getClient().subscribe(value => {
+      this.datos=value
+      this.dataSource = new MatTableDataSource(this.datos);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
   }
 
 }
-export class ArticulosCl {
-  constructor(public cliente:Cliente) {
-    console.log(cliente)
-  }
 
-}
