@@ -12,6 +12,11 @@ import {Servicio} from "../../modelos/Servicio";
 import {ServicioService} from "../../servicios/ServicioService";
 import {Descripcion} from "../../modelos/Descripcion";
 import {Modelo} from "../../modelos/Modelo";
+import {ClienteService} from "../../servicios/ClienteService";
+import {VehiculoService} from "../../servicios/VehiculoService";
+import {DescripcionService} from "../../servicios/DescripcionService";
+import {Gps} from "../../modelos/Gps";
+import {GpsService} from "../../servicios/GpsService";
 
 @Component({
   selector: 'app-nuevo-servicio',
@@ -23,7 +28,19 @@ export class NuevoServicioComponent implements OnInit {
   vehiculo:Vehiculo=new Vehiculo();
   servicio:Servicio=new Servicio();
   modelo:Modelo=new Modelo();
-  detalleservicio:Descripcion=new Descripcion();
+  detalle:Descripcion=new Descripcion();
+  gps:Gps=new Gps();
+
+
+  //Datos Get
+  clienteGet:Cliente=new Cliente();
+  listaClienteGet:Array<any>=[];
+
+  vehiculoGet:Vehiculo=new Vehiculo();
+
+  servicioGet:Servicio=new Servicio();
+
+  gpsGet:Gps=new Gps();
 
   isLinear=true
   firstFormGroup: FormGroup
@@ -56,7 +73,11 @@ export class NuevoServicioComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               private servicioModelo:ModeloService,
               private servicioAcciones:AccionesService,
-              private servicioService:ServicioService) {
+              private servicioService:ServicioService,
+              private servicioCliente:ClienteService,
+              private servicioVehiculo:VehiculoService,
+              private servicioDescripcion:DescripcionService,
+              private servicioGps:GpsService) {
 
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -117,15 +138,67 @@ export class NuevoServicioComponent implements OnInit {
     })
   }
 
+  GuardarCliente(){
+    this.servicioCliente.getClient().subscribe((value:any)=>{
+      if (value.filter((data:any)=>data.cedula==this.cliente.cedula).length==0){
+        console.log("No Entra");
+        console.log(this.cliente)
+        /*this.servicioCliente.crearClient(this.cliente).subscribe((value:any)=>{
+          this.clienteGet=value;
+          console.log(this.clienteGet)
+        })*/
+      }else{
+        console.log("Entra");
+        this.clienteGet=value.find((m:any)=>{return m.cedula==this.cliente.cedula});
+        console.log(this.clienteGet.nombre)
+      }
+    })
+
+  }
+
+  GuardarVehiculo(){
+    this.servicioVehiculo.getVehiculos().subscribe((value:any)=>{
+      if (value.filter((data:any)=>data.placa==this.vehiculo.placa).length==0){
+        console.log("No Entra");
+        this.vehiculo.cliente=this.clienteGet.id_persona;
+        this.vehiculo.estado="Activo"
+        console.log(this.vehiculo)
+        /*this.servicioVehiculo.crearVehiculos(this.vehiculo).subscribe((value:any)=>{
+          this.vehiucloGet=value
+          console.log(this.vehiucloGet)
+        })*/
+      }else{
+        console.log("Entra");
+        this.vehiculoGet=value.find((m:any)=>{return m.placa==this.vehiculo.placa});
+        console.log(this.vehiculoGet)
+      }
+    })
+  }
+
+
+
   guardaServcio(){
     this.cliente.estado="Activo";
     this.vehiculo.estado="Activo";
     this.servicio.estado="Activo";
-    this.vehiculo.cliente=this.cliente;
-    this.servicio.vehiculo=this.vehiculo;
+    this.vehiculo.cliente=this.clienteGet.id_persona;
+    this.servicio.vehiculo=this.vehiculoGet;
     console.log(this.servicio);
-    /*this.servicioService.crearService(this.servicio).subscribe(data=>{
-      console.log("Creado")
+
+    //DatoS gps
+    this.servicioGps.getGps().subscribe((value:any) => {
+      this.gpsGet=value.find((m:any)=>{return m.modelo.id_modelo==this.modelo.id_modelo});
+      console.log(this.gpsGet)
+    })
+
+
+    /*this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
+      this.servicioGet=data;
+      this.detalle.documentoservicio=this.servicioGet.id_documentoservicio;
+      this.detalle.estado="Activo"
+      this.servicioDescripcion.crearDescrip(this.detalle).subscribe(data=>{
+        console.log("Creado")
+      })
     })*/
   }
 

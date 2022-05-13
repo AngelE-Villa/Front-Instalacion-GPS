@@ -53,7 +53,6 @@ export class NuevoClienteComponent implements OnInit {
         this.router.navigate(['/verclientes'])
       })
     }
-
   }
 
 }

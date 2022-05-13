@@ -21,7 +21,7 @@ export class ClienteService{
   }
 
   crearClient(cliente:Cliente){
-    return this.httpClient.put(this.base_url+"create-client/", cliente);
+    return this.httpClient.post(this.base_url+"create-client/", cliente);
   }
 
   deleteClient(cliente:Cliente, id:String){

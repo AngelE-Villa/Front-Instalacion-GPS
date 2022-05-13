@@ -19,4 +19,8 @@ export class VehiculoService{
   editarVehiculos(vehiculo:Vehiculo, id:String){
     return this.httpClient.put(this.base_url+"update-vehiculo/"+id, vehiculo);
   }
+
+  crearVehiculos(vehiculo:Vehiculo){
+    return this.httpClient.post(this.base_url+"crear-vehiculo/", vehiculo);
+  }
 }

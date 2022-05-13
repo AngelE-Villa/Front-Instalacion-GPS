@@ -12,7 +12,7 @@ export class GpsService{
   constructor(private httpClient:HttpClient) {
   }
 
-  getGps():Observable<Gps>{
-    return this.httpClient.get<Gps>(this.base_url);
+  getGps():Observable<Gps[]>{
+    return this.httpClient.get<Gps[]>(this.base_url);
   }
 }

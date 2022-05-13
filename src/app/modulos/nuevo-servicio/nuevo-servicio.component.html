@@ -33,40 +33,44 @@
             </mat-card>
             <br>
             <div>
-              <button mat-button matStepperNext >Next</button>
+              <button mat-button matStepperNext (click)="GuardarCliente()">Next</button>
             </div>
           </form>
         </mat-step>
-        <mat-step [stepControl]="secondFormGroup">
-          <form [formGroup]="secondFormGroup" class="todostepper">
+        <mat-step [stepControl]="firstFormGroup">
+          <form >
             <ng-template matStepLabel><div class="mediast">Datos Vehiculo</div></ng-template>
             <mat-card-title class="mediat">Datos Vehiculo</mat-card-title>
             <mat-card class="example-card ">
             <mat-form-field>
-              <input matInput placeholder="Placa" formControlName="secondCtrl" name="placa"  [(ngModel)]="vehiculo.placa"  required/>
+              <input matInput placeholder="Placa"  name="placa"  [(ngModel)]="vehiculo.placa"  required/>
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input matInput placeholder="clave" formControlName="secondCtrl" name="clave" [(ngModel)]="vehiculo.clave" required/>
+              <input matInput placeholder="clave"  name="clave" [(ngModel)]="vehiculo.clave" required/>
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input matInput  placeholder="Año" formControlName="secondCtrl" name="inio" [(ngModel)]="vehiculo.anio" required/>
+              <input matInput  placeholder="Año"  name="inio" [(ngModel)]="vehiculo.anio" required/>
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input matInput placeholder="Kilometro" formControlName="secondCtrl" name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
+              <input matInput placeholder="Kilometro" name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
             </mat-form-field>
             <br>
             <mat-form-field>
-              <input matInput placeholder="Vehiculo" formControlName="secondCtrl" name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
+              <input matInput placeholder="Vehiculo" name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
             </mat-form-field>
             <br>
+              <mat-form-field>
+                <input matInput  name="cliente" [(ngModel)]="clienteGet.nombre"/>
+              </mat-form-field>
+              <br>
             </mat-card>
             <br>
             <div>
               <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+              <button mat-button matStepperNext (click)="GuardarVehiculo()">Next</button>
             </div>
           </form>
         </mat-step>
