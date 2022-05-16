@@ -17,6 +17,10 @@ import {VehiculoService} from "../../servicios/VehiculoService";
 import {DescripcionService} from "../../servicios/DescripcionService";
 import {Gps} from "../../modelos/Gps";
 import {GpsService} from "../../servicios/GpsService";
+import {MatSelectionListChange} from "@angular/material/list";
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-nuevo-servicio',
@@ -24,33 +28,47 @@ import {GpsService} from "../../servicios/GpsService";
   styleUrls: ['./nuevo-servicio.component.css']
 })
 export class NuevoServicioComponent implements OnInit {
-  cliente:Cliente=new Cliente();
-  vehiculo:Vehiculo=new Vehiculo();
-  servicio:Servicio=new Servicio();
-  modelo:Modelo=new Modelo();
-  detalle:Descripcion=new Descripcion();
-  gps:Gps=new Gps();
+//Boolean
+  infocli = false;
+  buscarclienteB = true;
 
+  infovehiculo=false;
+  seleccionvehiculo=true;
+
+  //busqueda
+  buscarimei?: String;
+  buscarcliente?: String;
+
+  cliente: Cliente = new Cliente();
+  vehiculo: Vehiculo = new Vehiculo();
+  servicio: Servicio = new Servicio();
+  modelo: Modelo = new Modelo();
+  detalle: Descripcion = new Descripcion();
+  gps: Gps = new Gps();
+
+
+  vehiculos: Vehiculo[] = [];
+  accionespdf:Acciones[] = [];
 
   //Datos Get
-  clienteGet:Cliente=new Cliente();
-  listaClienteGet:Array<any>=[];
+  clienteGet: Cliente = new Cliente();
+  listaClienteGet: Array<any> = [];
 
-  vehiculoGet:Vehiculo=new Vehiculo();
+  vehiculoGet: Vehiculo = new Vehiculo();
 
-  servicioGet:Servicio=new Servicio();
+  servicioGet: Servicio = new Servicio();
 
-  gpsGet:Gps=new Gps();
+  gpsGet: Gps = new Gps();
 
-  isLinear=true
-  firstFormGroup: FormGroup
-  secondFormGroup: FormGroup
+  modeloGet: Modelo = new Modelo();
 
-  listaModelo:Array<any>=[];
-  listaAcciones:Array<any>=[];
-  listaAcciones1:Array<any>=[];
+  isLinear = true
+
+  listaModelo: Array<any> = [];
+  listaAcciones: Array<any> = [];
+  listaAcciones1: Array<any> = [];
   // @ts-ignore
-  acciones:Acciones[];
+  acciones: Acciones[];
 
   // @ts-ignore
   selectedValue: string;
@@ -71,89 +89,102 @@ export class NuevoServicioComponent implements OnInit {
   date = new FormControl(new Date());
 
   constructor(private _formBuilder: FormBuilder,
-              private servicioModelo:ModeloService,
-              private servicioAcciones:AccionesService,
-              private servicioService:ServicioService,
-              private servicioCliente:ClienteService,
-              private servicioVehiculo:VehiculoService,
-              private servicioDescripcion:DescripcionService,
-              private servicioGps:GpsService) {
+              private servicioModelo: ModeloService,
+              private servicioAcciones: AccionesService,
+              private servicioService: ServicioService,
+              private servicioCliente: ClienteService,
+              private servicioVehiculo: VehiculoService,
+              private servicioDescripcion: DescripcionService,
+              private servicioGps: GpsService) {
 
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
 
-  hide = true;
-  accion:Boolean=true;
-
-  profileFormPaciente = new FormGroup({
-    cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
-    nombre: new FormControl('',Validators.required),
-    direccion: new FormControl('',Validators.required),
-    sexo: new FormControl('',Validators.required),
-    telefono: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
-    nacimiento: new FormControl('',Validators.required),
-    correo: new FormControl('',[Validators.required, Validators.email]),
-    contra: new FormControl('',Validators.required),
-    sangre: new FormControl('',Validators.required),
-    ocupacion: new FormControl('',Validators.required),
-    estado: new FormControl('',Validators.required),
-
+  firstFormGroup = new FormGroup({
+    cedcli: new FormControl('', Validators.required),
+    cedula: new FormControl('', Validators.required),
+    nombre: new FormControl('', Validators.required),
+    direccion: new FormControl('', Validators.required),
+    telefono: new FormControl('', Validators.required),
+    correo: new FormControl('', Validators.required),
   });
 
+  hide = true;
+  accion: Boolean = true;
+
   ngOnInit(): void {
-    this.servicioModelo.getModelos().subscribe((data:any)=>{
-      this.listaModelo=data;
+    let date: Date = new Date();
+    this.servicio.fecha_ds=date;
+    this.servicioModelo.getModelos().subscribe((data: any) => {
+      this.listaModelo = data;
     })
   }
 
   profileForm = new FormGroup({
-    fechaI: new FormControl('',Validators.required),
-    fechaF: new FormControl('',Validators.required),
-    hora: new FormControl('',Validators.required),
+    fechaI: new FormControl('', Validators.required),
+    fechaF: new FormControl('', Validators.required),
+    hora: new FormControl('', Validators.required),
   });
 
-  AccionesSeleccion(id:String){
-    while (this.listaAcciones.length>0){
-      for (let i=0;i<this.listaAcciones1.length;i++){
-        this.table.renderRows();
+  buscarCliente() {
+    this.servicioCliente.getClient().subscribe((value: any) => {
+      if (value.filter((data: any) => data.cedula == this.buscarcliente).length == 0) {
+        this.infocli = true;
+        this.buscarclienteB = false;
+      } else {
+        this.infocli = true;
+        this.buscarclienteB = false;
+        this.cliente = value.find((m: any) => {
+          return m.cedula == this.buscarcliente
+        });
       }
-    }
-    this.servicioAcciones.getAcciones().subscribe(data=>{
-      this.listaAcciones.pop()
-      for(let ac of data){
-        if (ac.modelo.id_modelo==id){
-          this.listaAcciones.push(ac);
+    })
+    console.log(this.cliente)
+  }
+
+  buscarximei() {
+    console.log(this.buscarimei)
+    this.servicioGps.getGps().subscribe((value: any) => {
+      if (value.filter((data: any) => data.imei_gps == this.buscarimei).length == 0) {
+        console.log("No imei")
+      } else {
+        this.gpsGet = value.find((data: any) => {
+          return data.imei_gps == this.buscarimei
+        })
+        this.modeloGet = this.gpsGet.modelo;
+
+        while (this.listaAcciones.length > 0) {
+          for (let i = 0; i < this.listaAcciones1.length; i++) {
+            this.table.renderRows();
+          }
         }
+        this.servicioAcciones.getAcciones().subscribe(data => {
+          this.listaAcciones.pop()
+          for (let ac of data) {
+            if (ac.modelo.id_modelo == this.modeloGet.id_modelo) {
+              this.listaAcciones.push(ac);
+            }
+          }
+          this.listaAcciones1.pop()
+          this.listaAcciones1 = this.listaAcciones;
+          console.log(this.listaAcciones1.length)
+          this.dataSource = new MatTableDataSource(this.listaAcciones1);
+          this.dataSource.paginator = this.paginator;
+        })
       }
-      this.listaAcciones1.pop()
-      this.listaAcciones1=this.listaAcciones;
-      console.log(this.listaAcciones1.length)
-      this.dataSource = new MatTableDataSource(this.listaAcciones1);
-      this.dataSource.paginator = this.paginator;
     })
   }
 
-  GuardarCliente(){
-    this.servicioCliente.getClient().subscribe((value:any)=>{
-      if (value.filter((data:any)=>data.cedula==this.cliente.cedula).length==0){
-        console.log("No Entra");
-        console.log(this.cliente)
-        /*this.servicioCliente.crearClient(this.cliente).subscribe((value:any)=>{
-          this.clienteGet=value;
-          console.log(this.clienteGet)
-        })*/
-      }else{
-        console.log("Entra");
-        this.clienteGet=value.find((m:any)=>{return m.cedula==this.cliente.cedula});
-        console.log(this.clienteGet.nombre)
-      }
-    })
+  mostardatos() {
+    console.log(this.servicio)
+  }
 
+
+  vehiculosporCliente(){
+    console.log(this.cliente)
+    this.servicioVehiculo.getVehiculos().subscribe((value:any)=>{
+      this.vehiculos=value.filter((data:any)=>data.cliente.cedula==this.cliente.cedula)
+      console.log(this.vehiculos)
+    })
   }
 
   GuardarVehiculo(){
@@ -164,8 +195,8 @@ export class NuevoServicioComponent implements OnInit {
         this.vehiculo.estado="Activo"
         console.log(this.vehiculo)
         /*this.servicioVehiculo.crearVehiculos(this.vehiculo).subscribe((value:any)=>{
-          this.vehiucloGet=value
-          console.log(this.vehiucloGet)
+          this.vehiculoGet=value
+          console.log(this.vehiculoGet)
         })*/
       }else{
         console.log("Entra");
@@ -177,29 +208,127 @@ export class NuevoServicioComponent implements OnInit {
 
 
 
-  guardaServcio(){
+  guardaServicio(){
+
     this.cliente.estado="Activo";
     this.vehiculo.estado="Activo";
     this.servicio.estado="Activo";
-    this.vehiculo.cliente=this.clienteGet.id_persona;
-    this.servicio.vehiculo=this.vehiculoGet;
+    this.vehiculo.cliente=this.clienteGet;
+    this.servicio.vehiculo=this.vehiculoGet.id_vehiculo;
+
+    //fecha de solicitud
+
     console.log(this.servicio);
 
+
     //DatoS gps
-    this.servicioGps.getGps().subscribe((value:any) => {
+    /*this.servicioGps.getGps().subscribe((value:any) => {
       this.gpsGet=value.find((m:any)=>{return m.modelo.id_modelo==this.modelo.id_modelo});
       console.log(this.gpsGet)
-    })
+    })*/
 
-
+    this.detalle.gps=this.gpsGet
     /*this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
       this.servicioGet=data;
-      this.detalle.documentoservicio=this.servicioGet.id_documentoservicio;
+      this.detalle.documentoservicio=this.servicioGet;
       this.detalle.estado="Activo"
       this.servicioDescripcion.crearDescrip(this.detalle).subscribe(data=>{
         console.log("Creado")
       })
     })*/
+  }
+
+  selectVehiculo(vehiculoselect: MatSelectionListChange){
+    this.vehiculo=vehiculoselect.option.value;
+    this.infovehiculo=true;
+    this.seleccionvehiculo=false;
+  }
+
+  createPdf(){
+    this.accionespdf=this.listaAcciones.filter(m=>{m})
+    console.log(this.accionespdf[0].nombre)
+      const pdfDefinition: any = {
+      content: [
+
+        {
+          text: '_________________________________________________________________________________________',
+          alignment: 'center'
+        },
+
+
+        {text: 'COORDENADA', fontSize: 15, bold: true, alignment: 'center'},
+        {text: '    '},
+        {text: 'INFORMACION GENERAL', fontSize: 13, bold: true, alignment: 'center'},
+        {text: '    '},
+        {
+          fontSize: 13,
+          table: {
+            widths: ['50%', '50%'],
+            body: [
+              ['PLACA: '+this.vehiculo.placa, 'CLAVE: '+this.vehiculo.clave],
+              ['NOMBRE:'+this.cliente.nombre, 'RUC/CLI:'+this.cliente.cedula],
+              ['DIRECCION: '+this.cliente.direccion, 'CORREO: '+this.cliente.correo],
+              ['VEHICULO:'+this.vehiculo.vehiculo, 'TELEFONO: '+this.cliente.telefono],
+              ['ANIO:'+this.vehiculo.anio, 'IMEI GPS: '+this.gpsGet.imei_gps],
+              ['NUMERO DE GPS: '+this.gpsGet.num_gps, 'KILOMETRAJE: '+this.vehiculo.kilometraje],
+              ['NUMERO SIM: '+this.gpsGet.num_sim, 'FECHA ENTREGA: '+this.servicio.fecha_ds],
+              ['FECHA INICIO: '+this.servicio.fecha_inicion, 'FECHA FIN: '+this.servicio.fecha_fin],
+              ['ATENDIDO POR: Angel Villa' , 'HORAS: '+this.servicio.hora],
+              [' MODELO '+this.modeloGet.nombre,' ']
+
+            ]
+          }
+        },
+        {text: '    '},
+        {text: 'SERVICIO', fontSize: 13, bold: true, alignment: 'center'},
+        {
+          fontSize: 13,
+          table: {
+            widths: ['100%'],
+            body: [
+
+              ['DESCRIPCION: '],
+              [' '+this.accionespdf[0]],
+              [' '+this.accionespdf[1]],
+              [' '],
+            ]
+          }
+        },
+        {text: '    '},
+        {
+          fontSize: 13,
+          table: {
+            widths: ['100%'],
+            body: [
+              ['OBSERVACIONES: '],
+            ]
+          }
+        },
+
+        {text: '    '},
+        {text: 'UBICACION GPS', fontSize: 13, bold: true, alignment: 'center'},
+        {text: '    '},
+        {
+          fontSize: 13,
+          table: {
+            widths: ['50%', '50%'],
+            body: [
+              [' '],
+              [' '],
+              [' '],
+              [' '],
+              [' ']
+
+            ]
+          }
+        }
+
+      ]
+    }
+
+    const pdf = pdfMake.createPdf(pdfDefinition);
+    pdf.open();
+
   }
 
 }

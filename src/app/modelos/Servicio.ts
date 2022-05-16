@@ -8,5 +8,6 @@ export class Servicio{
   hora: any;
   id_documentoservicio: any;
   observaciones: any;
+  ubicacion_gps:any
   vehiculo: Vehiculo = new Vehiculo();
 }

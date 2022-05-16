@@ -2,6 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Gps} from "../modelos/Gps";
+import {Cliente} from "../modelos/Cliente";
 
 @Injectable({
   providedIn:"root"
@@ -14,5 +15,9 @@ export class GpsService{
 
   getGps():Observable<Gps[]>{
     return this.httpClient.get<Gps[]>(this.base_url);
+  }
+
+  crearGps(gps:Gps){
+    return this.httpClient.post(this.base_url+"create-gps/", gps);
   }
 }

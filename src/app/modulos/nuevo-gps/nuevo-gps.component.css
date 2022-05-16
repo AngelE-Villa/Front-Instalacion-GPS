@@ -1,0 +1,9 @@
+.center{
+  width: 80%;
+  text-align: center;
+  margin: 1% auto;
+}
+
+mat-form-field {
+  width: 60%;
+}

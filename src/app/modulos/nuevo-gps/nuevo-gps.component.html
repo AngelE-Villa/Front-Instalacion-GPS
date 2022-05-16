@@ -1,1 +1,34 @@
-<p>nuevo-gps works!</p>
+<br>
+<div class="center">
+  <form>
+    <mat-card class="example-card ">
+      <mat-card-title class="mediat">Datos GPS</mat-card-title>
+      <ng-template matStepLabel >Datos de GPS de APECS</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Numero de GPS" name="cedula" [(ngModel)]="gps.num_gps" required/>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput placeholder="Numero SIM" name="nombre" [(ngModel)]="gps.num_sim"  required/>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput placeholder="Imei" name="direccion" [(ngModel)]="gps.imei_gps" required/>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Modelo GPS</mat-label>
+        <mat-select [(ngModel)]="modelo.id_modelo" name="modelo" >
+          <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id_modelo">
+            {{modelo.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-card-actions style="text-align: center">
+        <button  mat-raised-button class="btniniciarSesion" (click)="Guardar()" >GUARDAR</button>
+      </mat-card-actions>
+      <br>
+    </mat-card>
+
+  </form>
+</div>
