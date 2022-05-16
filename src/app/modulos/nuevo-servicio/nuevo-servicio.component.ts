@@ -101,11 +101,11 @@ export class NuevoServicioComponent implements OnInit {
 
   firstFormGroup = new FormGroup({
     cedcli: new FormControl('', Validators.required),
-    cedula: new FormControl('', Validators.required),
+    cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
     nombre: new FormControl('', Validators.required),
     direccion: new FormControl('', Validators.required),
-    telefono: new FormControl('', Validators.required),
-    correo: new FormControl('', Validators.required),
+    telefono: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    correo: new FormControl('',[Validators.required, Validators.email]),
   });
 
   hide = true;
