@@ -138,8 +138,8 @@ export class NuevoServicioComponent implements OnInit {
           return m.cedula == this.buscarcliente
         });
       }
+      console.log(this.cliente)
     })
-    console.log(this.cliente)
   }
 
   buscarximei() {
@@ -189,22 +189,8 @@ export class NuevoServicioComponent implements OnInit {
   }
 
   GuardarVehiculo(){
-    this.servicioVehiculo.getVehiculos().subscribe((value:any)=>{
-      if (value.filter((data:any)=>data.placa==this.vehiculo.placa).length==0){
-        console.log("No Entra");
-        this.vehiculo.cliente=this.clienteGet.id_persona;
-        this.vehiculo.estado="Activo"
-        console.log(this.vehiculo)
-        /*this.servicioVehiculo.crearVehiculos(this.vehiculo).subscribe((value:any)=>{
-          this.vehiculoGet=value
-          console.log(this.vehiculoGet)
-        })*/
-      }else{
-        console.log("Entra");
-        this.vehiculoGet=value.find((m:any)=>{return m.placa==this.vehiculo.placa});
-        console.log(this.vehiculoGet)
-      }
-    })
+    this.vehiculo.cliente=this.cliente;
+    console.log(this.vehiculo)
   }
 
 
@@ -214,30 +200,77 @@ export class NuevoServicioComponent implements OnInit {
     this.cliente.estado="Activo";
     this.vehiculo.estado="Activo";
     this.servicio.estado="Activo";
-    this.vehiculo.cliente=this.clienteGet;
-    this.servicio.vehiculo=this.vehiculoGet.id_vehiculo;
+    //Cliente
+    this.servicioCliente.getClient().subscribe((value: any) => {
+      if (value.filter((data: any) => data.cedula == this.cliente.cedula).length == 0) {
+        this.servicioCliente.crearClient(this.cliente).subscribe((data:any)=>{
+          this.clienteGet=data;
+          console.log(this.clienteGet)
+          this.CrearVehiculo(this.clienteGet.id_persona);
+        })
+        console.log("Crea Cliente")
+      } else {
+        console.log("Cliente existe")
+        this.clienteGet = value.find((m: any) => {
+          return m.cedula == this.cliente.cedula
+        });
+        this.CrearVehiculo(this.clienteGet.id_persona);
+        console.log(this.clienteGet)
+      }
 
-    //fecha de solicitud
+    })
 
+  }
+
+  CrearVehiculo(id:any){
+    //Vehiculo
+    this.servicioVehiculo.getVehiculos().subscribe((value:any)=>{
+      if (value.filter((data:any)=>data.placa==this.vehiculo.placa).length==0){
+        this.vehiculo.cliente.id_persona=id;
+        this.vehiculo.estado="Activo"
+        console.log(this.vehiculo)
+        this.servicioVehiculo.crearVehiculos(this.vehiculo).subscribe((data:any)=>{
+          this.vehiculoGet=data;
+          console.log(this.vehiculoGet)
+          console.log(this.vehiculoGet.id_vehiculo)
+          this.CrearServicio(this.vehiculoGet.id_vehiculo);
+        })
+        console.log("Crea Vehiculo");
+      }else{
+        this.vehiculoGet=value.find((m:any)=>{return m.placa==this.vehiculo.placa});
+        this.CrearServicio(this.vehiculoGet.id_vehiculo);
+      }
+
+    })
+
+  }
+
+
+  CrearServicio(id:any){
+    this.servicio.vehiculo.id_vehiculo=id;
     console.log(this.servicio);
 
-
-    //DatoS gps
-    /*this.servicioGps.getGps().subscribe((value:any) => {
-      this.gpsGet=value.find((m:any)=>{return m.modelo.id_modelo==this.modelo.id_modelo});
-      console.log(this.gpsGet)
-    })*/
-
-    this.detalle.gps=this.gpsGet
-    /*this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
+    this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
       this.servicioGet=data;
-      this.detalle.documentoservicio=this.servicioGet;
-      this.detalle.estado="Activo"
+      console.log(this.servicioGet)
+      this.CrearDetalle(this.servicioGet.id_documentoservicio)
       this.servicioDescripcion.crearDescrip(this.detalle).subscribe(data=>{
-        console.log("Creado")
+        console.log(data)
+        console.log("Creado Detalle")
       })
-    })*/
+    })
+
   }
+
+  CrearDetalle(id:any){
+    this.detalle.documentoservicio.id_documentoservicio=id;
+    this.gpsGet.estado="En uso"
+    this.detalle.gps.id_gps=this.gpsGet.id_gps;
+    console.log(this.detalle)
+    this.detalle.estado="Activo";
+    console.log("Servicio Creado")
+  }
+
 
   selectVehiculo(vehiculoselect: MatSelectionListChange){
     this.vehiculo=vehiculoselect.option.value;
@@ -245,11 +278,7 @@ export class NuevoServicioComponent implements OnInit {
     this.seleccionvehiculo=false;
   }
 
-
-
   newArray =  [];
-
-
   recorreArray(){
     this.accionespdf = this.listaAcciones.filter(m => m);
     this.accionespdf.map((ac) =>
@@ -259,8 +288,6 @@ export class NuevoServicioComponent implements OnInit {
     )
     return this.newArray;
   }
-
-
 
   createPdf() {
     console.log(this.recorreArray())
