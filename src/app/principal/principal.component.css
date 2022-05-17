@@ -89,6 +89,9 @@ footer{
 .pie-pagina .grupo-2 small{
   font-size: 15px;
 }
+.tmmeda{
+  font-size: 16px;
+}
 
 @media (max-width: 800px) {
   .medath{

@@ -12,9 +12,9 @@
       <button class="btninicio" [routerLink]="['']"><span class="tool logo"><img src="/assets/Imagenes/apecs.png" alt=""></span></button>
       <span class="example-spacer"></span>
 
-        <div class="mediaUbt">
+        <div class="mediaUbt" *ngIf="issloading==true">
             <button class="btniniciarS hover" [matMenuTriggerFor]="servicios" >
-              <mat-icon class="sep">supervised_user_circle</mat-icon>
+              <mat-icon> person_pin_circle</mat-icon>
               <span class="medath">SERVICIOS</span>
             </button>
             <mat-menu #servicios="matMenu">
@@ -23,7 +23,7 @@
             </mat-menu>
 
             <button class="btniniciarS hover" [matMenuTriggerFor]="clientes" >
-              <mat-icon class="sep"> person_pin</mat-icon>
+              <mat-icon class="sep">supervised_user_circle</mat-icon>
               <span class="medath">CLIENTES</span>
             </button>
             <mat-menu #clientes="matMenu">
@@ -52,29 +52,25 @@
 
         </div>
 
-        <div *ngIf="false">
+        <div *ngIf="issloading==true" style="margin-left: 50px">
           <button class="btniniciarS hover" [matMenuTriggerFor]="perfil">
-            <span class="medath" >Angel Villa</span>
-            <mat-icon>gps_fixed</mat-icon>
+            <span class="medath tmmeda">{{usuario}}<mat-icon> person_pin</mat-icon></span>
+
           </button>
           <mat-menu #perfil="matMenu">
-            <button mat-menu-item [routerLink]="['/vergps']">Perfil</button>
-            <button mat-menu-item [routerLink]="['']">Cerrar Sesión</button>
+            <button mat-menu-item style="text-align: center" [routerLink]="['/vergps']">Perfil<mat-icon> person_pin</mat-icon></button>
+            <button mat-menu-item style="text-align: center" (click)="cerrarSesion()" >Cerrar Sesión<mat-icon>exit_to_app</mat-icon></button>
           </mat-menu>
         </div>
 
 
-        <div >
+        <div *ngIf="issloading==false" class="mediaUbt">
           <button class="btniniciarS hover" [routerLink]="['/iniciasesion']">
             <mat-icon>supervised_user_circle</mat-icon>
             INICIAR SESION
           </button>
         </div>
 
-      <button class="tool" mat-menu-item color="secundary" *ngIf="false">
-          CERRAR SESIÓN
-          <mat-icon>exit_to_app</mat-icon>
-      </button>
 
     <!--<button mat-icon-button class="tool">
         <mat-icon >menu</mat-icon>

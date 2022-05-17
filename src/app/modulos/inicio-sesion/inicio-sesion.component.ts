@@ -43,7 +43,7 @@ export class InicioSesionComponent implements OnInit {
         this.user=value.filter(value1 => value1.correo==this.correoU&&value1.password==this.pswU)[0];
         if(this.user.correo==this.correoU && this.user.password==this.pswU){
           sessionStorage.clear;
-          sessionStorage.setItem('user', JSON.stringify(this.user));
+          sessionStorage.setItem('user', JSON.stringify(this.user.nombre));
           this.issloading=true;
           this.router.navigate(['']).then(() => {
             window.location.reload();

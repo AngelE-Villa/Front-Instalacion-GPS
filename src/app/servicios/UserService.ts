@@ -2,6 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "../modelos/User";
 import {map, Observable} from "rxjs";
 import {Injectable} from "@angular/core";
+import {Cliente} from "../modelos/Cliente";
 
 @Injectable({
   providedIn:"root"
@@ -15,6 +16,10 @@ export class UserService{
 
   getUsers():Observable<User[]>{
     return this.httpClient.get(this.base_url).pipe(map(Response => Response as User[]))
+  }
+
+  crearUser(user:User){
+    return this.httpClient.post(this.base_url+"create-user/", user);
   }
 
 }

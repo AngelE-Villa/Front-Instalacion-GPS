@@ -5,13 +5,13 @@
       <mat-card-title class="centrar">Registro de Usuarios</mat-card-title>
       <mat-card-subtitle>Datos del usuario</mat-card-subtitle>
     </mat-card-header>
-    <form  [formGroup]="profileFormPaciente">
+    <form  [formGroup]="formUser">
       <mat-card-content>
         <mat-grid-list cols="1" rowHeight="8:1">
           <mat-grid-tile>
             <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
               <mat-label>Nombres completos</mat-label>
-              <input matInput placeholder="Ex. Angel Villa" formControlName="nombre">
+              <input matInput placeholder="Ex. Angel Villa" formControlName="nombre" [(ngModel)]="user.nombre">
             </mat-form-field>
           </mat-grid-tile>
         </mat-grid-list>
@@ -19,25 +19,25 @@
           <mat-grid-tile>
             <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
               <mat-label>Dirección</mat-label>
-              <input matInput placeholder="Ex. AV Americas"  formControlName="direccion">
+              <input matInput placeholder="Ex. AV Americas"  formControlName="direccion" [(ngModel)]="user.direccion">
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
               <mat-label>Teléfono</mat-label>
-              <input matInput placeholder="Ex. 0000087383"  formControlName="telefono" >
+              <input matInput placeholder="Ex. 0000087383"  formControlName="telefono" [(ngModel)]="user.telefono">
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
               <mat-label>Correo</mat-label>
-              <input matInput placeholder="Ex. ejemplo@gmail.com"  formControlName="correo">
+              <input matInput placeholder="Ex. ejemplo@gmail.com"  formControlName="correo" [(ngModel)]="user.correo">
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
               <mat-label>Contraseña</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'"   formControlName="contra">
+              <input matInput [type]="hide ? 'password' : 'text'"   formControlName="contra" [(ngModel)]="user.password">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
@@ -45,8 +45,7 @@
           </mat-grid-tile>
         </mat-grid-list>
         <mat-card-actions style="width: 100%; text-align: center">
-          <button *ngIf="accion==true" mat-raised-button color="accent" (click)="a()" [disabled]="profileFormPaciente.invalid">REGISTRASE</button>
-          <button *ngIf="accion==false" mat-raised-button color="accent" (click)="a()" [disabled]="profileFormPaciente.invalid">GUARDAR</button>
+          <button mat-raised-button color="accent" (click)="regsitrar()" [disabled]="formUser.invalid">REGISTRASE</button>
         </mat-card-actions>
       </mat-card-content>
     </form>
