@@ -21,6 +21,6 @@ export class VehiculoService{
   }
 
   crearVehiculos(vehiculo:Vehiculo){
-    return this.httpClient.post(this.base_url+"crear-vehiculo/", vehiculo);
+    return this.httpClient.post(this.base_url+"create-vehiculo/", vehiculo);
   }
 }

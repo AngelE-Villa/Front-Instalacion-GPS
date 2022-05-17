@@ -18,7 +18,7 @@ export class ServicioService{
   }
 
   crearService(servicio:Servicio){
-    return this.httpClient.put(this.base_url+"create-docservicio/", servicio);
+    return this.httpClient.post(this.base_url+"create-docservicio", servicio);
   }
 
 }
