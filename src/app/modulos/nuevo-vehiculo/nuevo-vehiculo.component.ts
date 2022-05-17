@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Cliente} from "../../modelos/Cliente";
 import {Vehiculo} from "../../modelos/Vehiculo";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ClienteService} from "../../servicios/ClienteService";
 import {VehiculoService} from "../../servicios/VehiculoService";
@@ -23,7 +23,16 @@ export class NuevoVehiculoComponent implements OnInit {
 
   listaVehiculos:Array<any>=[];
 
-  firstFormGroup: FormGroup;
+
+  //anio, clave, estado, kilometraje, placa, vehiculo
+  firstFormGroup = new FormGroup({
+    anio: new FormControl('',[Validators.required, Validators.maxLength(4),Validators.pattern("[0-9]+")]),
+    clave: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    num_sim: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    kilometraje: new FormControl('', Validators.required),
+    placa: new FormControl('', Validators.required),
+    vehiculo: new FormControl('', Validators.required),
+  });
 
   constructor(private _formBuilder: FormBuilder,route:ActivatedRoute,private vehiculoService:VehiculoService, private router:Router) {
     this.firstFormGroup = this._formBuilder.group({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Cliente} from "../../modelos/Cliente";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ClienteService} from "../../servicios/ClienteService";
@@ -24,7 +24,19 @@ export class NuevoClienteComponent implements OnInit {
   clientes:Array<any>=[];
 
 
-  firstFormGroup: FormGroup;
+
+
+
+  //validacion de campos
+  firstFormGroup = new FormGroup({
+
+    cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    nombre: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+    direccion: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+    telefono: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    correo: new FormControl('',[Validators.required, Validators.email]),
+  });
+
 
   constructor(private _formBuilder: FormBuilder,route:ActivatedRoute,private clienteService:ClienteService, private router:Router) {
     this.firstFormGroup = this._formBuilder.group({
