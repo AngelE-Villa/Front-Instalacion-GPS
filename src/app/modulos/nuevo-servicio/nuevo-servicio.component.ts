@@ -254,10 +254,6 @@ export class NuevoServicioComponent implements OnInit {
       this.servicioGet=data;
       console.log(this.servicioGet)
       this.CrearDetalle(this.servicioGet.id_documentoservicio)
-      this.servicioDescripcion.crearDescrip(this.detalle).subscribe(data=>{
-        console.log(data)
-        console.log("Creado Detalle")
-      })
     })
 
   }
@@ -269,6 +265,10 @@ export class NuevoServicioComponent implements OnInit {
     console.log(this.detalle)
     this.detalle.estado="Activo";
     console.log("Servicio Creado")
+    this.servicioDescripcion.crearDescrip(this.detalle).subscribe(data=>{
+      console.log(data)
+      console.log("Creado Detalle")
+    })
   }
 
 
