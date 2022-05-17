@@ -20,6 +20,7 @@ import {GpsService} from "../../servicios/GpsService";
 import {MatSelectionListChange} from "@angular/material/list";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {DatePipe} from "@angular/common";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -244,10 +245,30 @@ export class NuevoServicioComponent implements OnInit {
     this.seleccionvehiculo=false;
   }
 
-  createPdf(){
-    this.accionespdf=this.listaAcciones.filter(m=>{m})
-    console.log(this.accionespdf[0].nombre)
-      const pdfDefinition: any = {
+
+
+  newArray =  [];
+
+
+  recorreArray(){
+    this.accionespdf = this.listaAcciones.filter(m => m);
+    this.accionespdf.map((ac) =>
+      this.newArray.push([
+         ac.nombre,
+      ])
+    )
+    return this.newArray;
+  }
+
+
+
+  createPdf() {
+    console.log(this.recorreArray())
+    console.log(this.newArray)
+    var fecha: String = new Date().toISOString();
+    var pipe: DatePipe = new DatePipe('en-US')
+
+    const pdfDefinition: any = {
       content: [
 
         {
@@ -265,16 +286,16 @@ export class NuevoServicioComponent implements OnInit {
           table: {
             widths: ['50%', '50%'],
             body: [
-              ['PLACA: '+this.vehiculo.placa, 'CLAVE: '+this.vehiculo.clave],
-              ['NOMBRE:'+this.cliente.nombre, 'RUC/CLI:'+this.cliente.cedula],
-              ['DIRECCION: '+this.cliente.direccion, 'CORREO: '+this.cliente.correo],
-              ['VEHICULO:'+this.vehiculo.vehiculo, 'TELEFONO: '+this.cliente.telefono],
-              ['ANIO:'+this.vehiculo.anio, 'IMEI GPS: '+this.gpsGet.imei_gps],
-              ['NUMERO DE GPS: '+this.gpsGet.num_gps, 'KILOMETRAJE: '+this.vehiculo.kilometraje],
-              ['NUMERO SIM: '+this.gpsGet.num_sim, 'FECHA ENTREGA: '+this.servicio.fecha_ds],
-              ['FECHA INICIO: '+this.servicio.fecha_inicion, 'FECHA FIN: '+this.servicio.fecha_fin],
-              ['ATENDIDO POR: Angel Villa' , 'HORAS: '+this.servicio.hora],
-              [' MODELO '+this.modeloGet.nombre,' ']
+              ['PLACA: ' + this.vehiculo.placa, 'CLAVE: ' + this.vehiculo.clave],
+              ['NOMBRE:' + this.cliente.nombre, 'RUC/CLI:' + this.cliente.cedula],
+              ['DIRECCION: ' + this.cliente.direccion, 'CORREO: ' + this.cliente.correo],
+              ['VEHICULO:' + this.vehiculo.vehiculo, 'TELEFONO: ' + this.cliente.telefono],
+              ['ANIO:' + this.vehiculo.anio, 'IMEI GPS: ' + this.gpsGet.imei_gps],
+              ['NUMERO DE GPS: ' + this.gpsGet.num_gps, 'KILOMETRAJE: ' + this.vehiculo.kilometraje],
+              ['NUMERO SIM: ' + this.gpsGet.num_sim, 'FECHA ENTREGA: ' + pipe.transform(this.servicio.fecha_ds, 'dd/MM/yyyy')],
+              ['FECHA INICIO: ' + pipe.transform(this.servicio.fecha_inicion, 'dd/MM/yyyy'), 'FECHA FIN: ' + pipe.transform(this.servicio.fecha_fin, 'dd/MM/yyyy')],
+              ['ATENDIDO POR: Angel Villa', 'HORAS: ' + this.servicio.hora],
+              [' MODELO ' + this.modeloGet.nombre, ' ']
 
             ]
           }
@@ -288,9 +309,16 @@ export class NuevoServicioComponent implements OnInit {
             body: [
 
               ['DESCRIPCION: '],
-              [' '+this.accionespdf[0]],
-              [' '+this.accionespdf[1]],
-              [' '],
+                    [
+                      {
+                        stack: [
+                          {
+                            ol: [this.newArray],
+                          },
+
+                       ],
+                    },
+                ],
             ]
           }
         },
@@ -300,7 +328,7 @@ export class NuevoServicioComponent implements OnInit {
           table: {
             widths: ['100%'],
             body: [
-              ['OBSERVACIONES: '],
+              ['OBSERVACIONES: '+this.servicio.observaciones],
             ]
           }
         },
@@ -313,11 +341,7 @@ export class NuevoServicioComponent implements OnInit {
           table: {
             widths: ['50%', '50%'],
             body: [
-              [' '],
-              [' '],
-              [' '],
-              [' '],
-              [' ']
+              [this.servicio.ubicacion_gps],
 
             ]
           }
