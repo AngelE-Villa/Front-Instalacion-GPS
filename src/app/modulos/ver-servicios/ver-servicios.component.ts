@@ -4,6 +4,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {Servicio} from "../../modelos/Servicio";
 import {ServicioService} from "../../servicios/ServicioService";
+import {ClienteNServicio} from "../../modelos/ClienteNServicio";
+import {Cliente} from "../../modelos/Cliente";
+import {ClienteService} from "../../servicios/ClienteService";
 
 
 @Component({
@@ -13,18 +16,22 @@ import {ServicioService} from "../../servicios/ServicioService";
 })
 export class VerServiciosComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'vehiculoN', 'vehiculoCliente','fechaI','fechaF','detalles','editar','eliminar'];
+
+  displayedColumns: string[] = ['id', 'cedula', 'nombre','cant','detalles'];
   // @ts-ignore
-  dataSource: MatTableDataSource<Servicio>;
+  dataSource: MatTableDataSource<Cliente>;
 
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
 
-  datos: Servicio[] = [];
+  datosServicio: Servicio[] = [];
+  datosCliente:Cliente[] = [];
 
-  constructor(private serviceService:ServicioService) {
+  listaClientes:Cliente[] = [];
+
+  constructor(private serviceService:ServicioService, private clienteService:ClienteService) {
 
   }
 
@@ -42,12 +49,25 @@ export class VerServiciosComponent implements OnInit {
 
 
   listaServicios(){
-    this.serviceService.getServices().subscribe(value => {
-      this.datos=value
-      this.dataSource = new MatTableDataSource(this.datos);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.clienteService.getClient().subscribe(valuecliente => {
+      this.datosCliente=valuecliente
+      this.serviceService.getServices().subscribe(valueservicio => {
+        this.datosServicio=valueservicio
+
+        for (let dc of this.datosCliente){
+          for (let ds of this.datosServicio){
+            if (dc.id_persona==ds.vehiculo.cliente.id_persona){
+              this.listaClientes.push(dc);
+            }
+          }
+        }
+
+        this.dataSource = new MatTableDataSource(this.listaClientes);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      })
     })
+
   }
 }
 

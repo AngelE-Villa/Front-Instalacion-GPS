@@ -20,12 +20,15 @@ import { NuevoServicioComponent } from './modulos/nuevo-servicio/nuevo-servicio.
 import { NuevoClienteComponent } from './modulos/nuevo-cliente/nuevo-cliente.component';
 import { NuevoGpsComponent } from './modulos/nuevo-gps/nuevo-gps.component';
 import { NuevoVehiculoComponent } from './modulos/nuevo-vehiculo/nuevo-vehiculo.component';
+import { VerServicioClienteComponent } from './modulos/ver-servicio-cliente/ver-servicio-cliente.component';
+import { EditarServicioComponent } from './modulos/editar-servicio/editar-servicio.component';
 
 const routes: Routes = [
   {path:'', component:CuerpoComponent},
   {path:'iniciasesion', component:InicioSesionComponent},
   {path:'registrousuario', component:RegistroUsuariosComponent},
   {path:'verservicios', component:VerServiciosComponent},
+  {path:'verservicio/cliente=/:id', component:VerServicioClienteComponent},
   {path:'verclientes', component:VerClientesComponent},
   {path:'vervehiculos', component:VerVehiculosComponent},
   {path:'vergps', component:VerGpsComponent},
@@ -36,6 +39,8 @@ const routes: Routes = [
   {path:'nuevovehiculo', component:NuevoVehiculoComponent},
   {path:'nuevovehiculo/:id', component:NuevoVehiculoComponent},
   {path:'nuevogps', component:NuevoGpsComponent},
+  {path:'verservicio/cliente/edit=/:id', component:EditarServicioComponent},
+
 ];
 
 @NgModule({
@@ -53,7 +58,9 @@ const routes: Routes = [
     NuevoServicioComponent,
     NuevoClienteComponent,
     NuevoGpsComponent,
-    NuevoVehiculoComponent
+    NuevoVehiculoComponent,
+    VerServicioClienteComponent,
+    EditarServicioComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {Cliente} from "../../modelos/Cliente";
 import {ClienteService} from "../../servicios/ClienteService";
+import {Gps} from "../../modelos/Gps";
+import {GpsService} from "../../servicios/GpsService";
 
 @Component({
   selector: 'app-ver-gps',
@@ -11,21 +13,23 @@ import {ClienteService} from "../../servicios/ClienteService";
 })
 export class VerGpsComponent implements OnInit {
 
-  columnas: string[] = ['id', 'cedula', 'nombre', 'direccion','correo','editar','eliminar'];
+  columnas: string[] = ['id', 'num_gps', 'num_sim', 'imei','editar','eliminar'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  datos: Cliente[] = [];
-  dataSource:any;
+  // @ts-ignore
+  dataSource: MatTableDataSource<Gps>;
 
-  listaClients:Array<Cliente>=[];
+  datos: Gps[] = [];
 
-  constructor(private service:ClienteService) { }
+  listaGps:Array<Gps>=[];
+
+  constructor(private servicegps:GpsService) { }
 
   ngOnInit(): void {
-    this.service.getClient().subscribe((x:any) =>{
-      this.listaClients=x
-      for (let a of this.listaClients){
+    this.servicegps.getGps().subscribe((x:any) =>{
+      this.listaGps=x
+      for (let a of this.listaGps){
         this.datos.push(a);
         this.dataSource = new MatTableDataSource<any>(this.datos);
         this.dataSource.paginator = this.paginator;
