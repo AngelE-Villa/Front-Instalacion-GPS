@@ -66,8 +66,7 @@ export class NuevoServicioComponent implements OnInit {
   isLinear = true
 
   listaModelo: Array<any> = [];
-  listaAcciones: Array<any> = [];
-  listaAcciones1: Array<any> = [];
+  listaAcciones = [];
   // @ts-ignore
   acciones: Acciones[];
 
@@ -101,7 +100,7 @@ export class NuevoServicioComponent implements OnInit {
   }
 
   firstFormGroup = new FormGroup({
-    cedcli: new FormControl('', Validators.required),
+    cedcli: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
     cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
     nombre: new FormControl('', Validators.required),
     direccion: new FormControl('', Validators.required),
@@ -143,7 +142,7 @@ export class NuevoServicioComponent implements OnInit {
   }
 
   buscarximei() {
-    console.log(this.buscarimei)
+    this.listaAcciones.pop();
     this.servicioGps.getGps().subscribe((value: any) => {
       if (value.filter((data: any) => data.imei_gps == this.buscarimei).length == 0) {
         console.log("No imei")
@@ -153,23 +152,13 @@ export class NuevoServicioComponent implements OnInit {
         })
         this.modeloGet = this.gpsGet.modelo;
 
-        while (this.listaAcciones.length > 0) {
-          for (let i = 0; i < this.listaAcciones1.length; i++) {
-            this.table.renderRows();
-          }
-        }
         this.servicioAcciones.getAcciones().subscribe(data => {
-          this.listaAcciones.pop()
+          this.listaAcciones.pop();
           for (let ac of data) {
             if (ac.modelo.id_modelo == this.modeloGet.id_modelo) {
               this.listaAcciones.push(ac);
             }
           }
-          this.listaAcciones1.pop()
-          this.listaAcciones1 = this.listaAcciones;
-          console.log(this.listaAcciones1.length)
-          this.dataSource = new MatTableDataSource(this.listaAcciones1);
-          this.dataSource.paginator = this.paginator;
         })
       }
     })
