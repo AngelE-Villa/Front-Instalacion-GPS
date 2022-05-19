@@ -1,0 +1,131 @@
+<div class="example-card center">
+  <mat-card-title>DATOS DEL SERVICIO</mat-card-title>
+  <mat-divider inset></mat-divider>
+  <br>
+  <mat-card-content>
+    <div class="cabecera">
+      <div class="izquierda">
+        <h4><strong>Datos Cliente</strong></h4>
+        <span>Cedula: {{servicio.vehiculo.cliente.cedula}}</span><br>
+        <span>Nombre: {{servicio.vehiculo.cliente.nombre}}</span>
+        <br><br>
+        <h4><strong>GPS</strong></h4>
+          <span>Imei: {{detalle.gps.imei_gps}}</span><br>
+          <span>Modelo: {{detalle.gps.modelo.nombre}}</span>
+        <br><br>
+        <h4><strong>Datos Vehiculo</strong></h4>
+        <span>Placa: {{servicio.vehiculo.placa}}</span><br>
+        <span>Vehiculo: {{servicio.vehiculo.vehiculo}}</span>
+        <br><br>
+        <h4><strong>Horarios</strong></h4>
+        <span>Fecha Inicio: {{servicio.fecha_inicion | date: 'dd/MM/yyyy'}}</span><br>
+        <span>Fecha Fin: {{servicio.fecha_fin | date: 'dd/MM/yyyy'}}</span><br>
+        <span>Hora: {{servicio.hora}}</span>
+        <br><br>
+      </div>
+      <div class="derecha">
+        <div class="example-button-row">
+          <button mat-raised-button color="primary" (click)="editarGps()">Cambio GPS</button>
+          <button mat-raised-button color="primary" (click)="editarFechas()">Editar Plan</button>
+        </div>
+        <br>
+        <div *ngIf="editarNGps">
+          <br>
+          <form class="todostepper">
+            <mat-card-title class="mediat">Datos Nuevo GPS</mat-card-title>
+            <br><br>
+            <cdk-virtual-scroll-viewport appendOnly itemSize="70" class="example-viewport center">
+              <div class="center">
+                <h4>Ingrese el IMEI del GPS</h4>
+                <mat-form-field>
+                  <input matInput  placeholder="Ex: 10002"  name="imei" [(ngModel)]="buscarimei" required/>
+                </mat-form-field>
+                <input type="submit" value="Search" (click)="buscarximei()">
+                <br>
+                <mat-form-field>
+                  <input matInput  placeholder="Ex: 10002"  name="modelo" [(ngModel)]="modelo.nombre" disabled/>
+                </mat-form-field>
+                <br>
+                <table class="center">
+                  <thead>
+                  <th>Acciones</th>
+                  </thead>
+                  <tbody *ngFor="let ac of listaacciones">
+                  <td>{{ac.nombre}}</td>
+                  </tbody>
+                </table>
+                <h2><strong>Horarios:</strong></h2>
+                <mat-form-field appearance="outline" style="width: 40%">
+                  <mat-label>Fecha inicio contrato</mat-label>
+                  <input matInput [matDatepicker]="picker" name="fechaI" [(ngModel)]="servicioSet.fecha_inicion">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="outline" style="width: 40%">
+                  <mat-label>Fecha fin contrato</mat-label>
+                  <input matInput [matDatepicker]="picker1" name="fechaF" [(ngModel)]="servicioSet.fecha_fin">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="outline" style="width: 20%">
+                  <mat-label>Hora </mat-label>
+                  <input type="time" matInput name="hora" [(ngModel)]="servicioSet.hora">
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                  <input matInput placeholder="Observaciones" name="observacion" [(ngModel)]="servicioSet.observaciones"/>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                  <input matInput placeholder="Ubicacion" name="ubicacion" [(ngModel)]="servicioSet.ubicacion_gps" />
+                </mat-form-field>
+              </div>
+            </cdk-virtual-scroll-viewport>
+            <div>
+              <button mat-button >Cancelar</button>
+              <button mat-button >Guardar</button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="editarNFechas">
+          <form class="todostepper">
+            <mat-card-title class="mediat">Fechas</mat-card-title>
+            <br><br>
+              <form>
+                <h4>Ingrese la cantidad $</h4>
+                <mat-form-field>
+                  <input matInput placeholder="Cantidad $"  name="imei" [(ngModel)]="cantidad" required/>
+                </mat-form-field>
+                <div>
+                  <p>Horarios:</p>
+                  <mat-form-field appearance="outline" style="width: 40%">
+                    <mat-label>Fecha inicio contrato</mat-label>
+                    <input matInput [matDatepicker]="picker" name="fechaI" [(ngModel)]="servicio.fecha_inicion" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="outline" style="width: 40%">
+                    <mat-label>Fecha fin contrato</mat-label>
+                    <input matInput [matDatepicker]="picker1" name="fechaF" [(ngModel)]="servicio.fecha_fin" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </form>
+            <div>
+              <button mat-button >Cancelar</button>
+              <button mat-button >Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+</div>
+<mat-card-footer class="footer" *ngIf="false">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</mat-card-footer>

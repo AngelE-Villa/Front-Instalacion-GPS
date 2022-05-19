@@ -1,0 +1,45 @@
+.center{
+  width: 80%;
+  text-align: center;
+  margin: 1% auto;
+}
+
+.footer{
+  width: 100%;
+  margin: 1% auto;
+}
+
+.example-viewport {
+  height: 250px;
+  width: 100%;
+  text-align: center;
+  margin: 1% auto;
+}
+
+.example-item {
+  height: 50px;
+}
+
+.example-button-row {
+  width: 490px;
+  text-align: center;
+}
+
+.example-button-row .mat-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.cabecera{
+  min-height:250px;
+}
+.izquierda{
+  text-align: start;
+  height:50%;
+  float:left;
+  width:35%;
+}
+.derecha{
+  height:50%;
+  float:right;
+  width:65%;
+}
