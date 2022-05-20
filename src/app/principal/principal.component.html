@@ -9,8 +9,12 @@
 </head>
 <header>
   <mat-toolbar>
-      <button class="btninicio" [routerLink]="['']"><span class="tool logo"><img src="/assets/Imagenes/apecs.png" alt=""></span></button>
-      <span class="example-spacer"></span>
+    <div class="tool logo">
+      <a [routerLink]="['']" class="btninicio">
+        <span><img src="https://www.coordenadaec.com/wp-content/uploads/2022/04/LogoCoordenadas.png" alt="Coordenada - Tecnología en Geolocalización" /></span>
+      </a>
+    </div>
+    <span class="example-spacer"></span>
 
         <div class="mediaUbt" *ngIf="issloading==true">
             <button class="btniniciarS hover" [matMenuTriggerFor]="servicios" >
@@ -19,7 +23,7 @@
             </button>
             <mat-menu #servicios="matMenu">
               <button mat-menu-item [routerLink]="['/verservicios']">Listar Servicios</button>
-              <button mat-menu-item [routerLink]="['/nuevoservicio']">Nuevo Servicio</button>
+              <button mat-menu-item [routerLink]="['/seleccion/plan']">Nuevo Servicio</button>
             </mat-menu>
 
             <button class="btniniciarS hover" [matMenuTriggerFor]="clientes" >
@@ -76,8 +80,10 @@
         <mat-icon >menu</mat-icon>
       </button>-->
   </mat-toolbar>
+  <mat-divider style="width: 100%;"></mat-divider>
 </header>
 <body>
+<br><br>
 <router-outlet></router-outlet>
 </body>
 <footer class="pie-pagina">

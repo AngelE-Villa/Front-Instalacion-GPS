@@ -3,11 +3,14 @@ header{
   left: 0;
   top: 0;
   right: 0;
-  height: 4rem;
+  height: 10rem;
+
 }
 mat-toolbar{
-  background-color: #0e375d;
+  background-color: white;
+  height: 6rem;
 }
+
 
 .btninicio{
   background-color: transparent;
@@ -23,12 +26,13 @@ mat-toolbar{
 .btniniciarS{
   background-color: transparent;
   border: transparent;
-  color: white;
+  font-weight: bold;
+  color: #428bca;
   font-size: 15px;
 }
 
 .hover:hover{
-  color: #428bca;
+  color: black;
   cursor: pointer;
   transition: .5s;
 }
@@ -36,7 +40,7 @@ mat-toolbar{
 
 .logo{
   padding: 2% 0;
-  line-height: 5%;
+  line-height: 8%;
 }
 
 .logo img{

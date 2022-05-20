@@ -22,6 +22,7 @@ import { NuevoGpsComponent } from './modulos/nuevo-gps/nuevo-gps.component';
 import { NuevoVehiculoComponent } from './modulos/nuevo-vehiculo/nuevo-vehiculo.component';
 import { VerServicioClienteComponent } from './modulos/ver-servicio-cliente/ver-servicio-cliente.component';
 import { EditarServicioComponent } from './modulos/editar-servicio/editar-servicio.component';
+import { SeleccionPlanComponent } from './modulos/seleccion-plan/seleccion-plan.component';
 
 const routes: Routes = [
   {path:'', component:CuerpoComponent},
@@ -33,12 +34,13 @@ const routes: Routes = [
   {path:'vervehiculos', component:VerVehiculosComponent},
   {path:'vergps', component:VerGpsComponent},
   {path:'nuevomodelogps', component:NuevoModeloGpsComponent},
-  {path:'nuevoservicio', component:NuevoServicioComponent},
+  {path:'nuevoservicio/:id', component:NuevoServicioComponent},
   {path:'nuevocliente', component:NuevoClienteComponent},
   {path:'nuevocliente/:id', component:NuevoClienteComponent},
   {path:'nuevovehiculo', component:NuevoVehiculoComponent},
   {path:'nuevovehiculo/:id', component:NuevoVehiculoComponent},
   {path:'nuevogps', component:NuevoGpsComponent},
+  {path:'seleccion/plan', component:SeleccionPlanComponent},
   {path:'verservicio/cliente/edit=/:id', component:EditarServicioComponent},
 
 ];
@@ -60,7 +62,8 @@ const routes: Routes = [
     NuevoGpsComponent,
     NuevoVehiculoComponent,
     VerServicioClienteComponent,
-    EditarServicioComponent
+    EditarServicioComponent,
+    SeleccionPlanComponent
   ],
   imports: [
     BrowserModule,

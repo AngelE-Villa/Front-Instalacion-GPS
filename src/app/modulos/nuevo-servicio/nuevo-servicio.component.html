@@ -141,7 +141,7 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="firstFormGroup">
-        <mat-card class="example-card ">
+        <div class="example-card ">
           <mat-card-title class="mediat">Fechas</mat-card-title>
           <ng-template matStepLabel><div class="mediast">Fechas</div></ng-template>
           <mat-card-header>
@@ -149,12 +149,17 @@
           </mat-card-header>
           <form>
             <mat-card-content>
-              <p>Hoarios:</p>
+              <p>Horarios:</p>
               <mat-form-field appearance="outline" style="width: 40%">
                 <mat-label>Fecha inicio contrato</mat-label>
                 <input matInput [matDatepicker]="picker" name="fechaI" [(ngModel)]="servicio.fecha_inicion" required/>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <br>
+              <br>
+              <mat-form-field>
+                <input matInput placeholder="Cantidad" name="cantidad" [(ngModel)]="servicio.ubicacion_gps" required/>
               </mat-form-field>
               <br>
               <mat-form-field appearance="outline" style="width: 40%">
@@ -178,7 +183,7 @@
               </mat-form-field>
             </mat-card-content>
           </form>
-        </mat-card>
+        </div>
         <div>
           <button mat-button matStepperPrevious>Atras</button>
           <button mat-button matStepperNext (click)="mostardatos()">Siguiente</button>
@@ -225,12 +230,12 @@
               <p>{{servicio.ubicacion_gps}}</p>
             </div>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="guardaServicio()" >Guardar Servicio</button>
-            <button mat-button (click)="createPdf()" >Imprimir</button>
-          </mat-card-actions>
         </div>
+        <mat-card-actions>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="guardaServicio()" >Guardar Servicio</button>
+          <button mat-button (click)="createPdf()" >Imprimir</button>
+        </mat-card-actions>
 
       </mat-step>
     </mat-horizontal-stepper>
