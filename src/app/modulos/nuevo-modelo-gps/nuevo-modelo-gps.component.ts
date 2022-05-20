@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Cliente} from "../../modelos/Cliente";
 import {MatTableDataSource} from "@angular/material/table";
 import {ClienteService} from "../../servicios/ClienteService";
@@ -7,6 +7,8 @@ import {AccionesService} from "../../servicios/AccionesService";
 import {ModeloService} from "../../servicios/ModeloService";
 import {Modelo} from "../../modelos/Modelo";
 import {Acciones} from "../../modelos/Acciones";
+import {MatDialog} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nuevo-modelo-gps',
@@ -15,22 +17,37 @@ import {Acciones} from "../../modelos/Acciones";
 })
 export class NuevoModeloGpsComponent implements OnInit {
 
-  columnasM: string[] = ['idM','nombreM','editar','eliminar'];
-  columnasA: string[] = ['idA','nombreA', 'modelo','editar','eliminar'];
+  columnasM: string[] = ['idM','nombreM','EstadoM','Acciones','editar','eliminar'];
+
 
   @ViewChild(MatPaginator, { static: true }) paginatorM!: MatPaginator;
-  @ViewChild(MatPaginator, { static: true }) paginatorA!: MatPaginator;
+
 
   datosM: Modelo[] = [];
   dataSourceM:any;
+  titulo="";
+  editing=false;
+  creating=false;
+
+  modelo:Modelo=new Modelo();
+  accion:Acciones=new Acciones();
+
+  @ViewChild('dialogRef')
+  dialogRef!: TemplateRef<any>;
+
+  @ViewChild('dialogRefAc')
+  dialogRefAc!: TemplateRef<any>
 
 
   datosA: Acciones[] = [];
   dataSourceA:any;
 
   listaModelos:Array<Modelo>=[];
-  listaAcciones:Array<Acciones>=[];
-    constructor(private modeloservice:ModeloService,private accionesservice:AccionesService) { }
+  listaAcciones=[];
+    constructor(private modeloservice:ModeloService,
+                private accionesservice:AccionesService,
+                public dialog: MatDialog,
+                private router:Router) { }
 
   ngOnInit(): void {
     this.modeloservice.getModelos().subscribe((x:any) =>{
@@ -42,14 +59,6 @@ export class NuevoModeloGpsComponent implements OnInit {
       }
     })
 
-    this.accionesservice.getAcciones().subscribe((y:any) =>{
-      this.listaAcciones=y
-      for (let b of this.listaAcciones){
-        this.datosA.push(b);
-        this.dataSourceA = new MatTableDataSource<any>(this.datosA);
-        this.dataSourceA.paginatorA = this.paginatorA;
-      }
-    })
   }
 
   //Filtro modelos
@@ -59,17 +68,62 @@ export class NuevoModeloGpsComponent implements OnInit {
     this.dataSourceM.filter = filterValue;
   }
 
-}
-export class ArticulosAc {
-  constructor(public acciones:Acciones) {
-    console.log(acciones)
+  abrirdialogoC(){
+      this.editing=false;
+      this.creating=true;
+      this.titulo="Crear Modelo"
+      this.dialog.open(this.dialogRef);
   }
-}
-export class ArticulosM {
-  constructor(public modelo:Modelo) {
-    console.log(modelo)
+
+  abrirdialogoEdi(id:String){
+    this.editing=true;
+    this.creating=false;
+      this.modeloservice.getModelos().subscribe((data:any)=>{
+        this.modelo=data.find((m)=>{return m.id_modelo==id})
+        this.titulo="Editar Modelo"
+        this.dialog.open(this.dialogRef);
+      })
   }
+
+  crearModelo(){
+      this.modelo.estado="Activo"
+    this.modeloservice.crearModelo(this.modelo).subscribe((data:any)=>{
+      window.location.reload();
+    })
+  }
+
+  eliminarModelo(id:String){
+    this.modeloservice.deleteModelo(id).subscribe((data:any)=>{
+      window.location.reload();
+    })
+  }
+
+  editarModelo(){
+    this.modeloservice.updateModelo(this.modelo,this.modelo.id_modelo).subscribe((data:any)=>{
+      window.location.reload();
+    })
+  }
+
+  //Acciones
+  abrirdialogoAcciones(id:String){
+    console.log(id)
+      this.accionesservice.getAcciones().subscribe((data:any)=>{
+        this.listaAcciones=data.filter(value=>value.modelo.id_modelo==id)
+        this.modelo=data.find(m=>{return m.modelo.id_modelo==id})
+        console.log(this.listaAcciones)
+        this.dialog.open(this.dialogRefAc);
+      })
+  }
+
+  agregarAcciones(){
+      this.accion.modelo=this.modelo.id_modelo;
+      this.accionesservice.crearAccion(this.accion).subscribe((data:any)=>{
+
+      })
+  }
+
 }
+
 
 
 

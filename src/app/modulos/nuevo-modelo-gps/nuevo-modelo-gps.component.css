@@ -4,9 +4,14 @@ table {
   width: 100%;
 }
 .center{
-  width: 80%;
+  width: 90%;
   text-align: center;
   margin: 3% auto;
+}
+
+.btncrear{
+  margin-left: 5%;
+  background: #00d084;
 }
 
 .center1{
