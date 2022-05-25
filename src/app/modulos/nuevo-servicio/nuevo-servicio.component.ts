@@ -21,6 +21,7 @@ import {MatSelectionListChange} from "@angular/material/list";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DatePipe} from "@angular/common";
+import {MatSnackBar} from "@angular/material/snack-bar";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -48,7 +49,7 @@ export class NuevoServicioComponent implements OnInit {
   gps: Gps = new Gps();
 
 
-  vehiculos: Vehiculo[] = [];
+  listavehiculos = [];
   accionespdf:Acciones[] = [];
 
   //Datos Get
@@ -89,6 +90,7 @@ export class NuevoServicioComponent implements OnInit {
   date = new FormControl(new Date());
 
   constructor(private _formBuilder: FormBuilder,
+              private snackBar: MatSnackBar,
               private servicioModelo: ModeloService,
               private servicioAcciones: AccionesService,
               private servicioService: ServicioService,
@@ -101,11 +103,6 @@ export class NuevoServicioComponent implements OnInit {
 
   firstFormGroup = new FormGroup({
     cedcli: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
-    cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
-    nombre: new FormControl('', Validators.required),
-    direccion: new FormControl('', Validators.required),
-    telefono: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
-    correo: new FormControl('',[Validators.required, Validators.email]),
   });
 
   hide = true;
@@ -119,6 +116,11 @@ export class NuevoServicioComponent implements OnInit {
     })
   }
 
+  cambioCliente(){
+    this.infocli = false;
+    this.buscarclienteB = true;
+  }
+
   profileForm = new FormGroup({
     fechaI: new FormControl('', Validators.required),
     fechaF: new FormControl('', Validators.required),
@@ -128,14 +130,16 @@ export class NuevoServicioComponent implements OnInit {
   buscarCliente() {
     this.servicioCliente.getClient().subscribe((value: any) => {
       if (value.filter((data: any) => data.cedula == this.buscarcliente).length == 0) {
-        this.infocli = true;
-        this.buscarclienteB = false;
+        this.snackBar.open("El cliente no existe", "",{
+          duration: 1 * 1000,
+        });
       } else {
         this.infocli = true;
         this.buscarclienteB = false;
         this.cliente = value.find((m: any) => {
           return m.cedula == this.buscarcliente
         });
+        this.vehiculosporCliente(this.cliente.cedula);
       }
       console.log(this.cliente)
     })
@@ -169,11 +173,10 @@ export class NuevoServicioComponent implements OnInit {
   }
 
 
-  vehiculosporCliente(){
+  vehiculosporCliente(cedula:String){
     console.log(this.cliente)
     this.servicioVehiculo.getVehiculos().subscribe((value:any)=>{
-      this.vehiculos=value.filter((data:any)=>data.cliente.cedula==this.cliente.cedula)
-      console.log(this.vehiculos)
+      this.listavehiculos=value.filter((data:any)=>data.cliente.cedula==cedula)
     })
   }
 

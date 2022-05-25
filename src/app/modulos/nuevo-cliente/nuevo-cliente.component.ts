@@ -38,11 +38,8 @@ export class NuevoClienteComponent implements OnInit {
   });
 
 
-  constructor(private _formBuilder: FormBuilder,route:ActivatedRoute,private clienteService:ClienteService, private router:Router) {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.id=route.snapshot.params['id'];
+  constructor(private _formBuilder: FormBuilder,private route:ActivatedRoute,private clienteService:ClienteService, private router:Router) {
+    this.id=this.route.snapshot.params['id'];
     if (this.id){
       this.editing=true;
       this.clienteService.getClient().subscribe(data=>{
@@ -50,8 +47,6 @@ export class NuevoClienteComponent implements OnInit {
           console.log(this.cliente)
         }
       );
-    }else {
-      console.log("Crear")
     }
   }
 
@@ -62,6 +57,10 @@ export class NuevoClienteComponent implements OnInit {
   Guardar(){
     if (this.id){
       this.clienteService.editarClient(this.cliente,this.id).subscribe(value=>{
+        this.router.navigate(['/verclientes'])
+      })
+    }else {
+      this.clienteService.crearClient(this.cliente).subscribe(value=>{
         this.router.navigate(['/verclientes'])
       })
     }

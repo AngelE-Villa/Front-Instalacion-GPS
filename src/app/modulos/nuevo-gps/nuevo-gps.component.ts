@@ -4,6 +4,9 @@ import {ModeloService} from "../../servicios/ModeloService";
 import {Modelo} from "../../modelos/Modelo";
 import {GpsService} from "../../servicios/GpsService";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
+import {PlanService} from "../../servicios/PlanService";
+import {Plan} from "../../modelos/Plan";
 
 @Component({
   selector: 'app-nuevo-gps',
@@ -12,13 +15,17 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class NuevoGpsComponent implements OnInit {
   gps:Gps=new Gps();
+  plan:Plan=new Plan();
   modelo:Modelo=new Modelo();
 
   listaModelo:Array<any>=[];
   listaGps:Array<any>=[];
 
 
-  constructor(private servicioModelo:ModeloService,private servicioGps:GpsService) { }
+  constructor(private servicioModelo:ModeloService,
+              private servicioGps:GpsService,
+              private route:ActivatedRoute,
+              private servicioPlan:PlanService) { }
 
 //estado, imei_gps, num_gps, num_sim, id_modelo
   firstFormGroup = new FormGroup({
@@ -30,9 +37,10 @@ export class NuevoGpsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.servicioModelo.getModelos().subscribe((data:any)=>{
-      this.listaModelo=data;
+      this.servicioModelo.getModelos().subscribe((data:any)=>{
+        this.listaModelo=data.filter(value=>value.id_modelo==this.plan.modelo.id_modelo);
     })
+
 
     this.servicioGps.getGps().subscribe((data:any)=>{
       this.listaGps=data;

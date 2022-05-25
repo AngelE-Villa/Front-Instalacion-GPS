@@ -1,71 +1,16 @@
 <section id="nuestros-servicios">
   <div class="container">
-    <h1>Planes </h1>
-    <div class="grid-container">
-      <div class="grid-item ">
+    <h1>Seleccione el Plan a contratar</h1>
+    <div class="grid-container" >
+      <div class="grid-item" *ngFor="let plan of listaPlanes">
+        <img   class="img"   src="{{plan.imagen}}" alt="">
+        <br>
+        <ul><li>{{plan.nombre_p}}</li>
+          <li>{{plan.costo_p}}</li></ul>
 
-        <img  class="imgs"   src="https://www.coordenadaec.com/wp-content/uploads/2022/04/PLAN-A-2.png" alt="" srcset="">
-        <ul><li>Equipo GPS.</li>
-          <li>Equipo Profesional.</li>
-          <li>Ubicación en Tiempo Real. </li>
-          <li>Notificaciones de cambio de aceite.</li>
-          <li>Notificaciones de consumo de gasolina.</li>
-          <li>Llamadas de Alerta.</li>
-          <li>Bloqueo/Desbloqueo de motor.</li>
-          <li>Alertas de Freno Brusco.</li>
-          <li>Alertas de Exceso de Velocidad.</li>
-          <li>Geo cercas o Perímetros.</li>
-          <li>Historial de Recorrido.<br>.</li></ul>
-        <button mat-raised-button color="primary">CONTRATAR SERVICIO</button>
+        <button class="btn btn-primary" [routerLink]="['/nuevoservicio',plan.id_plan]">CONTRATAR SERVICIO</button>
       </div>
 
-      <div class="grid-item ">
-
-        <img class="imgs"  src="https://www.coordenadaec.com/wp-content/uploads/2022/04/PLAN-B-2.png" alt="">
-
-        <ul><li>Equipo GPS.</li>
-          <li>Equipo Profesional.</li>
-          <li>Ubicación en Tiempo Real.</li>
-          <li>Notificaciones de cambio de aceite.</li>
-          <li>Notificaciones de consumo de gasolina.</li>
-          <li>Llamadas de Alerta.</li>
-          <li>Bloqueo/Desbloqueo de motor.</li>
-          <li>Alertas de Freno Brusco.</li>
-          <li>Alertas de Exceso de Velocidad.</li>
-          <li>Geo cercas o Perímetros.</li>
-          <li>Historial de Recorrido.</li>
-          <li>Apertura de Puertas.</li>
-          <li>Botón de Pánico.</li>
-          <li>Micrófono Incorporado.</li></ul>
-
-        <button mat-raised-button color="primary">CONTRATAR SERVICIO</button>
-      </div>
-
-      <div class="grid-item ">
-        <img  class="imgs"   src="https://www.coordenadaec.com/wp-content/uploads/2022/05/PLAN-C-100.jpg" alt="">
-
-        <ul><li>Equipo GPS.</li>
-          <li>Equipo Profesional.</li>
-          <li>Ubicación en Tiempo Real.</li>
-          <li>Alertas de Exceso de Velocidad.</li>
-          <li>Geo cercas o Perímetros.</li>
-          <li>Historial de Recorrido.</li>
-          <li>Notificación de Batería Baja.</li></ul>
-
-        <button mat-raised-button color="primary">CONTRATAR SERVICIO</button>
-      </div>
-
-      <div class="grid-item ">
-        <img   class="imgs"   src="https://www.coordenadaec.com/wp-content/uploads/2022/04/PLAN-D-1.png" alt="">
-        <ul><li>Equipo GPS.</li>
-          <li>Equipo Profesional.</li>
-          <li>Ubicación en Tiempo Real.</li>
-          <li>Geo cercas o Perímetros.</li>
-          <li>Tiempo de Uso 3 Días.</li>
-          <li>Notificación de Batería Baja.</li></ul>
-
-        <button mat-raised-button color="primary">CONTRATAR SERVICIO</button>
-      </div>
 
     </div>
   </div>

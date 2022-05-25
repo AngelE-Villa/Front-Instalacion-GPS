@@ -6,79 +6,55 @@
 <div class="center">
   <div class="example-card">
     <mat-horizontal-stepper [linear]="isLinear" #stepper>
-      <mat-step [stepControl]="firstFormGroup">
-        <form class="todostepper" [formGroup]="firstFormGroup">
+      <mat-step >
           <mat-card class="example-card ">
             <mat-card-title class="mediat">Datos Cliente</mat-card-title>
             <ng-template matStepLabel ><div class="mediast">Datos Cliente</div></ng-template>
-            <div *ngIf="buscarclienteB">
-              <h4>Ingrese la cecula del cliente</h4>
-              <mat-form-field>
-                <input matInput formControlName="cedcli" placeholder="Cedula Cliente" [(ngModel)]="buscarcliente"/>
-              </mat-form-field>
-              <button mat-raised-button color="primary" (click)="buscarCliente()" >
-                <mat-icon class="sep">search</mat-icon>
-                <span class="medath">Buscar</span>
-              </button>
-
+            <form class="todostepper" [formGroup]="firstFormGroup">
+              <div *ngIf="buscarclienteB">
+                <h4>Ingrese la cecula del cliente</h4>
+                <mat-form-field>
+                  <input matInput formControlName="cedcli" placeholder="Cedula Cliente" [(ngModel)]="buscarcliente" Enabl/>
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="buscarCliente()" >
+                  <mat-icon class="sep">search</mat-icon>
+                  <span class="medath">Buscar</span>
+                </button>
+              </div>
+            </form>
+            <div *ngIf="infocli">
+                <span>Cedula: {{cliente.cedula}}</span>
+                <br>
+                <span>Nombres: {{cliente.cedula}}</span>
+                <br>
+                <span>Telefono: {{cliente.telefono}}</span>
+                <br>
+                <button class="btn btn-success" (click)="cambioCliente()">Cambiar Cliente</button>
             </div>
-            <mat-form-field *ngIf="infocli">
-              <input matInput formControlName="cedula" placeholder="Cedula" [(ngModel)]="cliente.cedula"/>
-            </mat-form-field>
-            <br>
-            <mat-form-field *ngIf="infocli">
-              <input matInput formControlName="nombre" placeholder="Nombre" [(ngModel)]="cliente.nombre"/>
-            </mat-form-field>
-            <br>
-            <mat-form-field *ngIf="infocli">
-              <input matInput formControlName="direccion" placeholder="Dirección" [(ngModel)]="cliente.direccion"/>
-            </mat-form-field>
-            <br>
-            <mat-form-field *ngIf="infocli">
-              <input matInput formControlName="telefono" placeholder="Telefono" [(ngModel)]="cliente.telefono"/>
-            </mat-form-field>
-            <br>
-            <mat-form-field *ngIf="infocli">
-              <input matInput formControlName="correo" placeholder="Correo" [(ngModel)]="cliente.correo" />
-            </mat-form-field>
           </mat-card>
           <br>
           <div>
-            <button mat-raised-button color="primary"  matStepperNext (click)="vehiculosporCliente() " *ngIf="infocli">Siguiente</button>
+            <button mat-raised-button color="primary"  matStepperNext *ngIf="infocli">Siguiente</button>
           </div>
-        </form>
+
       </mat-step>
       <mat-step [stepControl]="firstFormGroup">
         <form class="todostepper">
           <ng-template matStepLabel><div class="mediast">Datos Vehiculo</div></ng-template>
           <mat-card-title class="mediat">Datos Vehiculo</mat-card-title>
-
-          <mat-card-content *ngIf=seleccionvehiculo >
-            <mat-selection-list #vehiculol [multiple]="false" (selectionChange)="selectVehiculo($event)">
-              <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-                <mat-list-option *ngFor="let vehiculol of vehiculos" [value]="vehiculol" style="height: max-content">
-                  <mat-card style="background: aquamarine">
-                    Placa : {{vehiculol.placa}}
-                    <br>
-                    Año: {{vehiculol.anio}}
-                    <br>
-                    Vehiculo: {{vehiculol.vehiculo}}
-                    <br>
-                    Kilometraje: {{vehiculol.kilometraje}}
-                    <br>
-                    Cliente: {{vehiculol.cliente.nombre}}
-                    <br>
-                    Estado:{{vehiculol.estado}}
-                  </mat-card>
-                  <br>
-                </mat-list-option>
-              </cdk-virtual-scroll-viewport>
-            </mat-selection-list>
-            <br>
-            <button mat-raised-button color="primary"  (click)="infovehiculo=true; seleccionvehiculo=false">Nuevo Vehiculo</button>
-
-          </mat-card-content>
-
+          <table class="center">
+            <thead>
+            <th>Placa</th>
+            <th>Vehiculo</th>
+            <th>Seleccionar</th>
+            </thead>
+            <tbody *ngFor="let vehiculo of listavehiculos">
+            <td>{{vehiculo.placa}}</td>
+            <td>{{vehiculo.vehiculo}}</td>
+            <td><button class="btn btn-primary">Seleccionar</button></td>
+            </tbody>
+          </table>
+          <br>
           <mat-card class="example-card" *ngIf="infovehiculo">
             <mat-form-field >
               <input matInput placeholder="Placa"  name="placa"  [(ngModel)]="vehiculo.placa"  required/>

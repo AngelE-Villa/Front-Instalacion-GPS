@@ -56,10 +56,10 @@
 </ng-template>
 
 <ng-template #dialogRefAc >
-  <h2> Acciones de modelo {{modelo.nombre}} </h2>
+  <h2> Acciones de modelo {{accion.modelo.nombre}} </h2>
   <br>
   <mat-form-field>
-    <input matInput placeholder="Nombre" name="cliente" [(ngModel)]="accion.nombre" required/>
+    <input matInput placeholder="Nombre" name="cliente" [(ngModel)]="accionSet.nombre" required/>
   </mat-form-field>
   <button (click)="agregarAcciones()"><mat-icon>queue</mat-icon></button>
   <br>

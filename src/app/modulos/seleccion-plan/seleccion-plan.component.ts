@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {PlanService} from "../../servicios/PlanService";
+import {Plan} from "../../modelos/Plan";
 
 @Component({
   selector: 'app-seleccion-plan',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SeleccionPlanComponent implements OnInit {
 
-  constructor() { }
+  constructor(private servicioPlan:PlanService) { }
+  listaPlanes:Array<Plan>=[];
 
   ngOnInit(): void {
+    this.servicioPlan.getPlanes().subscribe((data:any)=>{
+      this.listaPlanes=data;
+    })
   }
 
 }

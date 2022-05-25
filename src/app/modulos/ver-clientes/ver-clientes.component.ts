@@ -12,7 +12,7 @@ import {MatSort} from "@angular/material/sort";
 })
 export class VerClientesComponent implements OnInit {
 
-  columnas: string[] = ['id', 'cedula', 'nombre', 'direccion','correo','editar','eliminar'];
+  columnas: string[] = ['id', 'cedula', 'nombre', 'direccion','correo','editar','eliminar','vehiculo'];
 
   // @ts-ignore
   dataSource: MatTableDataSource<Cliente>;

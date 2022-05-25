@@ -28,9 +28,12 @@ export class NuevoModeloGpsComponent implements OnInit {
   titulo="";
   editing=false;
   creating=false;
+  idmodelo:any;
+
 
   modelo:Modelo=new Modelo();
   accion:Acciones=new Acciones();
+  accionSet:Acciones=new Acciones();
 
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
@@ -106,19 +109,22 @@ export class NuevoModeloGpsComponent implements OnInit {
 
   //Acciones
   abrirdialogoAcciones(id:String){
-    console.log(id)
+    this.idmodelo=id;
       this.accionesservice.getAcciones().subscribe((data:any)=>{
         this.listaAcciones=data.filter(value=>value.modelo.id_modelo==id)
-        this.modelo=data.find(m=>{return m.modelo.id_modelo==id})
+        this.accion=data.find(m=>{return m.modelo.id_modelo==id})
         console.log(this.listaAcciones)
         this.dialog.open(this.dialogRefAc);
       })
   }
 
   agregarAcciones(){
-      this.accion.modelo=this.modelo.id_modelo;
-      this.accionesservice.crearAccion(this.accion).subscribe((data:any)=>{
 
+      this.accionSet.modelo=this.idmodelo;
+    console.log(this.accionSet)
+
+     this.accionesservice.crearAccion(this.accionSet).subscribe((data:any)=>{
+        window.location.reload();
       })
   }
 

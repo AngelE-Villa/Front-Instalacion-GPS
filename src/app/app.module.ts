@@ -32,6 +32,7 @@ const routes: Routes = [
   {path:'verservicio/cliente=/:id', component:VerServicioClienteComponent},
   {path:'verclientes', component:VerClientesComponent},
   {path:'vervehiculos', component:VerVehiculosComponent},
+  {path:'vervehiculos/:id', component:VerVehiculosComponent},
   {path:'vergps', component:VerGpsComponent},
   {path:'nuevomodelogps', component:NuevoModeloGpsComponent},
   {path:'nuevoservicio/:id', component:NuevoServicioComponent},
