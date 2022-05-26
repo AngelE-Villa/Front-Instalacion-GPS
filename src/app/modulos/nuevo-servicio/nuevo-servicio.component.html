@@ -108,7 +108,7 @@
           <br>
           <div>
             <button mat-raised-button matStepperPrevious color="warn">Atras</button>
-            <button mat-raised-button matStepperNext color="accent" (click)="GuardarVehiculo()">Siguente</button>
+            <button mat-raised-button matStepperNext color="accent">Siguente</button>
           </div>
         </form>
       </mat-step>
@@ -118,40 +118,34 @@
           <ng-template matStepLabel><div class="mediast">Confirmación</div></ng-template>
           <mat-card-content>
             <strong>Información general del servicio:</strong>
-            <div class="cabecera">
-              <div class="izquierda">
                 <h4>CLIENTE:</h4>
                 <p>Cedula: {{cliente.cedula}}</p>
                 <p>Nombre: {{cliente.nombre}}</p>
-                <p>Nombre: {{cliente.direccion}}</p>
-                <p>Telefono: {{cliente.telefono}}</p>
-                <h4>VEHICULO:</h4>
-                <p>Nombre: {{vehiculo.vehiculo}}</p>
-                <p>Año: {{vehiculo.anio}}</p>
-                <p>Kilometraje: {{vehiculo.kilometraje}}</p>
-                <p>Atendido por: Angel Villa</p>
-              </div>
-              <div class="derecha">
-                <h4>GPS:</h4>
-                <p>IMEI: {{gpsGet.imei_gps}}</p>
-                <p>Numero: {{gpsGet.num_gps}}</p>
-                <p>SIM: {{gpsGet.num_sim}}</p>
-                <p>Modelo: {{modeloGet.nombre}}</p>
+                <p>Nombre Contacto: {{cliente.contacto}}</p>
+                <h4>VEHICULOS - GPS:</h4>
+                <table class="center">
+                  <thead>
+                      <th>Placa</th>
+                      <th>Vehiculo</th>
+                      <th>ID</th>
+                      <th>Imei</th>
+                      <th>Modelo</th>
+                      <th>Observaciones</th>
+                      <th>Ubicación</th>
+                  </thead>
+                  <tbody *ngFor="let datos of listavehiculosAsignados">
+                      <td>{{datos.vehiculo.placa}}</td>
+                      <td>{{datos.vehiculo.vehiculo}}</td>
+                      <td>{{datos.gps.id_gps}}</td>
+                      <td>{{datos.gps.imei_gps}}</td>
+                      <td>{{datos.gps.modelo.nombre}}</td>
+                      <td>{{datos.observaciones}}</td>
+                      <td>{{datos.ubicacion_gps}}</td>
+                  </tbody>
+                </table>
                 <p>FECHAS DE CONTRATO:</p>
-                <p>Fecha Entrega: {{servicio.fecha_ds | date:'fullDate'}}</p>
-                <p>Fecha Inicio: {{servicio.fecha_inicion | date:'fullDate'}}</p>
-                <p>Fecha Fin: {{servicio.fecha_fin | date:'fullDate'}}</p>
+                <p>Fecha Entrega: {{servicio.fecha_ds | date:'dd/MM/yyyy'}}</p>
                 <p>Hora: {{servicio.hora}}</p>
-              </div>
-              <div></div>
-              <h4>SERVICIOS</h4>
-              <p *ngFor="let ac of listaAcciones ">{{ac.nombre}}</p>
-              <p>Observaciones:</p>
-              <p>{{servicio.observaciones}}</p>
-              <br>
-              <h4>Ubicación GPS:</h4>
-              <p>{{servicio.ubicacion_gps}}</p>
-            </div>
           </mat-card-content>
         </div>
         <mat-card-actions>
@@ -173,16 +167,24 @@
   </mat-form-field>
   <button (click)="buscarximei()"><mat-icon>search</mat-icon></button>
   <br>
-  <td>{{gps.id_gps}}</td>
-  <td>{{gps.imei_gps}}</td>
-  <td>{{gps.modelo.nombre}}</td>
-  <td>
+  <h4>GPS</h4>
+  <span>Imei: {{gps.imei_gps}}</span><br>
+  <span>Modelo: {{gps.modelo.nombre}}</span>
+  <h4>Acciones</h4>
     <div *ngFor="let ac of listaAcciones">
       <span>{{ac.nombre}}</span>
     </div>
-  </td>
-  <td><button class="btn btn-primary" (click)="Agregarlista(gps.id_gps)"><mat-icon>queue</mat-icon></button></td>
 
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="Observaciones" name="observacion" [(ngModel)]="ubica" required/>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="Ubicacion" name="ubicacion" [(ngModel)]="obser" required/>
+  </mat-form-field>
+  <br>
   <button mat-button mat-dialog-close>Cerrar</button>
+  <button class="btn btn-primary" (click)="Agregarlista(gps.id_gps)"><mat-icon>queue</mat-icon></button>
 </ng-template>
 

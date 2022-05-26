@@ -7,6 +7,4 @@ export class Servicio{
   fecha_inicion: any;
   hora: any;
   id_documentoservicio: any;
-  observaciones: any;
-  ubicacion_gps:any
 }

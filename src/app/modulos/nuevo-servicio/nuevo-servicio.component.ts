@@ -31,6 +31,10 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./nuevo-servicio.component.css']
 })
 export class NuevoServicioComponent implements OnInit {
+
+  //ubis obs
+  ubica:any;
+  obser:any;
 //Boolean
   infocli = false;
   buscarclienteB = true;
@@ -113,10 +117,15 @@ export class NuevoServicioComponent implements OnInit {
 
   hide = true;
   accion: Boolean = true;
+  today: Date = new Date();
+  pipe = new DatePipe('en-US');
+  dateday = null;
 
   ngOnInit(): void {
+    this.dateday = this.pipe.transform(Date.now(), 'dd/MM/yyyy');
     let date: Date = new Date();
-    this.servicio.fecha_ds=date;
+    this.servicio.fecha_ds=this.dateday;
+    this.servicio.hora=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     this.servicioModelo.getModelos().subscribe((data: any) => {
       this.listaModelo = data;
     })
@@ -186,19 +195,24 @@ export class NuevoServicioComponent implements OnInit {
 
   //1.0
   Agregarlista(id_gps:any){
+      console.log(this.servicio)
       console.log(this.vehiculo)
+      this.dialog.closeAll();
       this.servicioGps.getgps(id_gps).subscribe((value:any)=>{
         this.gps=value;
 
         var narray=this.listavehiculos.filter((item) => item.id_vehiculo !== this.vehiculo.id_vehiculo);
         this.listavehiculos=narray
-        this.listavehiculosAsignados.push(new Descripcion("Activo",
+        this.listavehiculosAsignados.push(new Descripcion(this.servicio,"Activo",
                                                           this.gps,
-                                                          this.vehiculo));
+                                                          this.vehiculo,
+                                                          this.obser,
+                                                          this.ubica));
         console.log(this.listavehiculosAsignados)
       });
   }
 
+  //1.0
   Quitar(id_vehiculo:any){
     this.servicioVehiculo.getVehiculo(id_vehiculo).subscribe((data:any)=>{
       this.vehiculo=data;
@@ -215,74 +229,15 @@ export class NuevoServicioComponent implements OnInit {
     })
   }
 
-  GuardarVehiculo(){
-    this.vehiculo.cliente=this.cliente;
-    console.log(this.vehiculo)
-  }
-
-
 
   guardaServicio(){
-
-    this.cliente.estado="Activo";
-    this.vehiculo.estado="Activo";
     this.servicio.estado="Activo";
-    //Cliente
-    this.servicioCliente.getClient().subscribe((value: any) => {
-      if (value.filter((data: any) => data.cedula == this.cliente.cedula).length == 0) {
-        this.servicioCliente.crearClient(this.cliente).subscribe((data:any)=>{
-          this.clienteGet=data;
-          console.log(this.clienteGet)
-          this.CrearVehiculo(this.clienteGet.id_persona);
-        })
-        console.log("Crea Cliente")
-      } else {
-        console.log("Cliente existe")
-        this.clienteGet = value.find((m: any) => {
-          return m.cedula == this.cliente.cedula
-        });
-        this.CrearVehiculo(this.clienteGet.id_persona);
-        console.log(this.clienteGet)
-      }
-
-    })
-
-  }
-
-  CrearVehiculo(id:any){
-    //Vehiculo
-    this.servicioVehiculo.getVehiculos().subscribe((value:any)=>{
-      if (value.filter((data:any)=>data.placa==this.vehiculo.placa).length==0){
-        this.vehiculo.cliente.id_persona=id;
-        this.vehiculo.estado="Activo"
-        console.log(this.vehiculo)
-        this.servicioVehiculo.crearVehiculos(this.vehiculo).subscribe((data:any)=>{
-          this.vehiculoGet=data;
-          console.log(this.vehiculoGet)
-          console.log(this.vehiculoGet.id_vehiculo)
-          this.CrearServicio(this.vehiculoGet.id_vehiculo);
-        })
-        console.log("Crea Vehiculo");
-      }else{
-        this.vehiculoGet=value.find((m:any)=>{return m.placa==this.vehiculo.placa});
-        this.CrearServicio(this.vehiculoGet.id_vehiculo);
-      }
-
-    })
-
+    console.log(this.servicio)
+      //this.servicioService.crearService(this.servicio)
   }
 
 
-  CrearServicio(id:any){
 
-
-  }
-
-  selectVehiculo(vehiculoselect: MatSelectionListChange){
-    this.vehiculo=vehiculoselect.option.value;
-    this.infovehiculo=true;
-    this.seleccionvehiculo=false;
-  }
 
   newArray =  [];
   recorreArray(){
@@ -361,7 +316,7 @@ export class NuevoServicioComponent implements OnInit {
           table: {
             widths: ['100%'],
             body: [
-              ['OBSERVACIONES: '+this.servicio.observaciones],
+              ['OBSERVACIONES: '],
             ]
           }
         },
@@ -374,7 +329,7 @@ export class NuevoServicioComponent implements OnInit {
           table: {
             widths: ['50%', '50%'],
             body: [
-              [this.servicio.ubicacion_gps],
+              [''],
 
             ]
           }
