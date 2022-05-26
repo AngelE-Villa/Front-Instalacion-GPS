@@ -7,6 +7,8 @@ import {ServicioService} from "../../servicios/ServicioService";
 import {ClienteNServicio} from "../../modelos/ClienteNServicio";
 import {Cliente} from "../../modelos/Cliente";
 import {ClienteService} from "../../servicios/ClienteService";
+import {DescripcionService} from "../../servicios/DescripcionService";
+import {Descripcion} from "../../modelos/Descripcion";
 
 
 @Component({
@@ -26,12 +28,14 @@ export class VerServiciosComponent implements OnInit {
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
 
-  datosServicio: Servicio[] = [];
   datosCliente:Cliente[] = [];
+  datosDetalle:Descripcion[] = [];
 
   listaClientes:Cliente[] = [];
 
-  constructor(private serviceService:ServicioService, private clienteService:ClienteService) {
+  constructor(private serviceService:ServicioService,
+              private clienteService:ClienteService,
+              private detalleService:DescripcionService) {
 
   }
 
@@ -51,22 +55,24 @@ export class VerServiciosComponent implements OnInit {
   listaServicios(){
     this.clienteService.getClient().subscribe(valuecliente => {
       this.datosCliente=valuecliente
-      this.serviceService.getServices().subscribe(valueservicio => {
-        this.datosServicio=valueservicio
-
-        for (let dc of this.datosCliente){
-          for (let ds of this.datosServicio){
-            /*if (dc.id_persona==ds.vehiculo.cliente.id_persona){
-              this.listaClientes.push(dc);
+      console.log(this.datosCliente)
+        this.detalleService.getDescrip().subscribe(valuedetalle => {
+          this.datosDetalle=valuedetalle;
+          console.log(this.datosDetalle)
+          for (let dc of this.datosCliente){
+            for (let dd of this.datosDetalle){
+              if (dc.id_persona==dd.vehiculo.cliente.id_persona){
+                console.log(dd)
+                this.listaClientes.push(dc);
+              }
             }
-            */
           }
-        }
+
+        })
 
         this.dataSource = new MatTableDataSource(this.listaClientes);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      })
     })
 
   }

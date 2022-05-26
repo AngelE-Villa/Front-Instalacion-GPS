@@ -23,6 +23,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DatePipe} from "@angular/common";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
+import {Router} from "@angular/router";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -50,6 +51,7 @@ export class NuevoServicioComponent implements OnInit {
   vehiculo: Vehiculo = new Vehiculo();
   servicio: Servicio = new Servicio();
   modelo: Modelo = new Modelo();
+  detalle:Descripcion;
   gps: Gps = new Gps();
 
 
@@ -107,7 +109,8 @@ export class NuevoServicioComponent implements OnInit {
               private servicioVehiculo: VehiculoService,
               private servicioDescripcion: DescripcionService,
               private servicioGps: GpsService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private router:Router) {
 
   }
 
@@ -117,14 +120,11 @@ export class NuevoServicioComponent implements OnInit {
 
   hide = true;
   accion: Boolean = true;
-  today: Date = new Date();
-  pipe = new DatePipe('en-US');
-  dateday = null;
 
   ngOnInit(): void {
-    this.dateday = this.pipe.transform(Date.now(), 'dd/MM/yyyy');
+
     let date: Date = new Date();
-    this.servicio.fecha_ds=this.dateday;
+    this.servicio.fecha_ds=date;
     this.servicio.hora=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     this.servicioModelo.getModelos().subscribe((data: any) => {
       this.listaModelo = data;
@@ -233,7 +233,22 @@ export class NuevoServicioComponent implements OnInit {
   guardaServicio(){
     this.servicio.estado="Activo";
     console.log(this.servicio)
-      //this.servicioService.crearService(this.servicio)
+      this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
+        this.servicioGet=data;
+        for (let des of this.listavehiculosAsignados){
+          this.detalle=new Descripcion(this.servicioGet,des.estado,des.gps,des.vehiculo,des.observacion,des.ubicacion)
+          console.log(des.vehiculo)
+          console.log(this.detalle)
+          console.log(this.detalle.vehiculo)
+          this.servicioDescripcion.crearDescrip(this.detalle).subscribe((data:any)=>{
+            this.snackBar.open("SERVICIO CREADO", "",{
+              duration: 1 * 1000,
+            });
+            this.router.navigate(['/verservicios'])
+          })
+        }
+
+      })
   }
 
 
