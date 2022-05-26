@@ -17,6 +17,10 @@ export class GpsService{
     return this.httpClient.get<Gps[]>(this.base_url);
   }
 
+  getgps(id:String):Observable<any>{
+    return this.httpClient.get<any>(this.base_url+id);
+  }
+
   crearGps(gps:Gps){
     return this.httpClient.post(this.base_url+"create-gps/", gps);
   }

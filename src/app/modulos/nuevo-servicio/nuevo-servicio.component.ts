@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Vehiculo} from "../../modelos/Vehiculo";
 import {ModeloService} from "../../servicios/ModeloService";
@@ -22,6 +22,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DatePipe} from "@angular/common";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -45,11 +46,12 @@ export class NuevoServicioComponent implements OnInit {
   vehiculo: Vehiculo = new Vehiculo();
   servicio: Servicio = new Servicio();
   modelo: Modelo = new Modelo();
-  detalle: Descripcion = new Descripcion();
   gps: Gps = new Gps();
 
 
   listavehiculos = [];
+  listavehiculosAsignados = [];
+  listaDetalle:Array<Descripcion>=[];
   accionespdf:Acciones[] = [];
 
   //Datos Get
@@ -78,6 +80,9 @@ export class NuevoServicioComponent implements OnInit {
   // @ts-ignore
   dataSource: MatTableDataSource<Acciones>;
 
+  @ViewChild('dialogRef')
+  dialogRef!: TemplateRef<any>;
+
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
   // @ts-ignore
@@ -97,7 +102,8 @@ export class NuevoServicioComponent implements OnInit {
               private servicioCliente: ClienteService,
               private servicioVehiculo: VehiculoService,
               private servicioDescripcion: DescripcionService,
-              private servicioGps: GpsService) {
+              private servicioGps: GpsService,
+              public dialog: MatDialog) {
 
   }
 
@@ -116,6 +122,7 @@ export class NuevoServicioComponent implements OnInit {
     })
   }
 
+  //1.0 Cambio
   cambioCliente(){
     this.infocli = false;
     this.buscarclienteB = true;
@@ -127,6 +134,7 @@ export class NuevoServicioComponent implements OnInit {
     hora: new FormControl('', Validators.required),
   });
 
+  //1.0
   buscarCliente() {
     this.servicioCliente.getClient().subscribe((value: any) => {
       if (value.filter((data: any) => data.cedula == this.buscarcliente).length == 0) {
@@ -144,22 +152,22 @@ export class NuevoServicioComponent implements OnInit {
       console.log(this.cliente)
     })
   }
-
+  //1.0
   buscarximei() {
     this.listaAcciones.pop();
     this.servicioGps.getGps().subscribe((value: any) => {
       if (value.filter((data: any) => data.imei_gps == this.buscarimei).length == 0) {
         console.log("No imei")
       } else {
-        this.gpsGet = value.find((data: any) => {
+        this.listaAcciones.pop();
+        this.gps = value.find((data: any) => {
           return data.imei_gps == this.buscarimei
         })
-        this.modeloGet = this.gpsGet.modelo;
 
         this.servicioAcciones.getAcciones().subscribe(data => {
           this.listaAcciones.pop();
           for (let ac of data) {
-            if (ac.modelo.id_modelo == this.modeloGet.id_modelo) {
+            if (ac.modelo.id_modelo == this.gps.modelo.id_modelo) {
               this.listaAcciones.push(ac);
             }
           }
@@ -168,10 +176,37 @@ export class NuevoServicioComponent implements OnInit {
     })
   }
 
-  mostardatos() {
-    console.log(this.servicio)
+  //1.0
+  addImei(id_vehiculo:any){
+    this.servicioVehiculo.getVehiculo(id_vehiculo).subscribe((data:any)=>{
+      this.vehiculo=data;
+    })
+    this.dialog.open(this.dialogRef);
   }
 
+  //1.0
+  Agregarlista(id_gps:any){
+      console.log(this.vehiculo)
+      this.servicioGps.getgps(id_gps).subscribe((value:any)=>{
+        this.gps=value;
+
+        var narray=this.listavehiculos.filter((item) => item.id_vehiculo !== this.vehiculo.id_vehiculo);
+        this.listavehiculos=narray
+        this.listavehiculosAsignados.push(new Descripcion("Activo",
+                                                          this.gps,
+                                                          this.vehiculo));
+        console.log(this.listavehiculosAsignados)
+      });
+  }
+
+  Quitar(id_vehiculo:any){
+    this.servicioVehiculo.getVehiculo(id_vehiculo).subscribe((data:any)=>{
+      this.vehiculo=data;
+      var narray=this.listavehiculosAsignados.filter((item) => item.vehiculo.id_vehiculo !== id_vehiculo);
+      this.listavehiculosAsignados=narray
+      this.listavehiculos.push(this.vehiculo)
+    })
+  }
 
   vehiculosporCliente(cedula:String){
     console.log(this.cliente)
@@ -239,30 +274,9 @@ export class NuevoServicioComponent implements OnInit {
 
 
   CrearServicio(id:any){
-    this.servicio.vehiculo.id_vehiculo=id;
-    console.log(this.servicio);
 
-    this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
-      this.servicioGet=data;
-      console.log(this.servicioGet)
-      this.CrearDetalle(this.servicioGet.id_documentoservicio)
-    })
 
   }
-
-  CrearDetalle(id:any){
-    this.detalle.documentoservicio.id_documentoservicio=id;
-    this.gpsGet.estado="En uso"
-    this.detalle.gps.id_gps=this.gpsGet.id_gps;
-    console.log(this.detalle)
-    this.detalle.estado="Activo";
-    console.log("Servicio Creado")
-    this.servicioDescripcion.crearDescrip(this.detalle).subscribe(data=>{
-      console.log(data)
-      console.log("Creado Detalle")
-    })
-  }
-
 
   selectVehiculo(vehiculoselect: MatSelectionListChange){
     this.vehiculo=vehiculoselect.option.value;

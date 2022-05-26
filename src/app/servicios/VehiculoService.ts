@@ -16,6 +16,10 @@ export class VehiculoService{
     return this.httpClient.get<any>(this.base_url);
   }
 
+  getVehiculo(id:String):Observable<any>{
+    return this.httpClient.get<any>(this.base_url+id);
+  }
+
   editarVehiculos(vehiculo:Vehiculo, id:String){
     return this.httpClient.put(this.base_url+"update-vehiculo/"+id, vehiculo);
   }

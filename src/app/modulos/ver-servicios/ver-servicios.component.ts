@@ -56,9 +56,10 @@ export class VerServiciosComponent implements OnInit {
 
         for (let dc of this.datosCliente){
           for (let ds of this.datosServicio){
-            if (dc.id_persona==ds.vehiculo.cliente.id_persona){
+            /*if (dc.id_persona==ds.vehiculo.cliente.id_persona){
               this.listaClientes.push(dc);
             }
+            */
           }
         }
 

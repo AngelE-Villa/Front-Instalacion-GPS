@@ -41,7 +41,7 @@ export class VerServicioClienteComponent implements OnInit {
   cliente:Cliente=new Cliente();
   servicio:Servicio=new Servicio();
   servicioSet:Servicio=new Servicio();
-  detalle:Descripcion=new Descripcion();
+ // detalle:Descripcion=new Descripcion();
 
   constructor(private serviceService:ServicioService,
               private route:ActivatedRoute,
@@ -64,7 +64,7 @@ export class VerServicioClienteComponent implements OnInit {
   }
 
   listaServicios(){
-    this.id=this.route.snapshot.params['id'];
+    /*this.id=this.route.snapshot.params['id'];
     if (this.id){
       this.serviceService.getServices().subscribe((data:any)=>{
           this.datos=data.filter((m)=> m.vehiculo.cliente.id_persona==this.id);
@@ -77,7 +77,7 @@ export class VerServicioClienteComponent implements OnInit {
       );
     }else {
       console.log("Crear")
-    }
+    }*/
   }
 
   openTempDialog(id:String) {
@@ -85,14 +85,14 @@ export class VerServicioClienteComponent implements OnInit {
       this.infoservicio=value.filter((m)=> m.id_documentoservicio==id);
     })
     this.detalleService.getDescrip().subscribe((value1:any)=>{
-      console.log(value1)
+      /*console.log(value1)
       this.infodetalle=value1.filter((m)=> m.documentoservicio.id_documentoservicio==id);
       this.detalle=value1.find((ma)=>{return ma.documentoservicio.id_documentoservicio==id})
       console.log(this.detalle.gps.modelo.id_modelo)
       this.acciones.getAcciones().subscribe((value2:any)=>{
         this.infoacciones=value2.filter((m1)=> m1.modelo.id_modelo==this.detalle.gps.modelo.id_modelo);
         console.log(this.infoacciones)
-      })
+      })*/
     })
 
     this.dialog.open(this.dialogRef);

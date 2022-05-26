@@ -29,8 +29,6 @@ export class EditarServicioComponent implements OnInit {
   listaacciones=[];
 
 
-  detalle:Descripcion=new Descripcion();
-  detalleSet:Descripcion=new Descripcion();
   id:any;
 
   cantidad:any;
@@ -44,10 +42,10 @@ export class EditarServicioComponent implements OnInit {
               private servicioAcciones:AccionesService) { }
 
   ngOnInit(): void {
-    this.listaServicio();
+    //this.listaServicio();
   }
 
-  listaServicio(){
+  /*listaServicio(){
     this.id=this.route.snapshot.params['id'];
     if (this.id){
       this.serviceService.getServices().subscribe(data=>{
@@ -59,10 +57,10 @@ export class EditarServicioComponent implements OnInit {
       })
 
     }
-  }
+  }*/
 
   editarGps(){
-    this.servicioSet=this.servicio;
+   /* this.servicioSet=this.servicio;
     this.buscarimei=this.detalle.gps.imei_gps;
     this.editarNGps=true;
     this.editarNFechas=false;
@@ -74,7 +72,7 @@ export class EditarServicioComponent implements OnInit {
           this.listaacciones.push(ac);
         }
       }
-    })
+    })*/
   }
 
   editarFechas(){
