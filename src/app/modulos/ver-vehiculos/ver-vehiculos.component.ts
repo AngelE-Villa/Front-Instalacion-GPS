@@ -2,9 +2,12 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {Cliente} from "../../modelos/Cliente";
+import { MatSort } from "@angular/material/sort";
 import {ClienteService} from "../../servicios/ClienteService";
 import {VehiculoService} from "../../servicios/VehiculoService";
 import {Vehiculo} from "../../modelos/Vehiculo";
+import {Servicio} from "../../modelos/Servicio";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-ver-vehiculos',
@@ -19,12 +22,17 @@ export class VerVehiculosComponent implements OnInit {
 
   datos: Vehiculo[] = [];
   dataSource:any;
+  id:any;
+  cliente:Cliente=new Cliente();
+
+  servicio:Vehiculo=new Vehiculo();
 
   listaVehiculos:Array<Vehiculo>=[];
 
-  constructor(private vehiculoservice:VehiculoService) { }
+  constructor(private vehiculoservice:VehiculoService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+
     this.vehiculoservice.getVehiculos().subscribe((x: any) => {
       this.listaVehiculos = x
       for (let a of this.listaVehiculos) {
@@ -34,6 +42,7 @@ export class VerVehiculosComponent implements OnInit {
       }
     })
   }
+
 
 }
 export class ArticulosVv {

@@ -24,6 +24,16 @@
       <input matInput placeholder="Correo" name="correo" [(ngModel)]="cliente.correo" required/>
     </mat-form-field>
     <br>
+
+    <mat-form-field>
+      <input matInput placeholder="Contacto" name="contacto" [(ngModel)]="cliente.contacto" required/>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+      <input matInput placeholder="Ciudad" name="ciudad" [(ngModel)]="cliente.ciudad" required/>
+    </mat-form-field>
+    <br>
     <mat-card-actions style="text-align: center">
       <button  mat-raised-button color="primary"  class="btniniciarSesion" (click)="Guardar()" >GUARDAR</button>
     </mat-card-actions>

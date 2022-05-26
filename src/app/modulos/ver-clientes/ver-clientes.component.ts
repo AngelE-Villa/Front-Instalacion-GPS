@@ -4,6 +4,10 @@ import {MatTableDataSource} from "@angular/material/table";
 import {Cliente} from "../../modelos/Cliente";
 import {ClienteService} from "../../servicios/ClienteService";
 import {MatSort} from "@angular/material/sort";
+import {Servicio} from "../../modelos/Servicio";
+import {Vehiculo} from "../../modelos/Vehiculo";
+import {ServicioService} from "../../servicios/ServicioService";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-ver-clientes',
@@ -12,7 +16,7 @@ import {MatSort} from "@angular/material/sort";
 })
 export class VerClientesComponent implements OnInit {
 
-  columnas: string[] = ['id', 'cedula', 'nombre', 'direccion','correo','editar','eliminar','vehiculo'];
+  columnas: string[] = ['id', 'cedula', 'nombre', 'direccion','correo','contacto','ciudad','editar','eliminar','vehiculo'];
 
   // @ts-ignore
   dataSource: MatTableDataSource<Cliente>;
@@ -23,7 +27,11 @@ export class VerClientesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   datos: Cliente[] = [];
+  id:any;
 
+  vehiculo: Vehiculo=new Vehiculo();
+  cliente:Cliente=new Cliente();
+  servicio:Servicio=new Servicio();
 
   constructor(private clienteservice:ClienteService) { }
 
@@ -38,8 +46,6 @@ export class VerClientesComponent implements OnInit {
   ngOnInit(): void {
     this.listaClientes();
   }
-
-
   listaClientes(){
     this.clienteservice.getClient().subscribe(value => {
       this.datos=value
@@ -48,6 +54,5 @@ export class VerClientesComponent implements OnInit {
       this.dataSource.sort = this.sort;
     })
   }
-
 }
 
