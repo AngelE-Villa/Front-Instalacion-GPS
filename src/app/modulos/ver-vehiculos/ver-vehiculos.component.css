@@ -2,7 +2,7 @@ table {
   width: 100%;
 }
 .center{
-  width: 80%;
+  width: 90%;
   text-align: center;
   margin: 3% auto;
 }
@@ -43,6 +43,11 @@ button{
   background: red;
   cursor: pointer;
   transition: .5s;
+}
+
+.btncrear{
+  margin-left: 5%;
+  background: #00d084;
 }
 
 @media (max-width: 800px) {
