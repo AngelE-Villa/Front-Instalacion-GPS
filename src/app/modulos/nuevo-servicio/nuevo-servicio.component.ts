@@ -236,7 +236,8 @@ export class NuevoServicioComponent implements OnInit {
       this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
         this.servicioGet=data;
         for (let des of this.listavehiculosAsignados){
-          this.detalle=new Descripcion(this.servicioGet,des.estado,des.gps,des.vehiculo,des.observacion,des.ubicacion)
+          this.vehiculoGet=des.vehiculo;
+          this.detalle=new Descripcion(this.servicioGet,des.estado,des.gps,this.vehiculoGet,des.observacion,des.ubicacion)
           console.log(des.vehiculo)
           console.log(this.detalle)
           console.log(this.detalle.vehiculo)
