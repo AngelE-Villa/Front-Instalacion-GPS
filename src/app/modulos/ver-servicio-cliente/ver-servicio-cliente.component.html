@@ -21,45 +21,45 @@
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row.id_documentoservicio}} </td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.id_documentoservicio}} </td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="vehiculoCliente">
-      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
-      <td mat-cell *matCellDef="let row"> {{row.vehiculo.placa}} </td>
+    <ng-container matColumnDef="fechas">
+      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> F. Instalación </th>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.fecha_ds | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
-    <!-- Progress Column -->
-    <ng-container matColumnDef="vehiculoN">
-      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Vehiculo </th>
-      <td mat-cell *matCellDef="let row"> {{row.vehiculo.vehiculo}} </td>
+    <!-- Name Column -->
+    <ng-container matColumnDef="hora">
+      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Hora </th>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.hora}} </td>
     </ng-container>
 
     <!-- Fruit Column -->
     <ng-container matColumnDef="fechaI">
       <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> F. Inicio </th>
-      <td mat-cell *matCellDef="let row"> {{row.fecha_inicion | date:'dd/MM/yyyy'}} </td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.fecha_inicion | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="fechaF">
       <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> F. Fin </th>
-      <td mat-cell *matCellDef="let row"> {{row.fecha_fin | date: 'dd/MM/yyyy'}} </td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.fecha_fin | date: 'dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="detalles">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Detalles </th>
-      <td mat-cell *matCellDef="let row"><button mat-button (click)="openTempDialog(row.id_documentoservicio)"><mat-icon class="btnEdi">description</mat-icon></button></td>
+      <td mat-cell class="centrarli" *matCellDef="let row"><button mat-button (click)="openTempDialog(row.id_documentoservicio)"><mat-icon class="btnEdi">description</mat-icon></button></td>
     </ng-container>
 
     <ng-container matColumnDef="editar">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Editar </th>
-      <td mat-cell *matCellDef="let row"><button [routerLink]="['/verservicio/cliente/edit=',row.id_documentoservicio]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
+      <td mat-cell class="centrarli" *matCellDef="let row"><button [routerLink]="['/verservicio/cliente/edit=',row.id_documentoservicio]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
     </ng-container>
 
     <ng-container matColumnDef="eliminar">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Eliminar </th>
-      <td mat-cell *matCellDef="let row"> <button ><mat-icon class="btnEli">delete</mat-icon></button></td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> <button ><mat-icon class="btnEli">delete</mat-icon></button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
