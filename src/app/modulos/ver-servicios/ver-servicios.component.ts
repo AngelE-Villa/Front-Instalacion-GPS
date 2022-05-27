@@ -55,24 +55,32 @@ export class VerServiciosComponent implements OnInit {
   listaServicios(){
     this.clienteService.getClient().subscribe(valuecliente => {
       this.datosCliente=valuecliente
-      console.log(this.datosCliente)
         this.detalleService.getDescrip().subscribe(valuedetalle => {
           this.datosDetalle=valuedetalle;
-          console.log(this.datosDetalle)
-          for (let dc of this.datosCliente){
+           for (let dc of this.datosCliente){
             for (let dd of this.datosDetalle){
               if (dc.id_persona==dd.vehiculo.cliente.id_persona){
-                console.log(dd)
-                this.listaClientes.push(dc);
+                if (this.listaClientes.length>0) {
+                  for (let lc of this.listaClientes){
+                    if (lc.id_persona==dc.id_persona){
+                      console.log(lc)
+                      console.log("Repite")
+                    }else{
+                      console.log("Guarda")
+                      this.listaClientes.push(dc);
+                    }
+                  }
+                }else{
+                  this.listaClientes.push(dc);
+                }
+                this.dataSource = new MatTableDataSource(this.listaClientes);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
               }
             }
           }
 
         })
-
-        this.dataSource = new MatTableDataSource(this.listaClientes);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
     })
 
   }
