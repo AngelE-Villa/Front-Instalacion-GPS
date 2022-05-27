@@ -24,6 +24,10 @@ export class ClienteService{
     return this.httpClient.post(this.base_url+"create-client/", cliente);
   }
 
+  getByidCliente(id:String):Observable<any>{
+    return this.httpClient.get<any>(this.base_url+id);
+  }
+
   deleteClient(cliente:Cliente, id:String){
     return this.httpClient.put(this.base_url+"delete/"+id, cliente);
   }

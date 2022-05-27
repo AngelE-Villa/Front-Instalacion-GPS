@@ -59,6 +59,8 @@ export class NuevoVehiculoComponent implements OnInit {
       this.vehiculoService.editarVehiculos(this.vehiculo,this.id).subscribe(value=>{
         this.router.navigate(['/vervehiculos'])
       })
+    }else {
+      console.log("Creando......")
     }
 
   }
