@@ -38,7 +38,7 @@ export class NuevoGpsComponent implements OnInit {
 
   ngOnInit(): void {
       this.servicioModelo.getModelos().subscribe((data:any)=>{
-        this.listaModelo=data.filter(value=>value.id_modelo==this.plan.modelo.id_modelo);
+        this.listaModelo=data/*.filter(value=>value.id_modelo==this.plan.modelo.id_modelo);*/
     })
 
 

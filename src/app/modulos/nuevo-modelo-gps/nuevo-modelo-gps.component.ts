@@ -28,7 +28,6 @@ export class NuevoModeloGpsComponent implements OnInit {
   titulo="";
   editing=false;
   creating=false;
-  idmodelo:any;
 
 
   modelo:Modelo=new Modelo();
@@ -108,20 +107,32 @@ export class NuevoModeloGpsComponent implements OnInit {
   }
 
   //Acciones
-  abrirdialogoAcciones(id:String){
-    this.idmodelo=id;
+  abrirdialogoAcciones(id:any){
+      for (let i=0;i<=this.listaAcciones.length;i++){
+        this.listaAcciones.pop();
+      }
+
+    console.log(id);
+    this.modelo.id_modelo=id;
       this.accionesservice.getAcciones().subscribe((data:any)=>{
-        this.listaAcciones=data.filter(value=>value.modelo.id_modelo==id)
-        this.accion=data.find(m=>{return m.modelo.id_modelo==id})
-        console.log(this.listaAcciones)
+        if (data.filter((data: any) => data.modelo.id_modelo == id).length == 0){
+
+          console.log("sin datos")
+        }else{
+          this.listaAcciones=data.filter(value=>value.modelo.id_modelo==id)
+          this.accion=data.find(m=>{return m.modelo.id_modelo==id})
+          console.log(this.listaAcciones)
+          console.log("datos")
+        }
         this.dialog.open(this.dialogRefAc);
+
       })
   }
 
   agregarAcciones(){
-
-      this.accionSet.modelo=this.idmodelo;
-    console.log(this.accionSet)
+      this.accionSet.estado="Activo"
+      this.accionSet.modelo=this.modelo;
+      console.log(this.accionSet)
 
      this.accionesservice.crearAccion(this.accionSet).subscribe((data:any)=>{
         window.location.reload();
