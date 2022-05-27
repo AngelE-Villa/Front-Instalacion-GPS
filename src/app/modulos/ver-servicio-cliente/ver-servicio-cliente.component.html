@@ -75,36 +75,22 @@
 </div>
 
 <ng-template #dialogRef >
-  <h2>***********|| Información del Servicio ||***********</h2>
-  <ul *ngFor="let item of infoservicio">
-    <div class="cabecera">
-        <div class="izquierda">
-          <h4><strong>Datos Cliente</strong></h4>
-          <!--<span>Cedula: {{item.vehiculo.cliente.cedula}}</span><br>
-          <span>Nombre: {{item.vehiculo.cliente.nombre}}</span>-->
-          <br><br>
-          <h4><strong>GPS</strong></h4>
-          <div *ngFor="let det of infodetalle">
-            <span>Imei: {{det.gps.imei_gps}}</span><br>
-            <span>Modelo: {{det.gps.modelo.nombre}}</span>
-          </div>
-        </div>
-      <div class="derecha">
-        <h4><strong>Datos Vehiculo</strong></h4>
-        <!--<span>Placa: {{item.vehiculo.placa}}</span><br>
-        <span>Vehiculo: {{item.vehiculo.vehiculo}}</span>-->
-        <br><br>
-        <h4><strong>Acciones</strong></h4>
-        <div *ngFor="let ac of infoacciones">
-          <span>{{ac.nombre}}</span><br>
-        </div>
-      </div>
-    </div>
-    <span>Fecha Inicio: {{item.fecha_inicion | date: 'dd/MM/yyyy'}}</span><br>
-    <span>Fecha Fin: {{item.fecha_fin | date: 'dd/MM/yyyy'}}</span><br>
-    <span>Hora: {{item.hora}}</span>
-  </ul>
-
+  <h2>********|| Información del Servicio ||********</h2>
+  <table>
+    <thead>
+        <th>Placa</th>
+        <th>Vehiculo</th>
+        <th>GPS (imei)</th>
+        <th>Modelo</th>
+    </thead>
+    <tbody *ngFor="let item of infodetalle">
+        <td>{{item.vehiculo.placa}}</td>
+        <td>{{item.vehiculo.vehiculo}}</td>
+        <td>{{item.gps.imei_gps}}</td>
+        <td>{{item.gps.modelo.nombre}}</td>
+    </tbody>
+  </table>
+  <br>
   <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
 </ng-template>
 

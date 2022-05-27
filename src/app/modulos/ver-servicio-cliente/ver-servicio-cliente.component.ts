@@ -33,9 +33,6 @@ export class VerServicioClienteComponent implements OnInit {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
-  //Listas
-  listadetalle:Descripcion[]=[];
-
   datos: Servicio[] = [];
   infoservicio: Servicio[] = [];
   infodetalle: Descripcion[]= [];
@@ -43,7 +40,6 @@ export class VerServicioClienteComponent implements OnInit {
   id:any;
   cliente:Cliente=new Cliente();
   servicio:Servicio=new Servicio();
-  servicioSet:Servicio=new Servicio();
   detalle:Descripcion;
 
   constructor(private serviceService:ServicioService,
@@ -54,7 +50,6 @@ export class VerServicioClienteComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
     this.listaServicios();
   }
 
@@ -88,22 +83,10 @@ export class VerServicioClienteComponent implements OnInit {
   }
 
   openTempDialog(id:String) {
-    this.serviceService.getServices().subscribe((value:any)=>{
-      this.infoservicio=value.filter((m)=> m.id_documentoservicio==id);
-    })
     this.detalleService.getDescrip().subscribe((value1:any)=>{
-      /*console.log(value1)
       this.infodetalle=value1.filter((m)=> m.documentoservicio.id_documentoservicio==id);
-      this.detalle=value1.find((ma)=>{return ma.documentoservicio.id_documentoservicio==id})
-      console.log(this.detalle.gps.modelo.id_modelo)
-      this.acciones.getAcciones().subscribe((value2:any)=>{
-        this.infoacciones=value2.filter((m1)=> m1.modelo.id_modelo==this.detalle.gps.modelo.id_modelo);
-        console.log(this.infoacciones)
-      })*/
     })
-
     this.dialog.open(this.dialogRef);
-
   }
 
 }
