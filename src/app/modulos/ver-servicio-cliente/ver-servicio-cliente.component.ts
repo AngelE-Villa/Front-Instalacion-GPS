@@ -11,6 +11,8 @@ import {DescripcionService} from "../../servicios/DescripcionService";
 import {AccionesService} from "../../servicios/AccionesService";
 import {Descripcion} from "../../modelos/Descripcion";
 import {Acciones} from "../../modelos/Acciones";
+import {Pagos} from "../../modelos/Pagos";
+import {PagosService} from "../../servicios/PagosService";
 
 @Component({
   selector: 'app-ver-servicio-cliente',
@@ -19,7 +21,7 @@ import {Acciones} from "../../modelos/Acciones";
 })
 export class VerServicioClienteComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'fechas','hora', 'fechaI','fechaF','detalles','editar','eliminar'];
+  displayedColumns: string[] = ['id', 'fechas','hora', 'fechaI','fechaF','estadoSer','activar','detalles','editar','eliminar'];
   // @ts-ignore
   dataSource: MatTableDataSource<Servicio>;
 
@@ -33,20 +35,26 @@ export class VerServicioClienteComponent implements OnInit {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
+  @ViewChild('dialogRefActivacion')
+  dialogRefActivacion!: TemplateRef<any>;
+
   datos: Servicio[] = [];
-  infoservicio: Servicio[] = [];
   infodetalle: Descripcion[]= [];
-  infoacciones: Acciones[] = [];
+  listadetalle:[];
   id:any;
   cliente:Cliente=new Cliente();
   servicio:Servicio=new Servicio();
+  servicioGet:Servicio=new Servicio();
   detalle:Descripcion;
+  pago:Pagos=new Pagos();
+  pagoGet:Pagos=new Pagos();
 
   constructor(private serviceService:ServicioService,
               private route:ActivatedRoute,
               public dialog: MatDialog,
               private detalleService:DescripcionService,
-              private acciones:AccionesService) {
+              private acciones:AccionesService,
+              private pagoService:PagosService) {
 
   }
   ngOnInit(): void {
@@ -89,5 +97,20 @@ export class VerServicioClienteComponent implements OnInit {
     this.dialog.open(this.dialogRef);
   }
 
+  openTempDialogPagos(id:String) {
+    this.serviceService.getService(id).subscribe((value1:any)=>{
+      this.servicioGet=value1;
+    })
+    this.dialog.open(this.dialogRefActivacion);
+  }
+
+  guardarCambios(id:String){
+    let cont=0;
+    this.detalleService.getDescrip().subscribe((data:any)=>{
+      this.listadetalle=data;
+      cont=this.listadetalle.length;
+      console.log(cont)
+    })
+  }
 }
 

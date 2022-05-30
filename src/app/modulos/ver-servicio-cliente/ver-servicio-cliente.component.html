@@ -47,6 +47,16 @@
       <td mat-cell class="centrarli" *matCellDef="let row"> {{row.fecha_fin | date: 'dd/MM/yyyy'}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="estadoSer">
+      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Estado Servicio </th>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.estado}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="activar">
+      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Activar Plan </th>
+      <td mat-cell class="centrarli" *matCellDef="let row"><button mat-button (click)="openTempDialogPagos(row.id_documentoservicio)"><mat-icon class="btnEdi"> attach_money</mat-icon></button></td>
+    </ng-container>
+
     <ng-container matColumnDef="detalles">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Detalles </th>
       <td mat-cell class="centrarli" *matCellDef="let row"><button mat-button (click)="openTempDialog(row.id_documentoservicio)"><mat-icon class="btnEdi">description</mat-icon></button></td>
@@ -90,6 +100,23 @@
         <td>{{item.gps.modelo.nombre}}</td>
     </tbody>
   </table>
+  <br>
+  <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
+</ng-template>
+
+<ng-template #dialogRefActivacion >
+  <h2>Activaciòn de Servicio</h2>
+  <span>Precio del Plan: {{servicioGet.costo}}</span>
+  <br>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="Pago de Servicio" name="pservice" [(ngModel)]="servicio.costo"  required/>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="Pago mesual" name="pmensual" [(ngModel)]="pago.cantidad_p"  required/>
+  </mat-form-field>
+  <br>
   <br>
   <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
 </ng-template>

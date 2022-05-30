@@ -7,4 +7,6 @@ export class Servicio{
   fecha_inicion: any;
   hora: any;
   id_documentoservicio: any;
+  costo:any;
+  id_plan:any;
 }

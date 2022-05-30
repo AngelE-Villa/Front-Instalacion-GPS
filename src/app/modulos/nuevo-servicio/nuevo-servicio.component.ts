@@ -23,7 +23,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DatePipe} from "@angular/common";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -74,6 +74,8 @@ export class NuevoServicioComponent implements OnInit {
 
   isLinear = true
 
+  id_plan:any;
+
   listaModelo: Array<any> = [];
   listaAcciones = [];
   // @ts-ignore
@@ -110,7 +112,8 @@ export class NuevoServicioComponent implements OnInit {
               private servicioDescripcion: DescripcionService,
               private servicioGps: GpsService,
               public dialog: MatDialog,
-              private router:Router) {
+              private router:Router,
+              private route:ActivatedRoute) {
 
   }
 
@@ -122,7 +125,7 @@ export class NuevoServicioComponent implements OnInit {
   accion: Boolean = true;
 
   ngOnInit(): void {
-
+    this.id_plan=this.route.snapshot.params['id'];
     let date: Date = new Date();
     this.servicio.fecha_ds=date;
     this.servicio.hora=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
@@ -232,6 +235,7 @@ export class NuevoServicioComponent implements OnInit {
 
   guardaServicio(){
     this.servicio.estado="Activo";
+    this.servicio.id_plan=this.id_plan;
     console.log(this.servicio)
       this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
         this.servicioGet=data;

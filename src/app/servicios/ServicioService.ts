@@ -17,6 +17,10 @@ export class ServicioService{
     return this.httpClient.get<Servicio[]>(this.base_url);
   }
 
+  getService(id:String):Observable<any>{
+    return this.httpClient.get<any>(this.base_url+id);
+  }
+
   crearService(servicio:Servicio){
     return this.httpClient.post(this.base_url+"create-docservicio", servicio);
   }
