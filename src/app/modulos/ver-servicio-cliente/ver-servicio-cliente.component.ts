@@ -19,7 +19,7 @@ import {Acciones} from "../../modelos/Acciones";
 })
 export class VerServicioClienteComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'vehiculoCliente','vehiculoN', 'fechaI','fechaF','detalles','editar','eliminar'];
+  displayedColumns: string[] = ['id', 'fechas','hora', 'fechaI','fechaF','detalles','editar','eliminar'];
   // @ts-ignore
   dataSource: MatTableDataSource<Servicio>;
 
@@ -40,8 +40,7 @@ export class VerServicioClienteComponent implements OnInit {
   id:any;
   cliente:Cliente=new Cliente();
   servicio:Servicio=new Servicio();
-  servicioSet:Servicio=new Servicio();
- // detalle:Descripcion=new Descripcion();
+  detalle:Descripcion;
 
   constructor(private serviceService:ServicioService,
               private route:ActivatedRoute,
@@ -51,7 +50,6 @@ export class VerServicioClienteComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
     this.listaServicios();
   }
 
@@ -64,39 +62,31 @@ export class VerServicioClienteComponent implements OnInit {
   }
 
   listaServicios(){
-    /*this.id=this.route.snapshot.params['id'];
+    this.id=this.route.snapshot.params['id'];
     if (this.id){
-      this.serviceService.getServices().subscribe((data:any)=>{
-          this.datos=data.filter((m)=> m.vehiculo.cliente.id_persona==this.id);
-          this.servicio=this.datos.find((m)=>{return m.vehiculo.cliente.id_persona==this.id})
-          this.cliente.nombre=this.servicio.vehiculo.cliente.nombre;
-        this.dataSource = new MatTableDataSource(this.datos);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        }
-      );
+      this.detalleService.getDescrip().subscribe((data:any)=>{
+        this.detalle=data.find((m)=>{return m.vehiculo.cliente.id_persona==this.id} );
+
+        this.serviceService.getServices().subscribe((data1:any)=>{
+          this.datos=data1.filter((m)=> m.id_documentoservicio==this.detalle.documentoservicio.id_documentoservicio);
+          console.log(data1)
+          this.servicio=this.datos.find((m)=>{return m.id_documentoservicio==this.detalle.documentoservicio.id_documentoservicio})
+          this.cliente.nombre=this.detalle.vehiculo.cliente.nombre;
+          this.dataSource = new MatTableDataSource(this.datos);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+      })
     }else {
       console.log("Crear")
-    }*/
+    }
   }
 
   openTempDialog(id:String) {
-    this.serviceService.getServices().subscribe((value:any)=>{
-      this.infoservicio=value.filter((m)=> m.id_documentoservicio==id);
-    })
     this.detalleService.getDescrip().subscribe((value1:any)=>{
-      /*console.log(value1)
       this.infodetalle=value1.filter((m)=> m.documentoservicio.id_documentoservicio==id);
-      this.detalle=value1.find((ma)=>{return ma.documentoservicio.id_documentoservicio==id})
-      console.log(this.detalle.gps.modelo.id_modelo)
-      this.acciones.getAcciones().subscribe((value2:any)=>{
-        this.infoacciones=value2.filter((m1)=> m1.modelo.id_modelo==this.detalle.gps.modelo.id_modelo);
-        console.log(this.infoacciones)
-      })*/
     })
-
     this.dialog.open(this.dialogRef);
-
   }
 
 }

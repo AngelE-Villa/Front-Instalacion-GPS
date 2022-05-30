@@ -12,6 +12,9 @@ table {
   margin-left: 10%;
 }
 
+ng-container{
+  text-align: center;
+}
 
 .titulo{
   text-align: center;
@@ -143,6 +146,9 @@ button{
   }
 }
 
+.centrarli{
+  text-align: center;
+}
 .cabecera{
   min-height:250px;
 }

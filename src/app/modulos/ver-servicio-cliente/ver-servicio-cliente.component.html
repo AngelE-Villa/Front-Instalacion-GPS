@@ -21,45 +21,45 @@
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row.id_documentoservicio}} </td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.id_documentoservicio}} </td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="vehiculoCliente">
-      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
-      <td mat-cell *matCellDef="let row"> {{row.vehiculo.placa}} </td>
+    <ng-container matColumnDef="fechas">
+      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> F. Instalación </th>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.fecha_ds | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
-    <!-- Progress Column -->
-    <ng-container matColumnDef="vehiculoN">
-      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Vehiculo </th>
-      <td mat-cell *matCellDef="let row"> {{row.vehiculo.vehiculo}} </td>
+    <!-- Name Column -->
+    <ng-container matColumnDef="hora">
+      <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> Hora </th>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.hora}} </td>
     </ng-container>
 
     <!-- Fruit Column -->
     <ng-container matColumnDef="fechaI">
       <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> F. Inicio </th>
-      <td mat-cell *matCellDef="let row"> {{row.fecha_inicion | date:'dd/MM/yyyy'}} </td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.fecha_inicion | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="fechaF">
       <th class="titulo" mat-header-cell *matHeaderCellDef mat-sort-header> F. Fin </th>
-      <td mat-cell *matCellDef="let row"> {{row.fecha_fin | date: 'dd/MM/yyyy'}} </td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> {{row.fecha_fin | date: 'dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="detalles">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Detalles </th>
-      <td mat-cell *matCellDef="let row"><button mat-button (click)="openTempDialog(row.id_documentoservicio)"><mat-icon class="btnEdi">description</mat-icon></button></td>
+      <td mat-cell class="centrarli" *matCellDef="let row"><button mat-button (click)="openTempDialog(row.id_documentoservicio)"><mat-icon class="btnEdi">description</mat-icon></button></td>
     </ng-container>
 
     <ng-container matColumnDef="editar">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Editar </th>
-      <td mat-cell *matCellDef="let row"><button [routerLink]="['/verservicio/cliente/edit=',row.id_documentoservicio]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
+      <td mat-cell class="centrarli" *matCellDef="let row"><button [routerLink]="['/verservicio/cliente/edit=',row.id_documentoservicio]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
     </ng-container>
 
     <ng-container matColumnDef="eliminar">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Eliminar </th>
-      <td mat-cell *matCellDef="let row"> <button ><mat-icon class="btnEli">delete</mat-icon></button></td>
+      <td mat-cell class="centrarli" *matCellDef="let row"> <button ><mat-icon class="btnEli">delete</mat-icon></button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -75,36 +75,22 @@
 </div>
 
 <ng-template #dialogRef >
-  <h2>***********|| Información del Servicio ||***********</h2>
-  <ul *ngFor="let item of infoservicio">
-    <div class="cabecera">
-        <div class="izquierda">
-          <h4><strong>Datos Cliente</strong></h4>
-          <!--<span>Cedula: {{item.vehiculo.cliente.cedula}}</span><br>
-          <span>Nombre: {{item.vehiculo.cliente.nombre}}</span>-->
-          <br><br>
-          <h4><strong>GPS</strong></h4>
-          <div *ngFor="let det of infodetalle">
-            <span>Imei: {{det.gps.imei_gps}}</span><br>
-            <span>Modelo: {{det.gps.modelo.nombre}}</span>
-          </div>
-        </div>
-      <div class="derecha">
-        <h4><strong>Datos Vehiculo</strong></h4>
-        <!--<span>Placa: {{item.vehiculo.placa}}</span><br>
-        <span>Vehiculo: {{item.vehiculo.vehiculo}}</span>-->
-        <br><br>
-        <h4><strong>Acciones</strong></h4>
-        <div *ngFor="let ac of infoacciones">
-          <span>{{ac.nombre}}</span><br>
-        </div>
-      </div>
-    </div>
-    <span>Fecha Inicio: {{item.fecha_inicion | date: 'dd/MM/yyyy'}}</span><br>
-    <span>Fecha Fin: {{item.fecha_fin | date: 'dd/MM/yyyy'}}</span><br>
-    <span>Hora: {{item.hora}}</span>
-  </ul>
-
+  <h2>********|| Información del Servicio ||********</h2>
+  <table>
+    <thead>
+        <th>Placa</th>
+        <th>Vehiculo</th>
+        <th>GPS (imei)</th>
+        <th>Modelo</th>
+    </thead>
+    <tbody *ngFor="let item of infodetalle">
+        <td>{{item.vehiculo.placa}}</td>
+        <td>{{item.vehiculo.vehiculo}}</td>
+        <td>{{item.gps.imei_gps}}</td>
+        <td>{{item.gps.modelo.nombre}}</td>
+    </tbody>
+  </table>
+  <br>
   <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
 </ng-template>
 
