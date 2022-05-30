@@ -1,6 +1,7 @@
 <section id="nuestros-servicios">
   <div class="container">
     <h1>Seleccione el Plan a contratar</h1>
+    <button class="btn btn-success btncrear"  (click)="abrirdialogoPlanes()">Crear Nuevo Plan</button>
     <div class="grid-container" >
       <div class="grid-item" *ngFor="let plan of listaPlanes">
         <img   class="img"   src="{{plan.imagen}}" alt="">
@@ -10,10 +11,39 @@
 
         <button class="btn btn-primary" [routerLink]="['/nuevoservicio',plan.id_plan]">CONTRATAR SERVICIO</button>
       </div>
-
-
     </div>
   </div>
+
+  <ng-template #dialogNplan>
+    <h2> {{titulo}} </h2>
+    <mat-form-field>
+      <input matInput placeholder="Nombre" name="nombre"  [(ngModel)]="plan.nombre_p"  required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Costo" name="costo" [(ngModel)]="plan.costo_p" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Imagen" name="imagen" [(ngModel)]="plan.imagen" required/>
+    </mat-form-field>
+
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Modelo GPS</mat-label>
+      <mat-select [(ngModel)]="modelo.id_modelo" name="modelo" >
+        <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id_modelo">
+          {{modelo.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button mat-dialog-close (click)="GuardarPlan()" >Guardar</button>
+
+  </ng-template>
+
+
 </section>
 
 

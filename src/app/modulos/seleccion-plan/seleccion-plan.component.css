@@ -18,6 +18,11 @@ a:hover{
   color: #1883ba;
   background-color: #ffffff;
 }
+/*ASIGNACION DE COLOR DE BOTON CREE*/
+.btncrear{
+  margin-left: 5%;
+  background: #00d084;
+}
 
 
 .grid-container {
