@@ -18,6 +18,9 @@ export class PlanService{
     return this.httpClient.get<Plan[]>(this.base_url);
   }
 
+  getPlan(id:String):Observable<any>{
+    return this.httpClient.get<any>(this.base_url+id);
+  }
   crearPlan(plan:Plan){
     return this.httpClient.post(this.base_url+"create-plan/", plan);
   }

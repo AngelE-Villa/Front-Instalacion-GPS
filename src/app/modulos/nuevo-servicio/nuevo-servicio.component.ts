@@ -235,7 +235,7 @@ export class NuevoServicioComponent implements OnInit {
 
   guardaServicio(){
     this.servicio.estado="Activo";
-    this.servicio.id_plan=this.id_plan;
+    this.servicio.idplan=this.id_plan;
     console.log(this.servicio)
       this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
         this.servicioGet=data;

@@ -106,7 +106,7 @@
 
 <ng-template #dialogRefActivacion >
   <h2>Activaciòn de Servicio</h2>
-  <span>Precio del Plan: {{servicioGet.costo}}</span>
+  <span>Precio del Plan: {{monto}}</span>
   <br>
   <br>
   <mat-form-field>
@@ -119,5 +119,6 @@
   <br>
   <br>
   <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
+  <button mat-button mat-dialog-close   (click)="activarservicio()" >Activar</button>
 </ng-template>
 

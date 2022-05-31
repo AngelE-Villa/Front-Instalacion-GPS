@@ -8,5 +8,5 @@ export class Servicio{
   hora: any;
   id_documentoservicio: any;
   costo:any;
-  id_plan:any;
+  idplan:any;
 }
