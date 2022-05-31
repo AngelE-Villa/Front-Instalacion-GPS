@@ -44,6 +44,16 @@
             </mat-form-field>
           </mat-grid-tile>
         </mat-grid-list>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Rol</mat-label>
+          <mat-select [(ngModel)]="rol.id" name="rol" >
+            <mat-option *ngFor="let rols of listaRol" [value]="rols.id">
+              {{rols.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-card-actions style="width: 100%; text-align: center">
           <button mat-raised-button color="accent" (click)="regsitrar()" [disabled]="formUser.invalid">REGISTRASE</button>
         </mat-card-actions>
