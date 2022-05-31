@@ -130,7 +130,6 @@ export class VerServicioClienteComponent implements OnInit {
       console.log("No Hay fecha fin")
     }
     this.servicio.fecha_fin = new Date(date.getTime()+mesmili);
-    console.log(date)
 
     this.servicio.estado="Activo"
     console.log(this.servicio)
