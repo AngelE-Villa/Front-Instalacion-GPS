@@ -23,6 +23,7 @@ import { NuevoVehiculoComponent } from './modulos/nuevo-vehiculo/nuevo-vehiculo.
 import { VerServicioClienteComponent } from './modulos/ver-servicio-cliente/ver-servicio-cliente.component';
 import { EditarServicioComponent } from './modulos/editar-servicio/editar-servicio.component';
 import { SeleccionPlanComponent } from './modulos/seleccion-plan/seleccion-plan.component';
+import { AsignacionRolesComponent } from './modulos/asignacion-roles/asignacion-roles.component';
 
 const routes: Routes = [
   {path:'', component:CuerpoComponent},
@@ -43,6 +44,7 @@ const routes: Routes = [
   {path:'nuevogps', component:NuevoGpsComponent},
   {path:'seleccion/plan', component:SeleccionPlanComponent},
   {path:'verservicio/cliente/edit=/:id', component:EditarServicioComponent},
+  {path:'asignacionroles', component:AsignacionRolesComponent},
 
 ];
 
@@ -64,7 +66,8 @@ const routes: Routes = [
     NuevoVehiculoComponent,
     VerServicioClienteComponent,
     EditarServicioComponent,
-    SeleccionPlanComponent
+    SeleccionPlanComponent,
+    AsignacionRolesComponent
   ],
   imports: [
     BrowserModule,

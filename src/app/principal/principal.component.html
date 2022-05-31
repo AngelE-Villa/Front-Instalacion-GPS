@@ -54,6 +54,16 @@
             <button mat-menu-item [routerLink]="['/nuevomodelogps']">Nuevo Modelo GPS</button>
           </mat-menu>
 
+
+          <!------btn para asignacion de roles----->
+          <button class="btniniciarS hover" [matMenuTriggerFor]="rolesU">
+            <mat-icon class="sep">group_add</mat-icon>
+            <span class="medath" >ADMINISTRACION DE USUARIOS</span>
+          </button>
+          <mat-menu #rolesU="matMenu">
+            <button mat-menu-item [routerLink]="['/asignacionroles']">Crear Usuarios</button>
+          </mat-menu>
+
         </div>
 
         <div *ngIf="issloading==true" style="margin-left: 50px">
