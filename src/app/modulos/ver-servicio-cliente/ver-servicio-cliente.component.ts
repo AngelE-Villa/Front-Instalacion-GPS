@@ -106,13 +106,14 @@ export class VerServicioClienteComponent implements OnInit {
   }
 
   openTempDialogPagos(id:String) {
+    this.servicio.costo=0;
+    this.pago.cantidad_p=0;
     this.serviceService.getService(id).subscribe((value1:any)=>{
       this.servicioGet=value1;
       console.log(this.servicioGet.idplan)
       this.servicePlan.getPlan(this.servicioGet.idplan).subscribe((value:any)=>{
         this.plan=value;
         this.monto=this.plan.costo_p-this.servicioGet.costo;
-        console.log(this.monto)
       })
     })
     this.dialog.open(this.dialogRefActivacion);
@@ -132,21 +133,23 @@ export class VerServicioClienteComponent implements OnInit {
     this.servicio.fecha_fin = new Date(date.getTime()+mesmili);
 
     this.servicio.estado="Activo"
-    console.log(this.servicio)
+    this.serviceService.getService(this.servicio.id_documentoservicio).subscribe((data:any)=>{
+      this.servicioGet=data;
+      this.servicio.costo=Number(this.servicioGet.costo)+Number(this.servicio.costo);
 
-    this.pago.servicio=this.servicio.id_documentoservicio;
-    this.pago.fecha_pago=new Date();
-    console.log(this.pago)
+      console.log(this.servicio)
 
-    /*this.serviceService.editarService(this.servicio,this.servicio.id_documentoservicio).subscribe((data:any)=>{
-      console.log("Actializado el servicio")
-      this.pago.servicio=this.servicio.id_documentoservicio;
-      this.pago.fecha_pago=new Date();
-      console.log(this.pago)
-      this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
-        window.location.reload();
+      this.serviceService.editarService(this.servicio,this.servicio.id_documentoservicio).subscribe((data:any)=>{
+        console.log("Actializado el servicio")
+        this.pago.docservice=this.servicio;
+        this.pago.fecha_pago=new Date();
+        console.log(this.pago)
+        this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
+          console.log("Pago realizado")
+          window.location.reload();
+        })
       })
-    })*/
+    })
   }
 }
 

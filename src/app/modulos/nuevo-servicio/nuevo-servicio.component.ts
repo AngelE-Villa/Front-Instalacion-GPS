@@ -128,6 +128,7 @@ export class NuevoServicioComponent implements OnInit {
     this.id_plan=this.route.snapshot.params['id'];
     let date: Date = new Date();
     this.servicio.fecha_ds=date;
+    this.servicio.fecha_inicion=date;
     this.servicio.hora=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     this.servicioModelo.getModelos().subscribe((data: any) => {
       this.listaModelo = data;
