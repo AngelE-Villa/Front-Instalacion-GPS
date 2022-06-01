@@ -13,6 +13,10 @@ import {Descripcion} from "../../modelos/Descripcion";
 import {Acciones} from "../../modelos/Acciones";
 import {Pagos} from "../../modelos/Pagos";
 import {PagosService} from "../../servicios/PagosService";
+import {PlanService} from "../../servicios/PlanService";
+import {Plan} from "../../modelos/Plan";
+import {$0} from "@angular/compiler/src/chars";
+import {withModule} from "@angular/core/testing";
 
 @Component({
   selector: 'app-ver-servicio-cliente',
@@ -32,6 +36,8 @@ export class VerServicioClienteComponent implements OnInit {
 
   title = 'angular-material-dialog-app';
 
+  monto:any;
+
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
@@ -48,13 +54,15 @@ export class VerServicioClienteComponent implements OnInit {
   detalle:Descripcion;
   pago:Pagos=new Pagos();
   pagoGet:Pagos=new Pagos();
+  plan:Plan=new Plan();
 
   constructor(private serviceService:ServicioService,
               private route:ActivatedRoute,
               public dialog: MatDialog,
               private detalleService:DescripcionService,
               private acciones:AccionesService,
-              private pagoService:PagosService) {
+              private pagoService:PagosService,
+              private servicePlan:PlanService) {
 
   }
   ngOnInit(): void {
@@ -100,17 +108,45 @@ export class VerServicioClienteComponent implements OnInit {
   openTempDialogPagos(id:String) {
     this.serviceService.getService(id).subscribe((value1:any)=>{
       this.servicioGet=value1;
+      console.log(this.servicioGet.idplan)
+      this.servicePlan.getPlan(this.servicioGet.idplan).subscribe((value:any)=>{
+        this.plan=value;
+        this.monto=this.plan.costo_p-this.servicioGet.costo;
+        console.log(this.monto)
+      })
     })
     this.dialog.open(this.dialogRefActivacion);
   }
 
-  guardarCambios(id:String){
-    let cont=0;
-    this.detalleService.getDescrip().subscribe((data:any)=>{
-      this.listadetalle=data;
-      cont=this.listadetalle.length;
-      console.log(cont)
-    })
+
+  activarservicio(){
+    let cant= this.pago.cantidad_p/4;
+    let mesmili = ((1000 * 60 * 60 * 24 * 7 * 4)+((1000*60*60*24)*2)) *cant;
+    if(this.servicio.fecha_fin!=null){
+      console.log("Hay fecha fin")
+      var date=new Date(this.servicio.fecha_fin);
+    }else{
+      var date=new Date(this.servicio.fecha_ds);
+      console.log("No Hay fecha fin")
+    }
+    this.servicio.fecha_fin = new Date(date.getTime()+mesmili);
+
+    this.servicio.estado="Activo"
+    console.log(this.servicio)
+
+    this.pago.servicio=this.servicio.id_documentoservicio;
+    this.pago.fecha_pago=new Date();
+    console.log(this.pago)
+
+    /*this.serviceService.editarService(this.servicio,this.servicio.id_documentoservicio).subscribe((data:any)=>{
+      console.log("Actializado el servicio")
+      this.pago.servicio=this.servicio.id_documentoservicio;
+      this.pago.fecha_pago=new Date();
+      console.log(this.pago)
+      this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
+        window.location.reload();
+      })
+    })*/
   }
 }
 

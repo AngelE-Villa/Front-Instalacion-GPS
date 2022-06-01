@@ -17,6 +17,10 @@ export class DescripcionService{
     return this.httpClient.get<Descripcion[]>(this.base_url);
   }
 
+  getByidDescrip(id:String):Observable<any>{
+    return this.httpClient.get<any>(this.base_url+id);
+  }
+
   editarDescrip(descripcion:Descripcion, id:String){
     return this.httpClient.put(this.base_url+"update-descipciondc/"+id, descripcion);
   }

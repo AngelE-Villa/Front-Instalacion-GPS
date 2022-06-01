@@ -18,7 +18,11 @@ export class ServicioService{
   }
 
   getService(id:String):Observable<any>{
-    return this.httpClient.get<any>(this.base_url+id);
+    return this.httpClient.get(this.base_url+id);
+  }
+
+  editarService(service:Servicio, id:String){
+    return this.httpClient.put(this.base_url+"update-docservicio/"+id, service);
   }
 
   crearService(servicio:Servicio){
