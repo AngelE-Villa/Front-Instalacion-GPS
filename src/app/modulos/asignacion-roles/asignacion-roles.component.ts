@@ -1,10 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {User} from "../../modelos/User";
 import {UserService} from "../../servicios/UserService";
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {Gps} from "../../modelos/Gps";
 import {MatPaginator} from "@angular/material/paginator";
+import {MatDialog} from "@angular/material/dialog";
+import { Rol } from "../../modelos/Rol";
+import {RolService} from "../../servicios/RolService";
 
 @Component({
   selector: 'app-asignacion-roles',
@@ -21,12 +24,22 @@ export class AsignacionRolesComponent implements OnInit {
   dataSource: MatTableDataSource<User>;
 
   datos: User[] = [];
+  dataSourceM:any;
+  titulo="";
+  editing=false;
+  creating=false;
 
   listaUser:Array<User>=[];
 
   users:User=new User();
 
-  constructor(private serviciouser:UserService, private router:Router) { }
+  rol:Rol=new Rol();
+
+  @ViewChild('dialogRol')
+  dialogRol!: TemplateRef<any>;
+
+  constructor(private serviciouser:UserService, private router:Router,public dialog: MatDialog,
+              private rolservicio:RolService) { }
 
   ngOnInit(): void {
 
@@ -38,6 +51,19 @@ export class AsignacionRolesComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
 
       }
+    })
+  }
+  abrirdialogoC(){
+    this.editing=false;
+    this.creating=true;
+    this.titulo="Crear Roles"
+    this.dialog.open(this.dialogRol);
+  }
+
+
+  crearRol(){
+    this.rolservicio.crearRol(this.rol).subscribe((data:any)=>{
+      window.location.reload();
     })
   }
 

@@ -2,6 +2,7 @@
 
       <mat-card-title class="mediat">Lista Usuarios</mat-card-title>
       <button class="btn btn-success btncrear" [routerLink]="['/registrousuario']">Crear Usuarios</button>
+      <button class="btn btn-success btncrear"  (click)="abrirdialogoC()">Crear Roles</button>
 
 
   <div class="mat-elevation-z8 center">
@@ -44,6 +45,24 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
   </div>
+  <!--------Dialog --------->
+
+
+<!--------Dialog para crear  roles--------->
+  <ng-template #dialogRol >
+    <h2> {{titulo}} </h2>
+    <mat-form-field>
+      <input matInput placeholder="Nombre" name="rol" [(ngModel)]="rol.nombre" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Descripcion" name="rol" [(ngModel)]="rol.descripcion" required/>
+    </mat-form-field>
+    <br>
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button mat-dialog-close  (click)="crearRol()" *ngIf="creating">Guardar</button>
+
+  </ng-template>
 
 
 </div>

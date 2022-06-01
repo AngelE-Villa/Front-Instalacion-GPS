@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Rol} from "../modelos/Rol";
+import {Modelo} from "../modelos/Modelo";
 
 
 @Injectable({
@@ -15,6 +16,10 @@ export class RolService{
 
   getRol():Observable<Rol[]>{
     return this.httpClient.get<Rol[]>(this.base_url);
+  }
+
+  crearRol(rol:Rol){
+    return this.httpClient.post(this.base_url+"create-rol/", rol);
   }
 
 
