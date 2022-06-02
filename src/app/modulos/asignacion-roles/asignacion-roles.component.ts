@@ -19,17 +19,24 @@ export class AsignacionRolesComponent implements OnInit {
 
   columnas: string[] = ['id', 'nombre', 'correo','estado','editar','eliminar'];
 
+  columnasPlan: string[] = ['id', 'nombre', 'descripcion','editar','eliminar'];
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   dataSource: MatTableDataSource<User>;
 
+  dataSourceRol: MatTableDataSource<Rol>;
+
   datos: User[] = [];
-  dataSourceM:any;
+
+  datosRol: Rol[] = [];
+
   titulo="";
   editing=false;
   creating=false;
 
   listaUser:Array<User>=[];
+  listaRol:Array<Rol>=[];
 
   users:User=new User();
 
@@ -52,6 +59,24 @@ export class AsignacionRolesComponent implements OnInit {
 
       }
     })
+
+    this.rolservicio.getRol().subscribe((x:any) =>{
+      this.listaRol=x
+      for (let a of this.listaRol){
+        this.datosRol.push(a);
+        this.dataSourceRol = new MatTableDataSource<any>(this.datosRol);
+        this.dataSourceRol.paginator = this.paginator;
+
+      }
+    })
+
+
+
+
+
+
+
+
   }
   abrirdialogoC(){
     this.editing=false;
