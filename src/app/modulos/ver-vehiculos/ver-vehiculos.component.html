@@ -4,7 +4,7 @@
   <mat-card-subtitle>Vehiculos del servicio de APECS</mat-card-subtitle>
 </div>
 
-<button class="btn btn-success btncrear"  (click)="abrirdialogoVehiculos()">Crear Nuevo Vehiculo</button>
+<button class="btn btn-success btncrear"  (click)="abrirdialogoVehiculos()" *ngIf="btncrearVh">Crear Nuevo Vehiculo</button>
 
 <div class="mat-elevation-z8 center">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 " #tabla1>

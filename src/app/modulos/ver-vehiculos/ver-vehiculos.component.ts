@@ -21,8 +21,10 @@ export class VerVehiculosComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
+  // @ts-ignore
+  dataSource: MatTableDataSource<Vehiculo>;
+
   datos: Vehiculo[] = [];
-  dataSource:any;
   id:any;
 
   vehiculo:Vehiculo =new  Vehiculo();
@@ -30,6 +32,7 @@ export class VerVehiculosComponent implements OnInit {
   titulo="";
   editing=false;
   creating=false;
+  btncrearVh=false;
 
 
   @ViewChild('dialogNvehiculo')
@@ -45,26 +48,34 @@ export class VerVehiculosComponent implements OnInit {
               private clienteService:ClienteService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
-
     this.id=this.route.snapshot.params['id'];
-    this.clienteService.getByidCliente(this.id).subscribe((vs:any)=>{
-      this.cliente=vs;
+    if(this.id){
+      this.btncrearVh =true;
+      this.clienteService.getByidCliente(this.id).subscribe((vs:any)=>{
+        this.cliente=vs;
 
+        this.vehiculoservice.getVehiculos().subscribe((x: any) => {
+          this.listaVehiculos = x
+          for (let a of this.listaVehiculos) {
+            if(a.cliente.id_persona==this.cliente.id_persona){
+              this.datos.push(a);
+            }
+          }
+          this.dataSource = new MatTableDataSource<any>(this.datos);
+          this.dataSource.paginator = this.paginator;
+        })
+
+      })
+    }else{
+      console.log("Entra sin id")
       this.vehiculoservice.getVehiculos().subscribe((x: any) => {
         this.listaVehiculos = x
-        for (let a of this.listaVehiculos) {
-          if(a.cliente.id_persona==this.cliente.id_persona){
-            this.datos.push(a);
-            this.dataSource = new MatTableDataSource<any>(this.datos);
-            this.dataSource.paginator = this.paginator;
-          }
-
-        }
+        console.log(this.datos)
+        this.dataSource = new MatTableDataSource<any>(this.listaVehiculos);
+        this.dataSource.paginator = this.paginator;
       })
 
-    })
-
+    }
   }
 
 
@@ -85,8 +96,4 @@ export class VerVehiculosComponent implements OnInit {
 
 
 }
-export class ArticulosVv {
-  constructor(public vehiculo: Vehiculo) {
-    console.log(vehiculo)
-  }
-}
+
