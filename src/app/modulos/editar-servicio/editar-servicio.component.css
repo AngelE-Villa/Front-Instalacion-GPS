@@ -3,6 +3,60 @@
   text-align: center;
   margin: 1% auto;
 }
+.btnEdi{
+  background: #428bca;
+  border-radius: 5px;
+  cursor: pointer;
+  size: 12px;
+  margin-left: 10px;
+}
+
+.btnEli{
+  background: #F65B3A;
+  border-radius: 5px;
+  size: 12px;
+  cursor: pointer;
+}
+
+span{
+  margin-left: 20px;
+}
+button{
+  border: transparent;
+  background-color: transparent;
+}
+
+.tablec{
+  border: 1px solid;
+}
+.tdv{
+  border: 1px solid;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+noborder{
+  border: none;
+}
+
+table mat-radio-group tr td{
+  margin: 20px;
+}
+
+.btnEdi:hover{
+  background: blue;
+  cursor: pointer;
+  transition: .5s;
+}
 
 .footer{
   width: 100%;

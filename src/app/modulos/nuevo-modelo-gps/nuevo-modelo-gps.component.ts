@@ -1,7 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {Cliente} from "../../modelos/Cliente";
 import {MatTableDataSource} from "@angular/material/table";
-import {ClienteService} from "../../servicios/ClienteService";
 import {MatPaginator} from "@angular/material/paginator";
 import {AccionesService} from "../../servicios/AccionesService";
 import {ModeloService} from "../../servicios/ModeloService";

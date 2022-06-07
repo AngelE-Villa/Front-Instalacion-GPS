@@ -20,6 +20,10 @@ export class VehiculoService{
     return this.httpClient.get<any>(this.base_url+id);
   }
 
+  getVehiculoCli(id:String):Observable<any>{
+    return this.httpClient.get<any>(this.base_url+"cli/"+id);
+  }
+
   editarVehiculos(vehiculo:Vehiculo, id:String){
     return this.httpClient.put(this.base_url+"update-vehiculo/"+id, vehiculo);
   }
