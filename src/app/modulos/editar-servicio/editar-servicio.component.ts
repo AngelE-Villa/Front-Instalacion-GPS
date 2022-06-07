@@ -144,7 +144,7 @@ export class EditarServicioComponent implements OnInit {
     })
   }
 
-  //Abri
+  //Abrir
   abrirdialogoEditServiciogps(iddetalle:any){
     this.titulo="Editar GPS"
     this.serviciodescripcion.getByidDescrip(iddetalle).subscribe((data1:any)=>{
