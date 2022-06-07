@@ -6,6 +6,11 @@
 
 <button class="btn btn-success btncrear"  (click)="abrirdialogoVehiculos()" *ngIf="btncrearVh">Crear Nuevo Vehiculo</button>
 
+<mat-form-field class="buscarV">
+  <mat-label>Search</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+</mat-form-field>
+
 <div class="mat-elevation-z8 center">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 " #tabla1>
 

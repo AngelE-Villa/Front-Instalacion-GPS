@@ -12,6 +12,11 @@ table {
   text-align: center;
 }
 
+.buscarGPS{
+  width: 20%;
+  margin-left: 6%;
+}
+
 
 .titulo{
   text-align: center;

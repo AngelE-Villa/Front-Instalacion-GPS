@@ -50,6 +50,11 @@ button{
   background: #00d084;
 }
 
+.buscarV{
+  width: 20%;
+  margin-left: 6%;
+}
+
 @media (max-width: 800px) {
 
   .media1 {

@@ -38,6 +38,9 @@ export class VerGpsComponent implements OnInit {
   }
 }
 
+
+
+
 export class ArticulosVh {
   constructor(public cliente: Cliente) {
     console.log(cliente)
