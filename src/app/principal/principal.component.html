@@ -85,6 +85,20 @@
           </button>
         </div>
 
+    <ng-template #dialogRolesUs >
+      <h2> {{titulo}} </h2>
+      <mat-form-field appearance="fill">
+        <mat-select [(ngModel)]="rol_us.id" name="rol_us" >
+          <mat-option *ngFor="let roles of listrol" [value]="roles.id">
+            {{roles.rol.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-button mat-dialog-close>Aceptar</button>
+    </ng-template>
+
 
     <!--<button mat-icon-button class="tool">
         <mat-icon >menu</mat-icon>

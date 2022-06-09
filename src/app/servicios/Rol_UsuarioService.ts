@@ -21,6 +21,9 @@ export class Rol_UsuarioService{
     return this.httpClient.get<any>(this.base_url+id);
   }
 
+  getRol_Us_id_persona(id:String):Observable<any[]>{
+    return this.httpClient.get<any[]>(this.base_url+id);
+  }
   crearRol_Usuario(rol_us:Rol_Usuario){
     return this.httpClient.post(this.base_url+"create-roluser/", rol_us);
   }
