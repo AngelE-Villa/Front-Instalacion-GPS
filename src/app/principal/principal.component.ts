@@ -59,7 +59,7 @@ export class PrincipalComponent implements OnInit {
       try {
         if(this.listrol.length==1){
           this.issloading=true;
-          this.router.navigate(['']);
+          //this.router.navigate(['']);
           //-- btns
           this.btnUno=true;
           this.btnDos=true;

@@ -43,7 +43,7 @@ const routes: Routes = [
   {path:'nuevovehiculo/:id', component:NuevoVehiculoComponent},
   {path:'nuevogps', component:NuevoGpsComponent},
   {path:'seleccion/plan', component:SeleccionPlanComponent},
-  {path:'verservicio/cliente/edit=/:id', component:EditarServicioComponent},
+  {path:'verservicio/cliente/edit/:id', component:EditarServicioComponent},
   {path:'asignacionroles', component:AsignacionRolesComponent},
 
 ];

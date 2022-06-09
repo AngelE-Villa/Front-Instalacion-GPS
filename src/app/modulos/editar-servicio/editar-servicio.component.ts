@@ -2,7 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Servicio} from "../../modelos/Servicio";
 import {ServicioService} from "../../servicios/ServicioService";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Descripcion} from "../../modelos/Descripcion";
 import {DescripcionService} from "../../servicios/DescripcionService";
 import {GpsService} from "../../servicios/GpsService";
@@ -13,6 +13,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {VehiculoService} from "../../servicios/VehiculoService";
 import {Vehiculo} from "../../modelos/Vehiculo";
 import {Cliente} from "../../modelos/Cliente";
+import {HistorialService} from "../../servicios/HistorialService";
+import {Historial} from "../../modelos/Historial";
+import {withModule} from "@angular/core/testing";
 
 @Component({
   selector: 'app-editar-servicio',
@@ -27,6 +30,11 @@ export class EditarServicioComponent implements OnInit {
   modelo:Modelo=new Modelo();
   vehiculo:Vehiculo=new Vehiculo();
   vehiculoGet:Vehiculo=new Vehiculo();
+  historial:Historial=new Historial();
+  vehiculoedit:Vehiculo=new Vehiculo();
+
+  //Historial
+  vehiculoHistorial:Vehiculo=new Vehiculo();
 
   @ViewChild('dialogEditServiciogps')
   dialogEditServiciogps!: TemplateRef<any>;
@@ -40,6 +48,7 @@ export class EditarServicioComponent implements OnInit {
   listadetalle=[];
   listadetallehistorial=[];
   listadetallen=[];
+  listadetallehistoriaGet=[];
 
   cliente:Cliente=new Cliente();
   detalleid:Descripcion;
@@ -63,6 +72,7 @@ export class EditarServicioComponent implements OnInit {
   allinfo=true;
 
   vernuvehiculo=false;
+  vernuvegps=false;
 
 
   constructor(private serviceService:ServicioService,
@@ -71,7 +81,9 @@ export class EditarServicioComponent implements OnInit {
               private servicioGps:GpsService,
               private servicioAcciones:AccionesService,
               public dialog: MatDialog,
-              private serviceVehiculo:VehiculoService) { }
+              private serviceVehiculo:VehiculoService,
+              private serviceHistorial:HistorialService,
+              private router:Router) { }
 
   ngOnInit(): void {
     this.listaServicio();
@@ -81,7 +93,7 @@ export class EditarServicioComponent implements OnInit {
     this.id=this.route.snapshot.params['id'];
     if (this.id){
       this.serviciodescripcion.getDescrip().subscribe(data=>{
-          this.listadetalle=data.filter((m:any)=>m.documentoservicio.id_documentoservicio==this.id)
+          this.listadetalle=data.filter(m=>m.documentoservicio.id_documentoservicio==this.id && m.estado=="Activo")
           let conta=0;
           for (let cli of this.listadetalle){
             if (conta==0){
@@ -91,6 +103,9 @@ export class EditarServicioComponent implements OnInit {
               break;
             }
           }
+          this.serviceHistorial.getByidCliente(this.cliente.id_persona).subscribe((data1:any)=>{
+            this.listadetallehistoriaGet=data1;
+          })
         }
       );
     }
@@ -191,23 +206,42 @@ export class EditarServicioComponent implements OnInit {
 
   }
 
-  cancelarnvehiculo(){
-    this.editv=false;
-    this.allinfo=true;
+  cancelarnvehiculo() {
+      this.editv=false;
+      this.allinfo=true;
+      this.listadetallen.pop();
+      this.listadetallehistorial.pop();
+      this.vernuvehiculo=false;
   }
 
-  guardarcambios(idde:String){
-    for (let nvg of this.listadetallen){
-      nvg.id_documentodescripcion=idde;
-      this.serviciodescripcion.editarDescrip(nvg,idde).subscribe(d=>{
-        this.vehiculoGet=nvg.vehiculo;
-        this.vehiculoGet.estado="En servicio"
-        this.serviceVehiculo.editarVehiculos(this.vehiculoGet,this.vehiculoGet.id_vehiculo).subscribe(m=>{
-          window.location.reload();
-        })
-      });
-    }
+  guardarcambiosVehiculo(idde:String){
+    this.vehiculoedit=this.detalleid.vehiculo;
+    this.vehiculoedit.estado="Activo";
+      this.serviceVehiculo.editarVehiculos(this.vehiculoedit,this.vehiculoedit.id_vehiculo).subscribe(l=>{
+        for (let nvg of this.listadetallen){
+          nvg.estado="Activo"
+          nvg.fecha_inst=new Date();
+          this.serviciodescripcion.crearDescrip(nvg).subscribe(d=>{
+            this.vehiculoGet=nvg.vehiculo;
+            this.vehiculoGet.estado="En servicio"
+            this.serviceVehiculo.editarVehiculos(this.vehiculoGet,this.vehiculoGet.id_vehiculo).subscribe(m=> {
+              for (let dh of this.listadetallehistorial){
+                this.historial.documentodescripcion=dh;
+                this.historial.nombre="Vehiculo";
+                this.historial.fecha_cam=new Date();
+                this.serviceHistorial.crearHistorial(this.historial).subscribe(h=>{
+                  dh.estado="Cambiado"
+                  this.serviciodescripcion.editarDescrip(dh,idde).subscribe(dated=>{
+                    window.location.reload();
+                  })
 
+                })
+              }
+
+            })
+          });
+        }
+      })
   }
 
 }

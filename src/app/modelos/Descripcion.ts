@@ -11,6 +11,7 @@ export class Descripcion{
   vehiculo:Vehiculo=new Vehiculo();
   observacion: any;
   ubicacion:any;
+  fecha_inst:any
 
 
   constructor(documentoservicio: Servicio, estado: any, gps: Gps, vehiculo: Vehiculo, observacion: any, ubicacion: any) {

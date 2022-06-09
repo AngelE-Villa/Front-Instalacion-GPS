@@ -17,7 +17,7 @@
       </div>
       <div class="derecha center">
         <mat-card-content *ngIf="allinfo">
-          <h4><strong>Datos Vehiculo</strong></h4>
+          <h4><strong>Datos Vehiculio - GPS</strong></h4>
           <!---->
           <table class="center tablec">
             <thead>
@@ -40,6 +40,32 @@
             </tbody>
           </table>
         </mat-card-content>
+
+        <br><br>
+        <mat-card-content *ngIf="allinfo">
+          <h4><strong>Historial</strong></h4>
+          <!---->
+          <table class="center tablec">
+            <thead>
+            <th>ID</th>
+            <th>Placa</th>
+            <th>Vehiculo</th>
+            <th>Imei</th>
+            <th>Modelo</th>
+            <th>Cambio</th>
+            <th>Observaciones</th>
+            </thead>
+            <tbody *ngFor="let h of listadetallehistoriaGet">
+            <td class="tdv">{{h.documentodescripcion.id_documentodescripcion}}</td>
+            <td class="tdv">{{h.documentodescripcion.vehiculo.placa}}</td>
+            <td class="tdv">{{h.documentodescripcion.vehiculo.vehiculo}}</td>
+            <td class="tdv">{{h.documentodescripcion.gps.imei_gps}}</td>
+            <td class="tdv">{{h.documentodescripcion.gps.modelo.nombre}}</td>
+            <td class="tdv">{{h.nombre}}</td>
+            <td class="tdv">{{h.observaciones}}</td>
+            </tbody>
+          </table>
+        </mat-card-content>
         <mat-card-content *ngIf="editv">
           <mat-card-title>Cambio de Vehiculo</mat-card-title>
           <br>
@@ -55,6 +81,10 @@
               <span>Placa: {{nv.vehiculo.placa}}</span><br>
               <span>Vehiculo: {{nv.vehiculo.vehiculo}}</span><br><br>
             </div>
+            <mat-form-field appearance="outline">
+              <mat-label>Observación</mat-label>
+              <input matInput  name="observacion" [(ngModel)]="historial.observaciones" required/>
+            </mat-form-field>
           </div>
 
           <button class="btnEli" (click)="cancelarnvehiculo()">Cancelar</button>
@@ -62,16 +92,37 @@
             <button class="btnEdi" (click)="abrirdialogoEditServiciovehiculo(detalleid.vehiculo.cliente.id_persona,detalleid)">Seleccionar vehiculo</button>
           </span>
           <span *ngIf="vernuvehiculo">
-            <button class="btnEdi" (click)="guardarcambios(detalleid.id_documentodescripcion)">Guardar Cambios</button>
+            <button class="btnEdi" (click)="guardarcambiosVehiculo(detalleid.id_documentodescripcion)">Guardar Cambios</button>
           </span>
           <br><br>
         </mat-card-content>
         <mat-card-content *ngIf="editgps">
-          <h2>Cambio de Vehiculo</h2>
-          <span>{{detalleid.id_documentodescripcion}}</span>
-          <span>{{detalleid.gps.imei_gps}}</span>
-          <span>{{detalleid.gps.modelo.nombre}}</span>
-          <button (click)="abrirdialogoEditServiciogps(detalleid.id_documentodescripcion)"></button>
+          <mat-card-title>Cambio de Dispositivo GPS</mat-card-title>
+          <br>
+          <span><strong>Datos del Vehiculo</strong></span><br>
+          <span>ID: {{detalleid.id_documentodescripcion}}</span><br>
+          <span>Placa: {{detalleid.vehiculo.placa}}</span><br>
+          <span>Vehiculo: {{detalleid.vehiculo.vehiculo}}</span><br>
+          <div *ngIf="vernuvegps">
+            <span><strong>GPS a Asignar</strong> </span><br>
+            <div *ngFor="let nv of listadetallen">
+              <span>Imei: {{nv.gps.imei}}</span><br>
+              <span>Modelo: {{nv.gps.modelo.nombre}}</span><br><br>
+            </div>
+            <mat-form-field appearance="outline">
+              <mat-label>Observación</mat-label>
+              <input matInput  name="observacion" [(ngModel)]="historial.observaciones" required/>
+            </mat-form-field>
+          </div>
+
+          <button class="btnEli" (click)="cancelarnvehiculo()">Cancelar</button>
+          <span *ngIf="!vernuvegps">
+            <button class="btnEdi" (click)="abrirdialogoEditServiciogps(detalleid.id_documentodescripcion)">Buscar GPS</button>
+          </span>
+          <span *ngIf="vernuvegps">
+            <button class="btnEdi" (click)="guardarcambiosVehiculo(detalleid.id_documentodescripcion)">Guardar Cambios</button>
+          </span>
+          <br><br>
         </mat-card-content>
         <br><br>
       </div>

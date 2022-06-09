@@ -64,7 +64,7 @@
 
     <ng-container matColumnDef="editar">
       <th class="titulo" mat-header-cell *matHeaderCellDef> Editar </th>
-      <td mat-cell class="centrarli" *matCellDef="let row"><button [routerLink]="['/verservicio/cliente/edit=',row.id_documentoservicio]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
+      <td mat-cell class="centrarli" *matCellDef="let row"><button [routerLink]="['/verservicio/cliente/edit',row.id_documentoservicio]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
     </ng-container>
 
     <ng-container matColumnDef="eliminar">
