@@ -242,18 +242,22 @@ export class NuevoServicioComponent implements OnInit {
         this.servicioGet=data;
         for (let des of this.listavehiculosAsignados){
           this.vehiculoGet=des.vehiculo;
+          this.gpsGet=des.gps;
           this.detalle=new Descripcion(this.servicioGet,des.estado,des.gps,this.vehiculoGet,des.observacion,des.ubicacion)
-          console.log(des.vehiculo)
-          console.log(this.detalle)
-          console.log(this.detalle.vehiculo)
-          this.servicioDescripcion.crearDescrip(this.detalle).subscribe((data:any)=>{
-            this.snackBar.open("SERVICIO CREADO", "",{
-              duration: 1 * 1000,
-            });
-            this.router.navigate(['/verservicios'])
+          this.servicioGet.estado="En servicio";
+          this.servicioVehiculo.editarVehiculos(this.vehiculoGet,this.vehiculoGet.id_vehiculo).subscribe(m=>{
+            this.gpsGet.estado="En servicio";
+            this.servicioGps.editGps(this.gpsGet,this.gpsGet.id_gps).subscribe(n=>{
+              this.servicioDescripcion.crearDescrip(this.detalle).subscribe((data:any)=>{
+                this.snackBar.open("SERVICIO CREADO", "",{
+                  duration: 1 * 1000,
+                });
+                this.router.navigate(['/verservicios'])
+              })
+            })
+
           })
         }
-
       })
   }
 

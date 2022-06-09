@@ -96,6 +96,7 @@ export class VerVehiculosComponent implements OnInit {
 
   crearVehiculo(){
     this.vehiculo.cliente.id_persona=this.id;
+    this.vehiculo.estado="Activo";
     console.log(this.vehiculo)
     this.vehiculoservice.crearVehiculos(this.vehiculo).subscribe((data:any)=>{
       window.location.reload();

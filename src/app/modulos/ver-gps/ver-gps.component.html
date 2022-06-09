@@ -27,6 +27,11 @@
       <td class="textmedia" mat-cell *matCellDef="let row"> {{row.num_sim}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="estado">
+      <th class="titulo" mat-header-cell *matHeaderCellDef> N. Sim </th>
+      <td class="textmedia" mat-cell *matCellDef="let row"> {{row.estado}} </td>
+    </ng-container>
+
     <ng-container  matColumnDef="imei">
       <th class="titulo media1" mat-header-cell *matHeaderCellDef> Imei </th>
       <td class="media1" mat-cell *matCellDef="let row"> {{row.imei_gps}} </td>

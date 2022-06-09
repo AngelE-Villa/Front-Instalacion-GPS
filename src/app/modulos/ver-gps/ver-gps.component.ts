@@ -13,7 +13,7 @@ import {GpsService} from "../../servicios/GpsService";
 })
 export class VerGpsComponent implements OnInit {
 
-  columnas: string[] = ['id', 'num_gps', 'num_sim', 'imei','editar','eliminar'];
+  columnas: string[] = ['id', 'num_gps', 'num_sim', 'imei' , 'estado','editar','eliminar'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
