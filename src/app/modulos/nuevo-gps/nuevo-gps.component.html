@@ -4,19 +4,24 @@
     <mat-card class="example-card ">
       <mat-card-title class="mediat">Datos GPS</mat-card-title>
       <ng-template matStepLabel >Datos de GPS de APECS</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Numero de GPS" name="cedula" [(ngModel)]="gps.num_gps" required/>
+
+
+      <mat-form-field  appearance="outline">
+        <mat-label>Numero de GPS</mat-label>
+        <input matInput name="numero_gps" [(ngModel)]="gps.num_gps" required/>
       </mat-form-field>
       <br>
-      <mat-form-field>
-        <input matInput placeholder="Numero SIM" name="nombre" [(ngModel)]="gps.num_sim"  required/>
+      <mat-form-field appearance="outline">
+        <mat-label>Numero SIM</mat-label>
+        <input matInput name="sim" [(ngModel)]="gps.num_sim"  required/>
       </mat-form-field>
       <br>
-      <mat-form-field>
-        <input matInput placeholder="Imei" name="direccion" [(ngModel)]="gps.imei_gps" required/>
+      <mat-form-field appearance="outline">
+        <mat-label>Imei</mat-label>
+        <input matInput name="Imei" [(ngModel)]="gps.imei_gps" required/>
       </mat-form-field>
       <br>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Modelo GPS</mat-label>
         <mat-select [(ngModel)]="modelo.id_modelo" name="modelo" >
           <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id_modelo">

@@ -4,6 +4,11 @@
   <mat-card-subtitle>GPS para el servicio de APECS</mat-card-subtitle>
 </div>
 
+<mat-form-field class="BusquedaGpss">
+  <mat-label>Search</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+</mat-form-field>
+
 <div class="mat-elevation-z8 center">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 " #tabla1>
 

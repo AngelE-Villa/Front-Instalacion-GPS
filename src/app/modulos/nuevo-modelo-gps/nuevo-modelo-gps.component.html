@@ -5,6 +5,8 @@
 </div>
 
 <button class="btn btn-primary btncrear"  (click)="abrirdialogoC()">Crear Nuevo Modelo</button>
+
+
 <div class="mat-elevation-z8 center">
 
   <table mat-table [dataSource]="dataSourceM" class="mat-elevation-z8 " #tabla1>
@@ -46,8 +48,9 @@
 </div>
 <ng-template #dialogRef >
   <h2> {{titulo}} </h2>
-  <mat-form-field>
-    <input matInput placeholder="Nombre" name="cliente" [(ngModel)]="modelo.nombre" required/>
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput name="nombre" [(ngModel)]="modelo.nombre" required/>
   </mat-form-field>
   <br>
   <button mat-button mat-dialog-close>Cancelar</button>
@@ -58,8 +61,9 @@
 <ng-template #dialogRefAc >
   <h2> Acciones de modelo {{accion.modelo.nombre}} </h2>
   <br>
-  <mat-form-field>
-    <input matInput placeholder="Nombre" name="cliente" [(ngModel)]="accionSet.nombre" required/>
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput name="cliente" [(ngModel)]="accionSet.nombre" required/>
   </mat-form-field>
   <button (click)="agregarAcciones()"><mat-icon>queue</mat-icon></button>
   <br>

@@ -4,28 +4,34 @@
     <mat-card class="example-card ">
       <mat-card-title class="mediat">Datos Vehiculos</mat-card-title>
       <ng-template matStepLabel >Datos Vehiculos</ng-template>
-      <mat-form-field>
-        <input matInput placeholder="Placa" name="placa"  [(ngModel)]="vehiculo.placa"  required/>
+      <mat-form-field appearance="outline">
+        <mat-label>Placa</mat-label>
+        <input matInput name="placa"  [(ngModel)]="vehiculo.placa"  required/>
       </mat-form-field>
       <br>
-      <mat-form-field>
-        <input matInput placeholder="clave" name="clave" [(ngModel)]="vehiculo.clave" required/>
+      <mat-form-field appearance="outline">
+        <mat-label>clave</mat-label>
+        <input matInput  name="clave" [(ngModel)]="vehiculo.clave" required/>
       </mat-form-field>
       <br>
-      <mat-form-field>
-        <input matInput  placeholder="Año" name="inio" [(ngModel)]="vehiculo.anio" required/>
+      <mat-form-field appearance="outline">
+        <mat-label>Año</mat-label>
+        <input matInput  name="inio" [(ngModel)]="vehiculo.anio" required/>
       </mat-form-field>
       <br>
-      <mat-form-field>
-        <input matInput placeholder="Kilometro" name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
+      <mat-form-field appearance="outline">
+        <mat-label>Kilometro</mat-label>
+        <input matInput  name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
       </mat-form-field>
       <br>
-      <mat-form-field>
-        <input matInput placeholder="Vehiculo" name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
+      <mat-form-field appearance="outline">
+        <mat-label>Vehiculo</mat-label>
+        <input matInput  name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
       </mat-form-field>
       <br>
-      <mat-form-field>
-        <input matInput placeholder="Cliente" name="cliente" [(ngModel)]="vehiculo.cliente.nombre" required/>
+      <mat-form-field appearance="outline">
+        <mat-label>Cliente</mat-label>
+        <input matInput  name="cliente" [(ngModel)]="vehiculo.cliente.nombre" required/>
       </mat-form-field>
       <br>
       <mat-card-actions style="text-align: center">
