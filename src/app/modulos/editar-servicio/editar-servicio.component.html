@@ -41,15 +41,29 @@
         </mat-card-content>
         <mat-card-content *ngIf="editv">
           <mat-card-title>Cambio de Vehiculo</mat-card-title>
-          <br><br>
-          <mat-card-subtitle>Datos del GPS</mat-card-subtitle>
-          <br><br>
+          <br>
+          <span><strong>Datos del GPS</strong></span>
+          <br>
           <span>ID: {{detalleid.id_documentodescripcion}}</span><br>
           <span>Imei: {{detalleid.gps.imei_gps}}</span><br>
-          <span>Modelo: {{detalleid.gps.modelo.nombre}}</span>
-          <br><br>
+          <span>Modelo: {{detalleid.gps.modelo.nombre}}</span><br><br>
+
+          <div *ngIf="vernuvehiculo">
+            <span><strong>Vehiculo a Asignar</strong> </span><br>
+            <div *ngFor="let nv of listadetallen">
+              <span>Placa: {{nv.vehiculo.placa}}</span><br>
+              <span>Vehiculo: {{nv.vehiculo.vehiculo}}</span><br><br>
+            </div>
+          </div>
+
           <button class="btnEli" (click)="cancelarnvehiculo()">Cancelar</button>
-          <button class="btnEdi" (click)="abrirdialogoEditServiciovehiculo(detalleid.vehiculo.cliente.id_persona,detalleid)">Seleccionar vehiculo</button>
+          <span *ngIf="!vernuvehiculo">
+            <button class="btnEdi" (click)="abrirdialogoEditServiciovehiculo(detalleid.vehiculo.cliente.id_persona,detalleid)">Seleccionar vehiculo</button>
+          </span>
+          <span *ngIf="vernuvehiculo">
+            <button class="btnEdi" (click)="guardarcambios(detalleid.id_documentodescripcion)">Guardar Cambios</button>
+          </span>
+          <br><br>
         </mat-card-content>
         <mat-card-content *ngIf="editgps">
           <h2>Cambio de Vehiculo</h2>
@@ -97,7 +111,7 @@
     aria-labelledby="example-radio-group-label"
     class="example-radio-group"
     [(ngModel)]="vehiculo.id_vehiculo">
-    <mat-radio-button class="example-radio-button" *ngFor="let v of listvehiuclosCli" [value]="v.id_vehiculo">
+    <mat-radio-button class="example-radio-button" *ngFor="let v of listvehiuclosCliSinSer" [value]="v.id_vehiculo">
       Placa: {{v.placa}}<br>
       Vehiculos: {{v.vehiculo}}
     </mat-radio-button>

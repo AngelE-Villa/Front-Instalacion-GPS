@@ -26,6 +26,7 @@ export class EditarServicioComponent implements OnInit {
   gps:Gps=new Gps();
   modelo:Modelo=new Modelo();
   vehiculo:Vehiculo=new Vehiculo();
+  vehiculoGet:Vehiculo=new Vehiculo();
 
   @ViewChild('dialogEditServiciogps')
   dialogEditServiciogps!: TemplateRef<any>;
@@ -38,11 +39,13 @@ export class EditarServicioComponent implements OnInit {
 
   listadetalle=[];
   listadetallehistorial=[];
+  listadetallen=[];
 
   cliente:Cliente=new Cliente();
   detalleid:Descripcion;
 
-  listvehiuclosCli=[];
+  listvehiuclosCliSinSer=[];
+
   editarNFechas=false;
   editarNGps=false;
 
@@ -58,6 +61,9 @@ export class EditarServicioComponent implements OnInit {
   editv=false;
   editgps=false;
   allinfo=true;
+
+  vernuvehiculo=false;
+
 
   constructor(private serviceService:ServicioService,
               private route:ActivatedRoute,
@@ -112,11 +118,14 @@ export class EditarServicioComponent implements OnInit {
   editarVehiculo(id_vehiculo:String){
     this.serviceVehiculo.getVehiculo(id_vehiculo).subscribe((data:any)=>{
       this.vehiculo=data;
-      var narray=this.listadetalle.filter((item) => item.vehiculo.id_vehiculo !== id_vehiculo);
-      var harray=this.listadetalle.filter((item) => item.vehiculo.id_vehiculo == id_vehiculo);
-      this.listadetallehistorial=harray;
-      this.listadetalle=narray
-      this.listadetalle.push(this.vehiculo)
+      let nuevovehiculo = new Descripcion(this.detalleedi.documentoservicio,this.detalleid.estado,this.detalleedi.gps, this.vehiculo,this.detalleedi.observacion, this.detalleedi.ubicacion)
+      this.listadetallen.push(nuevovehiculo)
+      this.listadetallehistorial.push(this.detalleedi);
+      this.vernuvehiculo=true;
+      console.log("Nuevo");
+      console.log(this.listadetallen);
+      console.log("Lista Historial");
+      console.log(this.listadetallehistorial);
     })
   }
 
@@ -174,17 +183,31 @@ export class EditarServicioComponent implements OnInit {
 
   abrirdialogoEditServiciovehiculo(idcli:any, det:Descripcion){
     this.detalleedi=det;
-    this.titulo="Seleccione el vehiculo"
-    this.serviceVehiculo.getVehiculoCli(idcli).subscribe(data=>{
-      this.listvehiuclosCli=data;
-      this.dialog.open(this.dialogEditServiciovehiculo);
-    })
+    this.titulo="Seleccione el vehiculo";
+      this.serviceVehiculo.getVehiculoCli(idcli).subscribe(data=>{
+        this.listvehiuclosCliSinSer=data.filter(m=>m.estado=="Activo")
+        this.dialog.open(this.dialogEditServiciovehiculo);
+      })
 
   }
 
-cancelarnvehiculo(){
-  this.editv=false;
-  this.allinfo=true;
-}
+  cancelarnvehiculo(){
+    this.editv=false;
+    this.allinfo=true;
+  }
+
+  guardarcambios(idde:String){
+    for (let nvg of this.listadetallen){
+      nvg.id_documentodescripcion=idde;
+      this.serviciodescripcion.editarDescrip(nvg,idde).subscribe(d=>{
+        this.vehiculoGet=nvg.vehiculo;
+        this.vehiculoGet.estado="En servicio"
+        this.serviceVehiculo.editarVehiculos(this.vehiculoGet,this.vehiculoGet.id_vehiculo).subscribe(m=>{
+          window.location.reload();
+        })
+      });
+    }
+
+  }
 
 }

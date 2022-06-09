@@ -25,4 +25,8 @@ export class GpsService{
     return this.httpClient.post(this.base_url+"create-gps/", gps);
   }
 
+  editGps(gps:Gps, id:String){
+    return this.httpClient.put(this.base_url+"update-gps/"+id, gps);
+  }
+
 }
