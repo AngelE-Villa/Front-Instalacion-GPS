@@ -67,24 +67,29 @@
 
 <ng-template #dialogNvehiculo >
   <h2> {{titulo}} </h2>
-  <mat-form-field>
-    <input matInput placeholder="Placa" name="placa"  [(ngModel)]="vehiculo.placa"  required/>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Placa</mat-label>
+    <input matInput name="placa"  [(ngModel)]="vehiculo.placa"  required/>
   </mat-form-field>
   <br>
-  <mat-form-field>
-    <input matInput placeholder="clave" name="clave" [(ngModel)]="vehiculo.clave" required/>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Clave</mat-label>
+    <input matInput name="clave" [(ngModel)]="vehiculo.clave" required/>
   </mat-form-field>
   <br>
-  <mat-form-field>
-    <input matInput  placeholder="Año" name="inio" [(ngModel)]="vehiculo.anio" required/>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Año</mat-label>
+    <input matInput name="inio" [(ngModel)]="vehiculo.anio" required/>
   </mat-form-field>
   <br>
-  <mat-form-field>
-    <input matInput placeholder="Kilometro" name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Kilometro</mat-label>
+    <input matInput  name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
   </mat-form-field>
   <br>
-  <mat-form-field>
-    <input matInput placeholder="Vehiculo" name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Vehiculo</mat-label>
+    <input matInput name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
   </mat-form-field>
   <br>
   <button mat-button mat-dialog-close>Cancelar</button>

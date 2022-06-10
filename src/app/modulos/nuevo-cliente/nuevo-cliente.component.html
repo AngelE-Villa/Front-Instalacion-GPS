@@ -4,40 +4,38 @@
   <mat-card class="example-card ">
     <mat-card-title class="mediat">Datos Cliente</mat-card-title>
     <ng-template matStepLabel >Datos Cliente</ng-template>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" style="width: 30%; margin-left: 5px">
       <mat-label>Cedula</mat-label>
       <input matInput  name="cedula" [(ngModel)]="cliente.cedula" required/>
     </mat-form-field>
-    <br>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field appearance="outline" style="width: 50%; margin-left: 5px">
       <mat-label>Nombre</mat-label>
       <input matInput name="nombre" [(ngModel)]="cliente.nombre"  required/>
     </mat-form-field>
-    <br>
-    <mat-form-field appearance="outline">
-      <mat-label>Dirección</mat-label>
-      <input matInput  name="direccion" [(ngModel)]="cliente.direccion" required/>
-    </mat-form-field>
-    <br>
-    <!-----nuevos formatos--------->
-    <mat-form-field appearance="outline">
+
+    <mat-form-field appearance="outline" style="width: 30%; margin-left: 5px">
       <mat-label>Telefono</mat-label>
       <input matInput  name="telefono" [(ngModel)]="cliente.telefono" required/>
     </mat-form-field>
+
+    <mat-form-field  appearance="outline" style="width: 50%; margin-left: 5px">
+      <mat-label>Dirección</mat-label>
+      <input matInput  name="direccion" [(ngModel)]="cliente.direccion" required/>
+    </mat-form-field>
+
     <br>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" style="width: 80%">
       <mat-label>Correo</mat-label>
       <input matInput  name="correo" [(ngModel)]="cliente.correo" required/>
     </mat-form-field>
-    <br>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field  appearance="outline" style="width: 40%; margin-left: 5px">
       <mat-label>Contacto</mat-label>
       <input matInput name="contacto" [(ngModel)]="cliente.contacto" required/>
     </mat-form-field>
-    <br>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" style="width: 40%; margin-left: 5px">
       <mat-label>Ciudad</mat-label>
       <input matInput name="ciudad" [(ngModel)]="cliente.ciudad" required/>
     </mat-form-field>
