@@ -237,7 +237,7 @@ export class NuevoServicioComponent implements OnInit {
   vehiculosporCliente(cedula:String){
     console.log(this.cliente)
     this.servicioVehiculo.getVehiculos().subscribe((value:any)=>{
-      this.listavehiculos=value.filter((data:any)=>data.cliente.cedula==cedula)
+      this.listavehiculos=value.filter((data:any)=>data.cliente.cedula==cedula && data.estado=="Activo")
     })
   }
 
