@@ -16,7 +16,6 @@ export class RegistroUsuariosComponent implements OnInit {
 
   user:User=new User();
   userGet:User=new User();
-  id_rol :any;
   rol: Rol = new Rol();
 
   rol_us: Rol_Usuario = new Rol_Usuario();
@@ -38,26 +37,26 @@ export class RegistroUsuariosComponent implements OnInit {
   accion:Boolean=true;
 
   formUser = new FormGroup({
-    nombre: new FormControl('',Validators.required),
-    direccion: new FormControl('',Validators.required),
-    telefono: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
     correo: new FormControl('',[Validators.required, Validators.email]),
     contra: new FormControl('',Validators.required),
+    rol:new FormControl('',Validators.required),
   });
 
   regsitrar(){
-    this.user.estado="Activo"
-    console.log(this.id_rol)
-    /* this.serviciouser.crearUser(this.user).subscribe((data:any)=>{
+    this.user.estado="Activo";
+    this.rol_us.usuario=this.user;
+    this.rol_us.rol=this.rol;
+    console.log(this.rol_us)
+    this.serviciouser.crearUser(this.user).subscribe((data:any)=>{
        this.userGet=data;
-       this.rol_us.usuario=this.userGet.id_persona;
-       this.rol_us.rol=this.rol.id;
+       this.rol_us.usuario=this.userGet;
+       this.rol_us.rol=this.rol;
        console.log(this.rol_us)
-     /*this.servicioRol_us.crearRol_Usuario(this.rol_us).subscribe((value)=>{
+     this.servicioRol_us.crearRol_Usuario(this.rol_us).subscribe((value)=>{
          this.router.navigate(['/asignacionroles'])
          console.log(value)
        });
-    })*/
+    })
   }
 
 }
