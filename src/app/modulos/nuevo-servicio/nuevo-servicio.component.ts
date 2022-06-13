@@ -54,6 +54,7 @@ export class NuevoServicioComponent implements OnInit {
   detalle:Descripcion;
   gps: Gps = new Gps();
 
+  listagps=[];
 
   listavehiculos = [];
   listavehiculosAsignados = [];
@@ -133,6 +134,10 @@ export class NuevoServicioComponent implements OnInit {
     this.servicioModelo.getModelos().subscribe((data: any) => {
       this.listaModelo = data;
     })
+    this.listaAcciones.pop();
+    this.servicioGps.getGps().subscribe((value: any) => {
+      this.listagps = value.filter(m=>m.estado=="Activo");
+    })
   }
 
   //1.0 Cambio
@@ -166,27 +171,26 @@ export class NuevoServicioComponent implements OnInit {
     })
   }
   //1.0
-  buscarximei() {
-    this.listaAcciones.pop();
-    this.servicioGps.getGps().subscribe((value: any) => {
-      if (value.filter((data: any) => data.imei_gps == this.buscarimei).length == 0) {
-        console.log("No imei")
-      } else {
-        this.listaAcciones.pop();
-        this.gps = value.find((data: any) => {
-          return data.imei_gps == this.buscarimei
-        })
-
-        this.servicioAcciones.getAcciones().subscribe(data => {
-          this.listaAcciones.pop();
-          for (let ac of data) {
-            if (ac.modelo.id_modelo == this.gps.modelo.id_modelo) {
-              this.listaAcciones.push(ac);
-            }
-          }
-        })
+  flitrarimei($event :any) {
+    this.listaAcciones.pop()
+    this.gps=new Gps();
+    console.log(this.listagps)
+    if (this.listagps.length>0){
+      for (let m of this.listagps){
+        if(m.imei_gps==$event.target.value){
+          this.gps=m;
+        }
       }
-    })
+      this.modelo=this.gps.modelo;
+      this.servicioAcciones.getAcciones().subscribe(data => {
+        this.listaAcciones.pop()
+        for (let ac of data) {
+          if (ac.modelo.id_modelo == this.modelo.id_modelo) {
+            this.listaAcciones.push(ac);
+          }
+        }
+      })
+    }
   }
 
   //1.0
@@ -194,17 +198,22 @@ export class NuevoServicioComponent implements OnInit {
     this.servicioVehiculo.getVehiculo(id_vehiculo).subscribe((data:any)=>{
       this.vehiculo=data;
     })
-    this.dialog.open(this.dialogRef);
+    this.gps=new Gps();
+    this.ubica="";
+    this.obser="";
+    while (this.listaAcciones.length>0){
+      this.listaAcciones.pop();
+    }
+    if (this.listaAcciones.length<1) {
+      this.dialog.open(this.dialogRef);
+    }
   }
 
   //1.0
-  Agregarlista(id_gps:any){
+  Agregarlista(){
       console.log(this.servicio)
       console.log(this.vehiculo)
       this.dialog.closeAll();
-      this.servicioGps.getgps(id_gps).subscribe((value:any)=>{
-        this.gps=value;
-
         var narray=this.listavehiculos.filter((item) => item.id_vehiculo !== this.vehiculo.id_vehiculo);
         this.listavehiculos=narray
         this.listavehiculosAsignados.push(new Descripcion(this.servicio,"Activo",
@@ -213,7 +222,6 @@ export class NuevoServicioComponent implements OnInit {
                                                           this.obser,
                                                           this.ubica));
         console.log(this.listavehiculosAsignados)
-      });
   }
 
   //1.0
@@ -235,30 +243,37 @@ export class NuevoServicioComponent implements OnInit {
 
 
   guardaServicio(){
-    this.servicio.estado="Activo";
+    this.servicio.estado="Desactivado";
+    let cont=0;
     this.servicio.idplan=this.id_plan;
-    console.log(this.servicio)
       this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
-        this.servicioGet=data;
+       this.servicioGet=data;
         for (let des of this.listavehiculosAsignados){
           this.vehiculoGet=des.vehiculo;
           this.gpsGet=des.gps;
-          this.detalle=new Descripcion(this.servicioGet,des.estado,des.gps,this.vehiculoGet,des.observacion,des.ubicacion)
-          this.servicioGet.estado="En servicio";
+          this.detalle=new Descripcion(this.servicioGet,des.estado,this.gpsGet,this.vehiculoGet,des.observacion,des.ubicacion)
+          console.log(this.detalle)
+          this.detalle.fecha_inst=new Date();
+          this.vehiculoGet.estado="En servicio";
+          this.gpsGet.estado="En servicio";
           this.servicioVehiculo.editarVehiculos(this.vehiculoGet,this.vehiculoGet.id_vehiculo).subscribe(m=>{
-            this.gpsGet.estado="En servicio";
-            this.servicioGps.editGps(this.gpsGet,this.gpsGet.id_gps).subscribe(n=>{
-              this.servicioDescripcion.crearDescrip(this.detalle).subscribe((data:any)=>{
-                this.snackBar.open("SERVICIO CREADO", "",{
-                  duration: 1 * 1000,
-                });
-                this.router.navigate(['/verservicios'])
-              })
-            })
-
+            console.log("gps "+cont)
           })
-        }
-      })
+          this.servicioGps.editGps(this.gpsGet,this.gpsGet.id_gps).subscribe(n=>{
+            console.log("vehiculo "+cont)
+          })
+          this.servicioDescripcion.crearDescrip(this.detalle).subscribe((d:any)=>{
+            console.log(d)
+                    cont++;
+                  if(cont==this.listavehiculosAsignados.length){
+                    this.snackBar.open("SERVICIO CREADO", "",{
+                      duration: 1 * 1000,
+                    });
+                    this.router.navigate(['/verservicios'])
+                  }
+            })
+          }
+     })
   }
 
 

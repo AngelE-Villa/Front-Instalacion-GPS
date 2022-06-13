@@ -162,10 +162,12 @@
 <ng-template #dialogRef >
   <h2> Ingrese el Imei </h2>
   <br>
-  <mat-form-field>
-    <input matInput placeholder="Numero de Imei" name="imei" [(ngModel)]="buscarimei" required/>
+  <mat-form-field appearance="legacy">
+      <mat-label>Imei</mat-label>
+      <input (keyup)="flitrarimei($event)" matInput placeholder="Numero de Imei" required/>
+      <mat-icon>search</mat-icon>
+      <mat-hint>Hint</mat-hint>
   </mat-form-field>
-  <button (click)="buscarximei()"><mat-icon>search</mat-icon></button>
   <br>
   <h4>GPS</h4>
   <span>Imei: {{gps.imei_gps}}</span><br>
@@ -185,6 +187,6 @@
   </mat-form-field>
   <br>
   <button mat-button mat-dialog-close>Cerrar</button>
-  <button class="btn btn-primary" (click)="Agregarlista(gps.id_gps)"><mat-icon>queue</mat-icon></button>
+  <button class="btn btn-primary" (click)="Agregarlista()"><mat-icon>queue</mat-icon></button>
 </ng-template>
 

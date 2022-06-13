@@ -27,6 +27,8 @@ export class EditarServicioComponent implements OnInit {
   servicio:Servicio=new Servicio();
   servicioSet:Servicio=new Servicio();
   gps:Gps=new Gps();
+  gpsedit:Gps=new Gps();
+  gpsGet:Gps=new Gps();
   modelo:Modelo=new Modelo();
   vehiculo:Vehiculo=new Vehiculo();
   vehiculoGet:Vehiculo=new Vehiculo();
@@ -50,22 +52,17 @@ export class EditarServicioComponent implements OnInit {
   listadetallen=[];
   listadetallehistoriaGet=[];
 
+  listagps=[];
   cliente:Cliente=new Cliente();
   detalleid:Descripcion;
 
   listvehiuclosCliSinSer=[];
 
-  editarNFechas=false;
-  editarNGps=false;
 
   listaacciones=[];
 
   titulo:any;
   id:any;
-
-  cantidad:any;
-
-  buscarimei:any;
 
   editv=false;
   editgps=false;
@@ -114,20 +111,16 @@ export class EditarServicioComponent implements OnInit {
     })
   }
 
-  editarGps(){
-   this.servicioSet=this.servicio;
-    this.buscarimei=this.detalle.gps.imei_gps;
-    this.editarNGps=true;
-    this.editarNFechas=false;
-    this.modelo=this.detalle.gps.modelo;
-    this.servicioAcciones.getAcciones().subscribe(data => {
-      this.listaacciones.pop()
-      for (let ac of data) {
-        if (ac.modelo.id_modelo == this.modelo.id_modelo) {
-          this.listaacciones.push(ac);
-        }
-      }
-    })
+  seleccionarGps(){
+    this.detalleedi=this.detalleid;
+      let nuevopgs = new Descripcion(this.detalleedi.documentoservicio,this.detalleid.estado,this.gps, this.detalleedi.vehiculo,this.detalleedi.observacion, this.detalleedi.ubicacion)
+      this.listadetallen.push(nuevopgs)
+      this.listadetallehistorial.push(this.detalleedi);
+      this.vernuvegps=true;
+      console.log("Nuevo");
+      console.log(this.listadetallen);
+      console.log("Lista Historial");
+      console.log(this.listadetallehistorial);
   }
 
   editarVehiculo(id_vehiculo:String){
@@ -144,38 +137,52 @@ export class EditarServicioComponent implements OnInit {
     })
   }
 
-  buscarximei() {
+  flitrarimei($event :any) {
+    this.gps=new Gps();
     this.listaacciones.pop();
     this.servicioGps.getGps().subscribe((value: any) => {
-      if (value.filter((data: any) => data.imei_gps == this.buscarimei).length == 0) {
-        console.log("No imei")
-      } else {
-        this.gps = value.find((data: any) => {
-          return data.imei_gps == this.buscarimei
-        })
-
-        this.modelo=this.gps.modelo;
-
-        this.servicioAcciones.getAcciones().subscribe(data => {
-          this.listaacciones.pop()
-          for (let ac of data) {
-            if (ac.modelo.id_modelo == this.modelo.id_modelo) {
-              this.listaacciones.push(ac);
-            }
-          }
-        })
-      }
+        this.listagps = value.filter(m=>m.estado=="Activo");
     })
+    console.log(this.listagps)
+    if (this.listagps.length>0){
+      for (let m of this.listagps){
+        if(m.imei_gps==$event.target.value){
+          this.gps=m;
+        }
+      }
+      this.modelo=this.gps.modelo;
+      this.servicioAcciones.getAcciones().subscribe(data => {
+        this.listaacciones.pop()
+        for (let ac of data) {
+          if (ac.modelo.id_modelo == this.modelo.id_modelo) {
+            this.listaacciones.push(ac);
+          }
+        }
+      })
+    }
   }
 
   //Abrir
-  abrirdialogoEditServiciogps(iddetalle:any){
+  abrirdialogoEditServiciogps(){
     this.titulo="Editar GPS"
-    this.serviciodescripcion.getByidDescrip(iddetalle).subscribe((data1:any)=>{
-      this.detalleid=data1;
-      console.log(this.listadetalle)
+    this.gps=new Gps();
+    while (this.listaacciones.length>0){
+      this.listaacciones.pop();
+    }
+    if (this.listaacciones.length<1){
       this.dialog.open(this.dialogEditServiciogps);
+    }
+
+  }
+
+  abrirdialogoEditServiciovehiculo(idcli:any, det:Descripcion){
+    this.detalleedi=det;
+    this.titulo="Seleccione el vehiculo";
+    this.serviceVehiculo.getVehiculoCli(idcli).subscribe(data=>{
+      this.listvehiuclosCliSinSer=data.filter(m=>m.estado=="Activo")
+      this.dialog.open(this.dialogEditServiciovehiculo);
     })
+
   }
 
   edithtmlvehiculo(iddetalle:any){
@@ -196,15 +203,6 @@ export class EditarServicioComponent implements OnInit {
     })
   }
 
-  abrirdialogoEditServiciovehiculo(idcli:any, det:Descripcion){
-    this.detalleedi=det;
-    this.titulo="Seleccione el vehiculo";
-      this.serviceVehiculo.getVehiculoCli(idcli).subscribe(data=>{
-        this.listvehiuclosCliSinSer=data.filter(m=>m.estado=="Activo")
-        this.dialog.open(this.dialogEditServiciovehiculo);
-      })
-
-  }
 
   cancelarnvehiculo() {
       this.editv=false;
@@ -212,6 +210,14 @@ export class EditarServicioComponent implements OnInit {
       this.listadetallen.pop();
       this.listadetallehistorial.pop();
       this.vernuvehiculo=false;
+  }
+
+  cancelarngps() {
+    this.editgps=false;
+    this.allinfo=true;
+    this.listadetallen.pop();
+    this.listadetallehistorial.pop();
+    this.vernuvegps=false;
   }
 
   guardarcambiosVehiculo(idde:String){
@@ -242,6 +248,36 @@ export class EditarServicioComponent implements OnInit {
           });
         }
       })
+  }
+
+  guardarcambiosGps(idde:String){
+    this.gpsedit=this.detalleid.gps;
+    this.gpsedit.estado="Activo";
+    this.servicioGps.editGps(this.gpsedit,this.gpsedit.id_gps).subscribe(l=>{
+      for (let nvg of this.listadetallen){
+        nvg.estado="Activo"
+        nvg.fecha_inst=new Date();
+        this.serviciodescripcion.crearDescrip(nvg).subscribe(d=>{
+          this.gpsGet=nvg.gps;
+          this.gpsGet.estado="En servicio"
+          this.servicioGps.editGps(this.gpsGet,this.gpsGet.id_gps).subscribe(m=> {
+            for (let dh of this.listadetallehistorial){
+              this.historial.documentodescripcion=dh;
+              this.historial.nombre="Gps";
+              this.historial.fecha_cam=new Date();
+              this.serviceHistorial.crearHistorial(this.historial).subscribe(h=>{
+                dh.estado="Cambiado"
+                this.serviciodescripcion.editarDescrip(dh,idde).subscribe(dated=>{
+                  window.location.reload();
+                })
+
+              })
+            }
+
+          })
+        });
+      }
+    })
   }
 
 }

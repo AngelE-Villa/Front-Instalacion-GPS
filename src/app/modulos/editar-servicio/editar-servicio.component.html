@@ -106,7 +106,7 @@
           <div *ngIf="vernuvegps">
             <span><strong>GPS a Asignar</strong> </span><br>
             <div *ngFor="let nv of listadetallen">
-              <span>Imei: {{nv.gps.imei}}</span><br>
+              <span>Imei: {{nv.gps.imei_gps}}</span><br>
               <span>Modelo: {{nv.gps.modelo.nombre}}</span><br><br>
             </div>
             <mat-form-field appearance="outline">
@@ -114,13 +114,13 @@
               <input matInput  name="observacion" [(ngModel)]="historial.observaciones" required/>
             </mat-form-field>
           </div>
-
-          <button class="btnEli" (click)="cancelarnvehiculo()">Cancelar</button>
+          <br>
+          <button class="btnEli" (click)="cancelarngps()">Cancelar</button>
           <span *ngIf="!vernuvegps">
-            <button class="btnEdi" (click)="abrirdialogoEditServiciogps(detalleid.id_documentodescripcion)">Buscar GPS</button>
+            <button class="btnEdi" (click)="abrirdialogoEditServiciogps()">Buscar GPS</button>
           </span>
           <span *ngIf="vernuvegps">
-            <button class="btnEdi" (click)="guardarcambiosVehiculo(detalleid.id_documentodescripcion)">Guardar Cambios</button>
+            <button class="btnEdi" (click)="guardarcambiosGps(detalleid.id_documentodescripcion)">Guardar Cambios</button>
           </span>
           <br><br>
         </mat-card-content>
@@ -136,12 +136,13 @@
 
 <ng-template #dialogEditServiciogps >
   <h2> {{titulo}} </h2>
-  <h2> Ingrese el Imei </h2>
   <br>
-  <mat-form-field>
-    <input matInput placeholder="Numero de Imei" name="imei" [(ngModel)]="buscarimei" required/>
+  <mat-form-field appearance="legacy">
+    <mat-label>Imei</mat-label>
+    <input (keyup)="flitrarimei($event)" matInput placeholder="Numero de Imei" required/>
+    <mat-icon>search</mat-icon>
+    <mat-hint>Hint</mat-hint>
   </mat-form-field>
-  <button (click)="buscarximei()"><mat-icon>search</mat-icon></button>
   <br>
   <h4>GPS</h4>
   <span>Imei: {{gps.imei_gps}}</span><br>
@@ -153,7 +154,7 @@
 
   <br>
   <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-button mat-dialog-close   (click)="editarGps()">Guardar Cambios</button>
+  <button mat-button mat-dialog-close   (click)="seleccionarGps()">Seleccionar</button>
 
 </ng-template>
 
