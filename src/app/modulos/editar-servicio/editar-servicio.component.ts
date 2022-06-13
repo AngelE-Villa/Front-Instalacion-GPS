@@ -193,7 +193,7 @@ export class EditarServicioComponent implements OnInit {
       this.allinfo=false
     })
   }
-
+//Edit
   edithtmlgps(iddetalle:any){
     this.titulo="Editar GPS"
     this.serviciodescripcion.getByidDescrip(iddetalle).subscribe((data1:any)=>{
