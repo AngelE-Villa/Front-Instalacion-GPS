@@ -88,10 +88,15 @@ export class VerVehiculosComponent implements OnInit {
 
 
   abrirdialogoVehiculos(){
+
     this.editing=false;
     this.creating=true;
     this.titulo="Crear Vehiculos"
-    this.dialog.open(this.dialogNvehiculo);
+    this.dialog.open(this.dialogNvehiculo,{
+      height: '70%',
+      width: '30%',
+    });
+
   }
 
   crearVehiculo(){

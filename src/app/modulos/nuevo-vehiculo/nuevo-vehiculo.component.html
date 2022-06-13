@@ -2,17 +2,23 @@
 <div class="center">
   <form>
     <mat-card class="example-card ">
+      <div class="row">
       <mat-card-title class="mediat">Datos Vehiculos</mat-card-title>
       <ng-template matStepLabel >Datos Vehiculos</ng-template>
-      <mat-form-field appearance="outline">
+
+        <div class="col">
+      <mat-form-field appearance="outline" style="width: 90%">
         <mat-label>Placa</mat-label>
         <input matInput name="placa"  [(ngModel)]="vehiculo.placa"  required/>
       </mat-form-field>
-      <br>
-      <mat-form-field appearance="outline">
+          <br>
+        </div>
+        <div class="col">
+      <mat-form-field appearance="outline" style="width: 90%">
         <mat-label>clave</mat-label>
         <input matInput  name="clave" [(ngModel)]="vehiculo.clave" required/>
       </mat-form-field>
+        </div>
       <br>
       <mat-form-field appearance="outline">
         <mat-label>Año</mat-label>
@@ -38,7 +44,9 @@
         <button  mat-raised-button color="primary"  class="btniniciarSesion" (click)="Guardar()" >GUARDAR</button>
       </mat-card-actions>
       <br>
+      </div>
     </mat-card>
+
 
   </form>
 </div>
