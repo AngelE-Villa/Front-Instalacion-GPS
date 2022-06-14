@@ -17,7 +17,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class VerVehiculosComponent implements OnInit {
 
-  columnas: string[] = ['id', 'placa', 'clave', 'vehiculo', 'año','kilometraje','cliente','editar','eliminar'];
+  columnas: string[] = ['id', 'placa', 'clave', 'vehiculo', 'año','kilometraje','estado','editar','eliminar'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 

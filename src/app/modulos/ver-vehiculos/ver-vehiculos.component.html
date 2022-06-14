@@ -10,7 +10,7 @@
   <mat-label>Search</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
 </mat-form-field>
-
+<!----tabla---->
 <div class="mat-elevation-z8 center">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 " #tabla1>
 
@@ -44,9 +44,9 @@
       <td class="media1" mat-cell *matCellDef="let articulosVv"> {{articulosVv.kilometraje}} </td>
     </ng-container>
 
-    <ng-container  matColumnDef="cliente">
-      <th class="titulo media1" mat-header-cell *matHeaderCellDef> Cliente</th>
-      <td class="media1" mat-cell *matCellDef="let articulosVv"> {{articulosVv.cliente.nombre}} </td>
+    <ng-container  matColumnDef="estado">
+      <th class="titulo media1" mat-header-cell *matHeaderCellDef>Estado</th>
+      <td class="media1" mat-cell *matCellDef="let articulosVv"> {{articulosVv.estado}} </td>
     </ng-container>
 
     <ng-container matColumnDef="editar">
