@@ -1,0 +1,24 @@
+.rol{
+  margin: 5% auto;
+  width: 60%;
+}
+.rolButtom{
+  color: #5b5050;
+  text-align: revert;
+  font-size: 20px;
+  background-size: 100%;
+  width: 100%;
+  height: 100%;
+
+}
+
+.example-card {
+  margin: 1% auto;
+  max-width: 400px;
+}
+.example-header-image {
+  background-image: url('../../../assets/Imagenes/a.png');
+  background-size: cover;
+}
+
+
