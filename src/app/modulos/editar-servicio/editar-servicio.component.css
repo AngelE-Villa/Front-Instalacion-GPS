@@ -33,6 +33,19 @@ button{
   border: 1px solid;
 }
 
+table {
+  width: 100%;
+}
+
+.width-full {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
 .example-radio-group {
   display: flex;
   flex-direction: column;

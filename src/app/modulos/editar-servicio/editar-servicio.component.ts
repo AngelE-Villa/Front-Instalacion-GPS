@@ -16,6 +16,8 @@ import {Cliente} from "../../modelos/Cliente";
 import {HistorialService} from "../../servicios/HistorialService";
 import {Historial} from "../../modelos/Historial";
 import {withModule} from "@angular/core/testing";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-editar-servicio',
@@ -35,6 +37,12 @@ export class EditarServicioComponent implements OnInit {
   historial:Historial=new Historial();
   vehiculoedit:Vehiculo=new Vehiculo();
 
+  displayedColumns: string[] = ['id', 'placa', 'vehiculo', 'imei', 'modelo', 'cgps','cvehiculo'];
+  dataSource: MatTableDataSource<Descripcion>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   //Historial
   vehiculoHistorial:Vehiculo=new Vehiculo();
 
@@ -47,7 +55,7 @@ export class EditarServicioComponent implements OnInit {
   detalle:Descripcion;
   detalleedi:Descripcion;
 
-  listadetalle=[];
+  listadetalle:Array<Descripcion>=[];
   listadetallehistorial=[];
   listadetallen=[];
   listadetallehistoriaGet=[];
@@ -90,8 +98,13 @@ export class EditarServicioComponent implements OnInit {
     this.id=this.route.snapshot.params['id'];
     if (this.id){
       this.serviciodescripcion.getDescrip().subscribe(data=>{
-          this.listadetalle=data.filter(m=>m.documentoservicio.id_documentoservicio==this.id && m.estado=="Activo")
-          let conta=0;
+        this.listadetalle=data.filter(m=>m.documentoservicio.id_documentoservicio==this.id && m.estado=="Activo")
+
+        this.dataSource = new MatTableDataSource(this.listadetalle);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        let conta=0;
           for (let cli of this.listadetalle){
             if (conta==0){
               this.detalle=cli;
@@ -109,6 +122,15 @@ export class EditarServicioComponent implements OnInit {
     this.serviceService.getService(this.id).subscribe(value => {
       this.servicio=value;
     })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   seleccionarGps(){

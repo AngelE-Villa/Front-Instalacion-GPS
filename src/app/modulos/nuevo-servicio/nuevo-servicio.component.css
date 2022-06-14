@@ -3,32 +3,28 @@
   text-align: center;
   margin: 1% auto;
 }
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5%;
+}
+
+.step{
+  position: fixed;
+}
+
+td{
+  border: 1px solid;
+}
 .example-viewport {
   height: 200px;
   width: auto;
 }
-.mat-step {
-  margin-top: 1%;
-  padding: 0;
-  float: right;
-}
 
-.cabecera{
-  min-height:250px;
+ng-template{
+  position: fixed;
 }
-.izquierda{
-  text-align: start;
-  height:50%;
-  float:left;
-  width:50%;
-}
-.derecha{
-  height:50%;
-  float:right;
-  width:50%;
-  text-align: start;
-}
-
 .titulo{
   text-align: center;
   font-weight: bold;
@@ -37,10 +33,6 @@
 
 mat-form-field {
   width: 60%;
-}
-.example-viewport {
-  height: 200px;
-  width: auto;
 }
 
 .mediat{

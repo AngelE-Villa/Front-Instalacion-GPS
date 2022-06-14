@@ -17,7 +17,6 @@ import {VehiculoService} from "../../servicios/VehiculoService";
 import {DescripcionService} from "../../servicios/DescripcionService";
 import {Gps} from "../../modelos/Gps";
 import {GpsService} from "../../servicios/GpsService";
-import {MatSelectionListChange} from "@angular/material/list";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DatePipe} from "@angular/common";
@@ -40,11 +39,6 @@ export class NuevoServicioComponent implements OnInit {
   infocli = false;
   buscarclienteB = true;
 
-  infovehiculo=false;
-  seleccionvehiculo=true;
-
-  //busqueda
-  buscarimei?: String;
   buscarcliente?: String;
 
   cliente: Cliente = new Cliente();

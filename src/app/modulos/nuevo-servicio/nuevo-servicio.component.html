@@ -1,13 +1,11 @@
 <div class="center">
-  <mat-card-title>GENERAR DOCUMENTO</mat-card-title>
-  <br>
-  <mat-card-subtitle>Documento de instalación de GPS de APECS</mat-card-subtitle>
+  <mat-card-title>GENERAR DOCUMENTO DE INSTALACIÓN</mat-card-title>
 </div>
+
 <div class="center">
-  <div class="example-card">
     <mat-horizontal-stepper [linear]="isLinear" #stepper>
-      <mat-step >
-          <mat-card class="example-card ">
+      <mat-step>
+          <div>
             <mat-card-title class="mediat">Datos Cliente</mat-card-title>
             <ng-template matStepLabel ><div class="mediast">Datos Cliente</div></ng-template>
             <form class="todostepper" [formGroup]="firstFormGroup">
@@ -31,7 +29,7 @@
                 <br><br>
                 <button class="btn btn-success" (click)="cambioCliente()">Cambiar Cliente</button>
             </div>
-          </mat-card>
+          </div>
           <br>
           <div>
             <button mat-raised-button color="primary"  matStepperNext *ngIf="infocli">Siguiente</button>
@@ -41,71 +39,54 @@
       <mat-step [stepControl]="firstFormGroup">
         <form class="todostepper">
           <ng-template matStepLabel><div class="mediast">Asignación</div></ng-template>
-          <mat-card-title class="mediat">Datos Vehiculo</mat-card-title>
-          <h2>Seleccione un imei para vehiculo</h2>
-          <br>
-          <table class="center">
-            <thead>
-            <th>ID</th>
-            <th>Placa</th>
-            <th>Vehiculo</th>
-            <th>Agregar Imei</th>
+          <div class="grid">
+            <div>
+              <mat-card-title class="mediat">Datos Vehiculo</mat-card-title>
+              <h2>Seleccione un imei para vehiculo</h2>
+              <br>
+              <table class="center">
+                <thead>
+                <th>ID</th>
+                <th>Placa</th>
+                <th>Vehiculo</th>
+                <th>Agregar Imei</th>
 
-            </thead>
-            <tbody *ngFor="let vehiculo of listavehiculos">
-            <td>{{vehiculo.id_vehiculo}}</td>
-            <td>{{vehiculo.placa}}</td>
-            <td>{{vehiculo.vehiculo}}</td>
-            <td><button class="btn btn-primary" (click)="addImei(vehiculo.id_vehiculo)">Add Imei</button></td>
-            </tbody>
-          </table>
-          <br>
-          <h2>Vehiculos a guardar</h2>
-          <br>
-          <table class="center">
-            <thead>
-            <th>ID</th>
-            <th>Placa</th>
-            <th>Vehiculo</th>
-            <th>ID</th>
-            <th>Imei</th>
-            <th>Modelo</th>
-            <th>Quitar</th>
-            </thead>
-            <tbody *ngFor="let det of listavehiculosAsignados">
-            <td>{{det.vehiculo.id_vehiculo}}</td>
-            <td>{{det.vehiculo.placa}}</td>
-            <td>{{det.vehiculo.vehiculo}}</td>
-            <td>{{det.gps.id_gps}}</td>
-            <td>{{det.gps.imei_gps}}</td>
-            <td>{{det.gps.modelo.nombre}}</td>
-            <td><button class="btn btn-primary" (click)="Quitar(det.vehiculo.id_vehiculo)">	<mat-icon>close</mat-icon></button></td>
-            </tbody>
-          </table>
-          <br>
-          <mat-card class="example-card" *ngIf="infovehiculo">
-            <mat-form-field >
-              <input matInput placeholder="Placa"  name="placa"  [(ngModel)]="vehiculo.placa"  required/>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-              <input matInput placeholder="clave"  name="clave" [(ngModel)]="vehiculo.clave" required/>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-              <input matInput  placeholder="Año"  name="anio" [(ngModel)]="vehiculo.anio" required/>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-              <input matInput placeholder="Kilometro" name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-              <input matInput placeholder="Vehiculo" name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
-            </mat-form-field>
-            <br>
-          </mat-card>
-          <br>
+                </thead>
+                <tbody *ngFor="let vehiculo of listavehiculos">
+                <td>{{vehiculo.id_vehiculo}}</td>
+                <td>{{vehiculo.placa}}</td>
+                <td>{{vehiculo.vehiculo}}</td>
+                <td><button class="btn btn-primary" (click)="addImei(vehiculo.id_vehiculo)">Add Imei</button></td>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <h2>Vehiculos a guardar</h2>
+              <br>
+              <table class="center">
+                <thead>
+                <th>ID</th>
+                <th>Placa</th>
+                <th>Vehiculo</th>
+                <th>ID</th>
+                <th>Imei</th>
+                <th>Modelo</th>
+                <th>Quitar</th>
+                </thead>
+                <tbody *ngFor="let det of listavehiculosAsignados">
+                <td>{{det.vehiculo.id_vehiculo}}</td>
+                <td>{{det.vehiculo.placa}}</td>
+                <td>{{det.vehiculo.vehiculo}}</td>
+                <td>{{det.gps.id_gps}}</td>
+                <td>{{det.gps.imei_gps}}</td>
+                <td>{{det.gps.modelo.nombre}}</td>
+                <td><button class="btn btn-danger" (click)="Quitar(det.vehiculo.id_vehiculo)">	<mat-icon>close</mat-icon></button></td>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+          <br><br>
           <div>
             <button mat-raised-button matStepperPrevious color="warn">Atras</button>
             <button mat-raised-button matStepperNext color="accent">Siguente</button>
@@ -156,7 +137,6 @@
 
       </mat-step>
     </mat-horizontal-stepper>
-  </div>
 </div>
 
 <ng-template #dialogRef >
