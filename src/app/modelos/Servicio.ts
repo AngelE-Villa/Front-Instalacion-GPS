@@ -1,4 +1,3 @@
-import {Vehiculo} from "./Vehiculo";
 
 export class Servicio{
   estado: any;
@@ -9,4 +8,7 @@ export class Servicio{
   id_documentoservicio: any;
   costo:any;
   idplan:any;
+  costo_plan:any;
+  tipo_plan:any;
+  fecha_fin_plan:any;
 }
