@@ -27,7 +27,18 @@
     <mat-form-field>
       <input matInput placeholder="Imagen" name="imagen" [(ngModel)]="plan.imagen" required/>
     </mat-form-field>
-
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Descripcion" name="descripcion" [(ngModel)]="plan.descripcion_plan" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Costo Mesual" name="costo mensial" [(ngModel)]="plan.p_costo_mesual" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Estado" name="estado" [(ngModel)]="plan.estado_plan" required/>
+    </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
       <mat-label>Modelo GPS</mat-label>
