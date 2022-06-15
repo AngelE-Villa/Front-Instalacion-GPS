@@ -28,21 +28,36 @@
       <input matInput placeholder="Imagen" name="imagen" [(ngModel)]="plan.imagen" required/>
     </mat-form-field>
     <br>
-    <mat-form-field>
-      <input matInput placeholder="Descripcion" name="descripcion" [(ngModel)]="plan.descripcion_plan" required/>
+
+    <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+      <mat-label>Descripcion</mat-label>
+      <mat-select  [(ngModel)]="plan.descripcion_plan" name="descripcion_p" required>
+        <mat-option value="anual">ANUAL</mat-option>
+        <mat-option value="semestral">SEMESTRAL</mat-option>
+        <mat-option value="cuatrimestral">CUATRIMESTRAL</mat-option>
+        <mat-option value="trimestral">TRIMESTRAL</mat-option>
+        <mat-option value="bimestral">BIMESTRAL</mat-option>
+        <mat-option value="mensual">MENSUAL</mat-option>
+      </mat-select>
     </mat-form-field>
+
     <br>
     <mat-form-field>
-      <input matInput placeholder="Costo Mesual" name="costo mensial" [(ngModel)]="plan.p_costo_mesual" required/>
+      <input matInput placeholder="Costo Mesual" name="costo_mensual" [(ngModel)]="plan.p_costo_mensual" required/>
     </mat-form-field>
     <br>
-    <mat-form-field>
-      <input matInput placeholder="Estado" name="estado" [(ngModel)]="plan.estado_plan" required/>
+
+    <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="plan.estado_plan" name="estado_plan" required>
+        <mat-option value="activo">ACTIVO</mat-option>
+        <mat-option value="inactivo">FUERA DE SERVICIO</mat-option>
+      </mat-select>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
       <mat-label>Modelo GPS</mat-label>
-      <mat-select [(ngModel)]="modelo.id_modelo" name="modelo" >
+      <mat-select [(ngModel)]="modelo.id_modelo" name="modelo" required>
         <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id_modelo">
           {{modelo.nombre}}
         </mat-option>
