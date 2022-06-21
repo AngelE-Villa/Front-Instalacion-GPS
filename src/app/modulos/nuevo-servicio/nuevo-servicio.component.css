@@ -4,11 +4,24 @@
   margin: 1% auto;
 }
 
+.tables{
+  margin-top: 10px;
+}
+
 .grid{
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(150px,auto));
   grid-gap: 5%;
+  grid-auto-flow: dense;
 }
+
+.grids{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px,auto));
+  grid-gap: 5%;
+  grid-auto-flow: dense;
+}
+
 
 .step{
   position: fixed;

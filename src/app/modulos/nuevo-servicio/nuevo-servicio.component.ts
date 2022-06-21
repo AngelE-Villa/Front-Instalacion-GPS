@@ -23,6 +23,8 @@ import {DatePipe} from "@angular/common";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
+import {PlanService} from "../../servicios/PlanService";
+import {Plan} from "../../modelos/Plan";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -35,6 +37,7 @@ export class NuevoServicioComponent implements OnInit {
   //ubis obs
   ubica:any;
   obser:any;
+
 //Boolean
   infocli = false;
   buscarclienteB = true;
@@ -71,6 +74,8 @@ export class NuevoServicioComponent implements OnInit {
 
   id_plan:any;
 
+  plan:Plan=new Plan();
+
   listaModelo: Array<any> = [];
   listaAcciones = [];
   // @ts-ignore
@@ -105,6 +110,7 @@ export class NuevoServicioComponent implements OnInit {
               private servicioCliente: ClienteService,
               private servicioVehiculo: VehiculoService,
               private servicioDescripcion: DescripcionService,
+              private servicioPlan:PlanService,
               private servicioGps: GpsService,
               public dialog: MatDialog,
               private router:Router,
@@ -131,6 +137,14 @@ export class NuevoServicioComponent implements OnInit {
     this.listaAcciones.pop();
     this.servicioGps.getGps().subscribe((value: any) => {
       this.listagps = value.filter(m=>m.estado=="Activo");
+    })
+
+    this.planbyid();
+  }
+
+  planbyid(){
+    this.servicioPlan.getPlan(this.id_plan).subscribe((x:any)=>{
+        this.plan=x;
     })
   }
 
@@ -238,6 +252,13 @@ export class NuevoServicioComponent implements OnInit {
 
   guardaServicio(){
     this.servicio.estado="Desactivado";
+    this.servicio.costo_plan=this.plan.p_costo_mensual;
+    this.servicio.tipo_plan=this.plan.descripcion_plan;
+    this.plan.num_descripcion_p=12;
+    var e = new Date()
+    e.setMonth(e.getMonth() + this.plan.num_descripcion_p)
+    this.servicio.fecha_fin_plan=e.getDate() +"/"+ (e.getMonth()+1) +"/"+ e.getFullYear()
+    console.log(this.servicio.fecha_fin_plan)
     let cont=0;
     this.servicio.idplan=this.id_plan;
       this.servicioService.crearService(this.servicio).subscribe((data:any)=>{

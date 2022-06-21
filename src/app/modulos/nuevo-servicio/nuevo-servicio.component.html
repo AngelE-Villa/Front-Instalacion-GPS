@@ -39,11 +39,10 @@
       <mat-step [stepControl]="firstFormGroup">
         <form class="todostepper">
           <ng-template matStepLabel><div class="mediast">Asignación</div></ng-template>
-          <div class="grid">
-            <div>
+          <div class="grids">
+            <div *ngIf="listavehiculos.length>0">
               <mat-card-title class="mediat">Datos Vehiculo</mat-card-title>
               <h2>Seleccione un imei para vehiculo</h2>
-              <br>
               <table class="center">
                 <thead>
                 <th>ID</th>
@@ -60,9 +59,8 @@
                 </tbody>
               </table>
             </div>
-            <div>
+            <div *ngIf="listavehiculosAsignados.length>0">
               <h2>Vehiculos a guardar</h2>
-              <br>
               <table class="center">
                 <thead>
                 <th>ID</th>
@@ -98,13 +96,21 @@
           <mat-card-title class="mediat">Confirmación</mat-card-title>
           <ng-template matStepLabel><div class="mediast">Confirmación</div></ng-template>
           <mat-card-content>
-            <strong>Información general del servicio:</strong>
-                <h4>CLIENTE:</h4>
-                <p>Cedula: {{cliente.cedula}}</p>
-                <p>Nombre: {{cliente.nombre}}</p>
-                <p>Nombre Contacto: {{cliente.contacto}}</p>
+            <div style="text-align: center">
+              <strong>Información general del servicio:</strong>
+              <br><br><br>
+            </div>
+
+            <div class="grid">
+              <p><strong>Cedula: </strong> {{cliente.cedula}}</p>
+              <p><strong>Nombre: </strong> {{cliente.nombre}}</p>
+              <p><strong>Nombre Contacto: </strong> {{cliente.contacto}}</p>
+              <p><strong>Fecha Entrega:</strong> {{servicio.fecha_ds | date:'dd/MM/yyyy'}}</p>
+              <p><strong>Hora:</strong> {{servicio.hora}}</p>
+            </div>
+
                 <h4>VEHICULOS - GPS:</h4>
-                <table class="center">
+                <table class="center" *ngIf="listavehiculosAsignados.length>0">
                   <thead>
                       <th>Placa</th>
                       <th>Vehiculo</th>
@@ -124,9 +130,8 @@
                       <td>{{datos.ubicacion}}</td>
                   </tbody>
                 </table>
-                <p>FECHAS DE CONTRATO:</p>
-                <p>Fecha Entrega: {{servicio.fecha_ds | date:'dd/MM/yyyy'}}</p>
-                <p>Hora: {{servicio.hora}}</p>
+            <h3 style="color: #F65B3A" *ngIf="listavehiculosAsignados.length<=0"><strong>Ningun vehiculo Asignado</strong></h3>
+
           </mat-card-content>
         </div>
         <mat-card-actions>
