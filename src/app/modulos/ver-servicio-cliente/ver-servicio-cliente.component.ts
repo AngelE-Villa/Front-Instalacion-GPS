@@ -105,6 +105,7 @@ export class VerServicioClienteComponent implements OnInit {
     }
   }
 
+
   openTempDialog(id:String) {
     this.detalleService.getDescrip().subscribe((value1:any)=>{
       this.infodetalle=value1.filter((m)=> m.documentoservicio.id_documentoservicio==id);
