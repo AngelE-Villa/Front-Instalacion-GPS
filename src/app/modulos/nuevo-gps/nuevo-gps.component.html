@@ -3,34 +3,47 @@
   <form>
     <mat-card class="example-card ">
       <mat-card-title class="mediat">Datos GPS</mat-card-title>
-      <ng-template matStepLabel >Datos de GPS de APECS</ng-template>
 
-
-      <mat-form-field  appearance="outline">
+      <!---------validacion  -------->
+      <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Numero de GPS</mat-label>
-        <input matInput name="numero_gps" [(ngModel)]="gps.num_gps" required/>
+        <input  maxlength="10"  minlength="2" matInput [formControl]=" numGpsFormControl" placeholder="Ex:123332"  [(ngModel)]="gps.num_gps">
+        <mat-error *ngIf=" numGpsFormControl.hasError('required')">
+          Numero de Gps <strong>requerido</strong>
+        </mat-error>
       </mat-form-field>
-      <br>
-      <mat-form-field appearance="outline">
+
+      <!---------validacion  -------->
+
+      <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Numero SIM</mat-label>
-        <input matInput name="sim" [(ngModel)]="gps.num_sim"  required/>
+        <input  matInput [formControl]="num_simFormControl" placeholder="Ex:0991856542"  [(ngModel)]="gps.num_sim">
+        <mat-error *ngIf=" num_simFormControl.hasError('required')">
+          Numero de SIM <strong>requerido</strong>
+        </mat-error>
       </mat-form-field>
-      <br>
-      <mat-form-field appearance="outline">
+
+      <!---------validacion  -------->
+
+      <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Imei</mat-label>
-        <input matInput name="Imei" [(ngModel)]="gps.imei_gps" required/>
+        <input  matInput [formControl]="imei_gpsFormControl" placeholder="Ex:0991856542"  [(ngModel)]="gps.imei_gps">
+        <mat-error *ngIf=" imei_gpsFormControl.hasError('required')">
+          Numero de  Imei<strong>requerido</strong>
+        </mat-error>
       </mat-form-field>
-      <br>
+
+      <!---------validacion  -------->
       <mat-form-field appearance="outline">
         <mat-label>Modelo GPS</mat-label>
-        <mat-select [(ngModel)]="modelo.id_modelo" name="modelo" >
+        <mat-select [(ngModel)]="modelo.id_modelo" name="modelo"  required>
           <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id_modelo">
             {{modelo.nombre}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-card-actions style="text-align: center">
-        <button  mat-raised-button color="primary"  class="btniniciarSesion" (click)="Guardar()" >GUARDAR</button>
+        <button  mat-raised-button color="primary"  class="btniniciarSesion" (click)="Guardar()" [disabled]="imei_gpsFormControl.invalid"  >GUARDAR</button>
       </mat-card-actions>
       <br>
     </mat-card>
