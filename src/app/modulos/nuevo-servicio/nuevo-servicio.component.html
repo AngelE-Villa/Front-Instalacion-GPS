@@ -9,30 +9,28 @@
             <mat-card-title class="mediat">Datos Cliente</mat-card-title>
             <ng-template matStepLabel ><div class="mediast">Datos Cliente</div></ng-template>
             <form class="todostepper" [formGroup]="firstFormGroup">
-              <div *ngIf="buscarclienteB">
+
                 <h4>Ingrese la cecula del cliente</h4>
                 <mat-form-field>
-                  <input matInput formControlName="cedcli" placeholder="Cedula Cliente" [(ngModel)]="buscarcliente" Enabl/>
-                </mat-form-field>
-                <button mat-raised-button color="primary" (click)="buscarCliente()" >
+                  <input matInput formControlName="cedcli" placeholder="Cedula Cliente" (keyup)="buscarCliente($event)" Enabl/>
                   <mat-icon class="sep">search</mat-icon>
-                  <span class="medath">Buscar</span>
-                </button>
-              </div>
+                </mat-form-field>
+              <br><br>
+
             </form>
-            <div *ngIf="infocli">
-                <span>Cedula: {{cliente.cedula}}</span>
-                <br>
-                <span>Nombres: {{cliente.nombre}}</span>
-                <br>
-                <span>Telefono: {{cliente.telefono}}</span>
-                <br><br>
-                <button class="btn btn-success" (click)="cambioCliente()">Cambiar Cliente</button>
+            <div *ngIf="cliente.cedula!=null" style="text-align: center">
+              <div class="grid">
+                <span><strong>Cedula: </strong>{{cliente.cedula}}</span>
+                <span><strong>Nombres: </strong>{{cliente.nombre}}</span>
+                <span><strong>Telefono: </strong>{{cliente.telefono}}</span>
+                <span><strong>Dirección: </strong>{{cliente.direccion}}</span>
+                <span><strong>Contacto: </strong>{{cliente.contacto}}</span>
+              </div>
             </div>
           </div>
           <br>
           <div>
-            <button mat-raised-button color="primary"  matStepperNext *ngIf="infocli">Siguiente</button>
+            <button mat-raised-button color="primary"  matStepperNext *ngIf="cliente.cedula!=null">Siguiente</button>
           </div>
 
       </mat-step>

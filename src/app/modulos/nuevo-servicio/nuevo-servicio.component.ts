@@ -148,11 +148,6 @@ export class NuevoServicioComponent implements OnInit {
     })
   }
 
-  //1.0 Cambio
-  cambioCliente(){
-    this.infocli = false;
-    this.buscarclienteB = true;
-  }
 
   profileForm = new FormGroup({
     fechaI: new FormControl('', Validators.required),
@@ -161,22 +156,20 @@ export class NuevoServicioComponent implements OnInit {
   });
 
   //1.0
-  buscarCliente() {
-    this.servicioCliente.getClient().subscribe((value: any) => {
-      if (value.filter((data: any) => data.cedula == this.buscarcliente).length == 0) {
-        this.snackBar.open("El cliente no existe", "",{
-          duration: 1 * 1000,
-        });
-      } else {
-        this.infocli = true;
-        this.buscarclienteB = false;
-        this.cliente = value.find((m: any) => {
-          return m.cedula == this.buscarcliente
-        });
-        this.vehiculosporCliente(this.cliente.cedula);
-      }
-      console.log(this.cliente)
-    })
+  buscarCliente($event :any) {
+    this.cliente=new Cliente();
+    if($event.target.value.length==10){
+      this.servicioCliente.getClientCedula($event.target.value).subscribe(value => {
+        if(value==null){
+          this.snackBar.open("El cliente no existe", "",{
+            duration: 1 * 1000,
+          });
+        }else{
+          this.cliente=value;
+          this.vehiculosporCliente(this.cliente.cedula);
+        }
+      })
+    }
   }
   //1.0
   flitrarimei($event :any) {
@@ -254,10 +247,11 @@ export class NuevoServicioComponent implements OnInit {
     this.servicio.estado="Desactivado";
     this.servicio.costo_plan=this.plan.p_costo_mensual;
     this.servicio.tipo_plan=this.plan.descripcion_plan;
-    this.plan.num_descripcion_p=12;
     var e = new Date()
-    e.setMonth(e.getMonth() + this.plan.num_descripcion_p)
-    this.servicio.fecha_fin_plan=e.getDate() +"/"+ (e.getMonth()+1) +"/"+ e.getFullYear()
+    let mesmili = ((1000 * 60 * 60 * 24 * 7 * 4)+((1000*60*60*24)*2))*this.plan.num_descripcion_p;
+    console.log(new Date(e.getTime()+mesmili))
+
+    this.servicio.fecha_fin_plan=new Date(e.getTime()+mesmili)
     console.log(this.servicio.fecha_fin_plan)
     let cont=0;
     this.servicio.idplan=this.id_plan;

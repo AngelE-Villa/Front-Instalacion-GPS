@@ -28,6 +28,10 @@ export class ClienteService{
     return this.httpClient.get<any>(this.base_url+id);
   }
 
+  getClientCedula(cedula:String):Observable<Cliente>{
+    return this.httpClient.get<any>(this.base_url+"/cliente/"+cedula);
+  }
+
   deleteClient(cliente:Cliente, id:String){
     return this.httpClient.put(this.base_url+"delete/"+id, cliente);
   }

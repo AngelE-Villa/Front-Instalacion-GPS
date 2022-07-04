@@ -10,13 +10,11 @@ import {MatDialog} from "@angular/material/dialog";
 import {DescripcionService} from "../../servicios/DescripcionService";
 import {AccionesService} from "../../servicios/AccionesService";
 import {Descripcion} from "../../modelos/Descripcion";
-import {Acciones} from "../../modelos/Acciones";
 import {Pagos} from "../../modelos/Pagos";
 import {PagosService} from "../../servicios/PagosService";
 import {PlanService} from "../../servicios/PlanService";
 import {Plan} from "../../modelos/Plan";
-import {$0} from "@angular/compiler/src/chars";
-import {withModule} from "@angular/core/testing";
+
 
 @Component({
   selector: 'app-ver-servicio-cliente',
@@ -25,18 +23,18 @@ import {withModule} from "@angular/core/testing";
 })
 export class VerServicioClienteComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'fechas','hora', 'fechaI','fechaF','estadoSer','activar','detalles','editar','eliminar'];
   // @ts-ignore
-  dataSource: MatTableDataSource<Servicio>;
+  dataSource1: MatTableDataSource<Pagos>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  Columns: string[] = ['id', 'cantidad', 'fecha'];
 
   // @ts-ignore
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator1: MatPaginator;
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
-
-  title = 'angular-material-dialog-app';
-
-  monto:any;
+  displayedColumns: string[] = ['id', 'fechas','hora', 'fechaI','fechaF','fechaFinPlan','estadoSer','activar','detalles','editar','eliminar'];
+  // @ts-ignore
+  dataSource: MatTableDataSource<Servicio>;
 
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
@@ -44,9 +42,18 @@ export class VerServicioClienteComponent implements OnInit {
   @ViewChild('dialogRefActivacion')
   dialogRefActivacion!: TemplateRef<any>;
 
+  @ViewChild('dialogRefdetallePago')
+  dialogRefdetallePago!: TemplateRef<any>;
+
+
+  title = 'angular-material-dialog-app';
+  monto:any;
+
+
   datos: Servicio[] = [];
   infodetalle: Descripcion[]= [];
-  listadetalle:[];
+  infodetallePagos: Pagos[]= [];
+
   id:any;
   cliente:Cliente=new Cliente();
   servicio:Servicio=new Servicio();
@@ -87,7 +94,7 @@ export class VerServicioClienteComponent implements OnInit {
           this.datos=data1.filter((m)=> m.id_documentoservicio==this.detalle.documentoservicio.id_documentoservicio);
           console.log(data1)
           this.servicio=this.datos.find((m)=>{return m.id_documentoservicio==this.detalle.documentoservicio.id_documentoservicio})
-          this.cliente.nombre=this.detalle.vehiculo.cliente.nombre;
+          this.cliente=this.detalle.vehiculo.cliente;
           this.dataSource = new MatTableDataSource(this.datos);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -103,6 +110,16 @@ export class VerServicioClienteComponent implements OnInit {
       this.infodetalle=value1.filter((m)=> m.documentoservicio.id_documentoservicio==id);
     })
     this.dialog.open(this.dialogRef);
+  }
+
+  openDialogoDetallePagos(id_service:any){
+    this.pagoService.getPagosByService(id_service).subscribe(value => {
+      this.infodetallePagos=value;
+      console.log(this.infodetallePagos)
+      this.dialog.open(this.dialogRefdetallePago);
+      this.dataSource1 = new MatTableDataSource(this.infodetallePagos);
+      this.dataSource1.paginator = this.paginator1;
+    })
   }
 
   openTempDialogPagos(id:String) {
@@ -121,7 +138,7 @@ export class VerServicioClienteComponent implements OnInit {
 
 
   activarservicio(){
-    let cant= this.pago.cantidad_p/4;
+    let cant= this.pago.cantidad_p/this.servicio.costo_plan;
     let mesmili = ((1000 * 60 * 60 * 24 * 7 * 4)+((1000*60*60*24)*2)) *cant;
     if(this.servicio.fecha_fin!=null){
       console.log("Hay fecha fin")
@@ -144,10 +161,15 @@ export class VerServicioClienteComponent implements OnInit {
         this.pago.docservice=this.servicio;
         this.pago.fecha_pago=new Date();
         console.log(this.pago)
-        this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
-          console.log("Pago realizado")
-          window.location.reload();
-        })
+        if (this.pago.cantidad_p<=0){
+
+        }else{
+          this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
+            console.log("Pago realizado")
+            window.location.reload();
+          })
+        }
+
       })
     })
   }

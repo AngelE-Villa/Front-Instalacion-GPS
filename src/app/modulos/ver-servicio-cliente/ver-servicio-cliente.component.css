@@ -1,15 +1,19 @@
 table {
   width: 100%;
 }
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px,auto));
+  grid-gap: 2%;
+  margin-left: 10%;
+  grid-auto-flow: dense;
+}
+
 .center{
   width: 80%;
   text-align: center;
-  margin: 3% auto;
-}
-
-.center1{
-  width: 20%;
-  margin-left: 10%;
+  margin: 2% auto;
 }
 
 ng-container{

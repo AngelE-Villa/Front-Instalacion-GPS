@@ -16,6 +16,10 @@ export class PagosService{
     return this.httpClient.get<Pagos[]>(this.base_url);
   }
 
+  getPagosByService(id_service:String):Observable<Pagos[]>{
+    return this.httpClient.get<Pagos[]>(this.base_url+"service/"+id_service);
+  }
+
   getPago(id:String):Observable<any>{
     return this.httpClient.get<any>(this.base_url+id);
   }
