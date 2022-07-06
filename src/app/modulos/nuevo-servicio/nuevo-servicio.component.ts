@@ -58,6 +58,8 @@ export class NuevoServicioComponent implements OnInit {
   listaDetalle:Array<Descripcion>=[];
   accionespdf:Acciones[] = [];
 
+  vehiculosas:Vehiculo[]=[];
+
   //Datos Get
   clienteGet: Cliente = new Cliente();
   listaClienteGet: Array<any> = [];
@@ -206,7 +208,11 @@ export class NuevoServicioComponent implements OnInit {
       this.listaAcciones.pop();
     }
     if (this.listaAcciones.length<1) {
-      this.dialog.open(this.dialogRef);
+     /// this.dialog.open(this.dialogRef);
+      this.dialog.open(this.dialogRef,{
+        height: '70%',
+        width: '25%',
+      });
     }
   }
 
@@ -298,14 +304,36 @@ export class NuevoServicioComponent implements OnInit {
     )
     return this.newArray;
   }
+  ///------------------------//////
+  newArray2 =  [];
+  recorreArrayS(){
+    this.vehiculosas = this. listavehiculosAsignados .filter(m => m);
+    this.vehiculosas.map((ad) =>
+      this.newArray2.push([
+        ad.placa,
+        ad.kilometraje,
+        ad.estado
+      ])
+    )
+    return this.newArray2;
+  }
 
-  createPdf() {
+  async createPdf() {
     console.log(this.recorreArray())
     console.log(this.newArray)
+    console.log(this.recorreArrayS())
+    console.log(this.newArray2)
     var fecha: String = new Date().toISOString();
     var pipe: DatePipe = new DatePipe('en-US')
 
     const pdfDefinition: any = {
+
+      background: [
+        {
+          image: await this.getBase64ImageFromURL('assets/Imagenes/LogoCoordenadas.png'),
+          width:150,height:50
+        }
+      ],
       content: [
 
         {
@@ -313,9 +341,6 @@ export class NuevoServicioComponent implements OnInit {
           alignment: 'center'
         },
 
-
-        {text: 'COORDENADA', fontSize: 15, bold: true, alignment: 'center'},
-        {text: '    '},
         {text: 'INFORMACION GENERAL', fontSize: 13, bold: true, alignment: 'center'},
         {text: '    '},
         {
@@ -323,17 +348,12 @@ export class NuevoServicioComponent implements OnInit {
           table: {
             widths: ['50%', '50%'],
             body: [
-              ['PLACA: ' + this.vehiculo.placa, 'CLAVE: ' + this.vehiculo.clave],
+
               ['NOMBRE:' + this.cliente.nombre, 'RUC/CLI:' + this.cliente.cedula],
               ['DIRECCION: ' + this.cliente.direccion, 'CORREO: ' + this.cliente.correo],
-              ['VEHICULO:' + this.vehiculo.vehiculo, 'TELEFONO: ' + this.cliente.telefono],
-              ['ANIO:' + this.vehiculo.anio, 'IMEI GPS: ' + this.gpsGet.imei_gps],
-              ['NUMERO DE GPS: ' + this.gpsGet.num_gps, 'KILOMETRAJE: ' + this.vehiculo.kilometraje],
-              ['NUMERO SIM: ' + this.gpsGet.num_sim, 'FECHA ENTREGA: ' + pipe.transform(this.servicio.fecha_ds, 'dd/MM/yyyy')],
+              [ 'FECHA ENTREGA: ' + pipe.transform(this.servicio.fecha_ds, 'dd/MM/yyyy'), 'TELEFONO: ' + this.cliente.telefono],
               ['FECHA INICIO: ' + pipe.transform(this.servicio.fecha_inicion, 'dd/MM/yyyy'), 'FECHA FIN: ' + pipe.transform(this.servicio.fecha_fin, 'dd/MM/yyyy')],
               ['ATENDIDO POR: Angel Villa', 'HORAS: ' + this.servicio.hora],
-              [' MODELO ' + this.modeloGet.nombre, ' ']
-
             ]
           }
         },
@@ -356,6 +376,18 @@ export class NuevoServicioComponent implements OnInit {
                        ],
                     },
                 ],
+
+              ['DETALLE: '],
+              [
+                {
+                  stack: [
+                    {
+                      ol: [this.newArray2],
+                    },
+
+                  ],
+                },
+              ]
             ]
           }
         },
@@ -391,5 +423,33 @@ export class NuevoServicioComponent implements OnInit {
     pdf.open();
 
   }
+
+  getBase64ImageFromURL(url: any) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext("2d");
+        // @ts-ignore
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
+  }
+
 
 }
