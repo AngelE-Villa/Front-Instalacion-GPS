@@ -111,7 +111,7 @@
   <span><strong>Pago Mensual: </strong> ${{servicio.costo_plan}} </span><br>
   <span><strong> Hasta: </strong> {{servicio.fecha_fin_plan | date: 'dd/MM/yyyy' }}</span>
   <br><br>
-  <mat-form-field *ngIf="monto!=0 || monto<=0">
+  <mat-form-field *ngIf="monto!=0">
     <input matInput placeholder="Pago de Servicio" name="pservice" [(ngModel)]="servicio.costo"  required/>
   </mat-form-field>
   <br>
@@ -127,7 +127,7 @@
 
 <ng-template #dialogRefdetallePago>
   <h2>Detalle de Pagos de Servicio</h2>
-  <br><br>
+  <br>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource1">
 

@@ -6,6 +6,9 @@ import {Rol_Usuario} from "../modelos/Rol_Usuario";
 import {Rol_UsuarioService} from "../servicios/Rol_UsuarioService";
 import {Observable} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
+import {MatSidenav} from "@angular/material/sidenav";
+import {LayoutModule, BreakpointObserver} from '@angular/cdk/layout';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-principal',
@@ -14,7 +17,6 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor(private router:Router,private roles_userSevice:Rol_UsuarioService,public dialog: MatDialog) { }
   admin:boolean;
   instalador:boolean;
   id_persona:any;
@@ -25,17 +27,26 @@ export class PrincipalComponent implements OnInit {
   btnCuatro=false;
   btnCinco=false;
 
+  constructor(private router:Router,
+              private roles_userSevice:Rol_UsuarioService,
+              public dialog: MatDialog,
+              private observer: BreakpointObserver) { }
+
   listrol=[];
   rol_us:Rol_Usuario = new Rol_Usuario();
 
 
-  issloading=false;
+  issloading=true;
   usuario:User = new User();
+
 
   dataSourceM:any;
   titulo="";
-  editing=false;
   creating=false;
+  isLogged = true;
+
+  @ViewChild(MatSidenav)
+  sidenav: MatSidenav;
 
   @ViewChild('dialogRolesUs')
   dialogRolesUs!: TemplateRef<any>;
@@ -86,6 +97,19 @@ export class PrincipalComponent implements OnInit {
     });
 
 
+  }
+
+  ngAfterContentInit() {
+
+    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
+      }
+    });
   }
 
   cerrarSesion(){

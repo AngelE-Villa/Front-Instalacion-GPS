@@ -3,6 +3,22 @@
   text-align: center;
   margin: 1% auto;
 }
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(400px,auto));
+  gap: 20px;
+
+}
+
+.card-border{
+  border: solid #877e7e;
+}
+
+.h4{
+  background: #428bca;
+}
+
 .btnEdi{
   background: #428bca;
   border-radius: 5px;
@@ -25,11 +41,7 @@ button{
   border: transparent;
   background-color: transparent;
 }
-
-.tablec{
-  border: 1px solid;
-}
-.tdv{
+.td{
   border: 1px solid;
 }
 
@@ -44,6 +56,43 @@ table {
 
 td, th {
   width: 25%;
+}
+
+.mat-column-id{
+  padding: -5px;
+  width: 30px !important;
+  text-align: left;
+}
+
+.mat-column-placa{
+  padding: 0;
+  width: 60px !important;
+  text-align: left;
+}
+
+.mat-column-vehiculo{
+  padding: 5px;
+  width: 30px !important;
+  text-align: left;
+}
+
+
+.mat-column-imei{
+  padding: 0;
+  width: 20px !important;
+  text-align: left;
+}
+
+.mat-column-modelo{
+  padding: 0;
+  width: 30px !important;
+  text-align: left;
+}
+
+.mat-column-cgps{
+  padding: 0;
+  width: 30px !important;
+  text-align: center;
 }
 
 .example-radio-group {
@@ -96,17 +145,3 @@ table mat-radio-group tr td{
   margin: 8px 8px 8px 0;
 }
 
-.cabecera{
-  min-height:250px;
-}
-.izquierda{
-  text-align: start;
-  height:50%;
-  float:left;
-  width:35%;
-}
-.derecha{
-  height:50%;
-  float:right;
-  width:65%;
-}

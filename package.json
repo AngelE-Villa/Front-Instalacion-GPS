@@ -23,6 +23,7 @@
     "bs-stepper": "^1.7.0",
     "jsfeat": "^0.0.8",
     "pdfmake": "^0.2.5",
+    "primeicons": "^5.0.0",
     "rxjs": "~7.5.0",
     "sweetalert2": "^7.26.9",
     "tslib": "^2.3.0",

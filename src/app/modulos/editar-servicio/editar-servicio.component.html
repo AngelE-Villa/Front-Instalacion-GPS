@@ -1,132 +1,196 @@
 <div class="example-card center">
   <mat-card-title>DATOS DEL SERVICIO</mat-card-title>
   <mat-divider inset></mat-divider>
-  <br>
+  <br><br>
   <mat-card-content>
-    <div class="cabecera">
-      <div class="izquierda center" >
-        <h4><strong>Datos Cliente</strong></h4>
-        <span>Cedula: {{cliente.cedula}}</span><br>
-        <span>Nombre: {{cliente.nombre}}</span>
-        <br><br>
-        <h4><strong>Horarios</strong></h4>
+    <div class="grid">
+      <mat-card-content class="card-border">
+          <h4 class="h4"><strong>Datos Cliente</strong></h4>
+          <span>Cedula: {{cliente.cedula}}</span><br>
+          <span>Nombre: {{cliente.nombre}}</span>
+      </mat-card-content>
+      <mat-card-content class="card-border">
+        <h4 class="h4"><strong>Horarios</strong></h4>
         <span>Fecha Inicio: {{servicio.fecha_inicion | date: 'dd/MM/yyyy'}}</span><br>
         <span>Fecha Fin: {{servicio.fecha_fin | date: 'dd/MM/yyyy'}}</span><br>
         <span>Hora: {{servicio.hora}}</span>
         <br><br>
-      </div>
-      <div class="derecha center">
+      </mat-card-content>
+      <div>
         <mat-card-content *ngIf="allinfo">
           <h4><strong>Datos Vehiculio - GPS</strong></h4>
-          <!---->
-          <table class="center tablec">
-            <thead>
-            <th>ID</th>
-            <th>Placa</th>
-            <th>Vehiculo</th>
-            <th>Imei</th>
-            <th>Modelo</th>
-            <th>Cambio GPS</th>
-            <th>Cambio Vehiculo</th>
-            </thead>
-            <tbody *ngFor="let det of listadetalle">
-            <td class="tdv">{{det.id_documentodescripcion}}</td>
-            <td class="tdv">{{det.vehiculo.placa}}</td>
-            <td class="tdv">{{det.vehiculo.vehiculo}}</td>
-            <td class="tdv">{{det.gps.imei_gps}}</td>
-            <td class="tdv">{{det.gps.modelo.nombre}}</td>
-            <td class="tdv"><button><mat-icon class="btnEdi" (click)="edithtmlgps(det.id_documentodescripcion)">edit</mat-icon></button></td>
-            <td class="tdv"><button><mat-icon class="btnEdi" (click)="edithtmlvehiculo(det.id_documentodescripcion)">edit</mat-icon></button></td>
-            </tbody>
-          </table>
-        </mat-card-content>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
 
-        <br><br>
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.id_documentodescripcion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="placa">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
+                <td mat-cell *matCellDef="let row"> {{row.vehiculo.placa}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vehiculo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehiculo </th>
+                <td mat-cell *matCellDef="let row"><div class="centertd">{{row.vehiculo.vehiculo}}</div></td>
+              </ng-container>
+
+              <ng-container matColumnDef="imei">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Imei </th>
+                <td mat-cell *matCellDef="let row"> {{row.gps.imei_gps}} </td>
+              </ng-container>
+
+              <!-- Fruit Column -->
+              <ng-container matColumnDef="modelo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
+                <td mat-cell *matCellDef="let row"> {{row.gps.modelo.nombre}} </td>
+              </ng-container>
+
+              <!-- Fruit Column -->
+              <ng-container matColumnDef="cgps">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Cambio GPS </th>
+                <td mat-cell *matCellDef="let row"> <button><mat-icon class="btnEdi" (click)="edithtmlgps(row.id_documentodescripcion)">gps_fixed</mat-icon></button> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cvehiculo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Cambio Vehiculo </th>
+                <td mat-cell *matCellDef="let row"> <button><mat-icon class="btnEdi" (click)="edithtmlvehiculo(row.id_documentodescripcion)">directions_car</mat-icon></button></td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+          </div>
+        </mat-card-content>
+      </div>
+      <div>
         <mat-card-content *ngIf="allinfo">
           <h4><strong>Historial</strong></h4>
           <!---->
-          <table class="center tablec">
-            <thead>
-            <th>ID</th>
-            <th>Placa</th>
-            <th>Vehiculo</th>
-            <th>Imei</th>
-            <th>Modelo</th>
-            <th>Cambio</th>
-            <th>Observaciones</th>
-            </thead>
-            <tbody *ngFor="let h of listadetallehistoriaGet">
-            <td class="tdv">{{h.documentodescripcion.id_documentodescripcion}}</td>
-            <td class="tdv">{{h.documentodescripcion.vehiculo.placa}}</td>
-            <td class="tdv">{{h.documentodescripcion.vehiculo.vehiculo}}</td>
-            <td class="tdv">{{h.documentodescripcion.gps.imei_gps}}</td>
-            <td class="tdv">{{h.documentodescripcion.gps.modelo.nombre}}</td>
-            <td class="tdv">{{h.nombre}}</td>
-            <td class="tdv">{{h.observaciones}}</td>
-            </tbody>
-          </table>
-        </mat-card-content>
-        <mat-card-content *ngIf="editv">
-          <mat-card-title>Cambio de Vehiculo</mat-card-title>
-          <br>
-          <span><strong>Datos del GPS</strong></span>
-          <br>
-          <span>ID: {{detalleid.id_documentodescripcion}}</span><br>
-          <span>Imei: {{detalleid.gps.imei_gps}}</span><br>
-          <span>Modelo: {{detalleid.gps.modelo.nombre}}</span><br><br>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource1" matSort>
 
-          <div *ngIf="vernuvehiculo">
-            <span><strong>Vehiculo a Asignar</strong> </span><br>
-            <div *ngFor="let nv of listadetallen">
-              <span>Placa: {{nv.vehiculo.placa}}</span><br>
-              <span>Vehiculo: {{nv.vehiculo.vehiculo}}</span><br><br>
-            </div>
-            <mat-form-field appearance="outline">
-              <mat-label>Observación</mat-label>
-              <input matInput  name="observacion" [(ngModel)]="historial.observaciones" required/>
-            </mat-form-field>
-          </div>
+              <!-- ID Column -->
+              <ng-container matColumnDef="idh">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row1"> {{row1.documentodescripcion.id_documentodescripcion}} </td>
+              </ng-container>
 
-          <button class="btnEli" (click)="cancelarnvehiculo()">Cancelar</button>
-          <span *ngIf="!vernuvehiculo">
-            <button class="btnEdi" (click)="abrirdialogoEditServiciovehiculo(detalleid.vehiculo.cliente.id_persona,detalleid)">Seleccionar vehiculo</button>
-          </span>
-          <span *ngIf="vernuvehiculo">
-            <button class="btnEdi" (click)="guardarcambiosVehiculo(detalleid.id_documentodescripcion)">Guardar Cambios</button>
-          </span>
-          <br><br>
-        </mat-card-content>
-        <mat-card-content *ngIf="editgps">
-          <mat-card-title>Cambio de Dispositivo GPS</mat-card-title>
-          <br>
-          <span><strong>Datos del Vehiculo</strong></span><br>
-          <span>ID: {{detalleid.id_documentodescripcion}}</span><br>
-          <span>Placa: {{detalleid.vehiculo.placa}}</span><br>
-          <span>Vehiculo: {{detalleid.vehiculo.vehiculo}}</span><br>
-          <div *ngIf="vernuvegps">
-            <span><strong>GPS a Asignar</strong> </span><br>
-            <div *ngFor="let nv of listadetallen">
-              <span>Imei: {{nv.gps.imei_gps}}</span><br>
-              <span>Modelo: {{nv.gps.modelo.nombre}}</span><br><br>
-            </div>
-            <mat-form-field appearance="outline">
-              <mat-label>Observación</mat-label>
-              <input matInput  name="observacion" [(ngModel)]="historial.observaciones" required/>
-            </mat-form-field>
+              <ng-container matColumnDef="placa">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Placa </th>
+                <td mat-cell *matCellDef="let row1"> {{row1.documentodescripcion.vehiculo.placa}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vehiculo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehiculo </th>
+                <td mat-cell *matCellDef="let row1"><div class="centertd">{{row1.documentodescripcion.vehiculo.vehiculo}}</div></td>
+              </ng-container>
+
+              <ng-container matColumnDef="imei">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Imei </th>
+                <td mat-cell *matCellDef="let row1"> {{row1.documentodescripcion.gps.imei_gps}} </td>
+              </ng-container>
+
+              <!-- Fruit Column -->
+              <ng-container matColumnDef="modelo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
+                <td mat-cell *matCellDef="let row1"> {{row1.documentodescripcion.gps.modelo.nombre}} </td>
+              </ng-container>
+
+              <!-- Fruit Column -->
+              <ng-container matColumnDef="cambio">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Cambio</th>
+                <td mat-cell *matCellDef="let row1">{{row1.nombre}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="observacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Observaciones</th>
+                <td mat-cell *matCellDef="let row1">{{row1.observaciones}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+              <tr mat-row *matRowDef="let row1; columns: displayedColumns1;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
           </div>
-          <br>
-          <button class="btnEli" (click)="cancelarngps()">Cancelar</button>
-          <span *ngIf="!vernuvegps">
-            <button class="btnEdi" (click)="abrirdialogoEditServiciogps()">Buscar GPS</button>
-          </span>
-          <span *ngIf="vernuvegps">
-            <button class="btnEdi" (click)="guardarcambiosGps(detalleid.id_documentodescripcion)">Guardar Cambios</button>
-          </span>
-          <br><br>
         </mat-card-content>
-        <br><br>
       </div>
     </div>
+    <br><br><br><br><br>
+        <!--Editar desde aqui-->
+    <div class="card-border">
+      <mat-card-content *ngIf="editv">
+        <mat-card-title>Cambio de Vehiculo</mat-card-title>
+        <br>
+        <span><strong>Datos del GPS</strong></span>
+        <br>
+        <span>ID: {{detalleid.id_documentodescripcion}}</span><br>
+        <span>Imei: {{detalleid.gps.imei_gps}}</span><br>
+        <span>Modelo: {{detalleid.gps.modelo.nombre}}</span><br><br>
+
+        <div *ngIf="vernuvehiculo">
+          <span><strong>Vehiculo a Asignar</strong> </span><br>
+          <div *ngFor="let nv of listadetallen">
+            <span>Placa: {{nv.vehiculo.placa}}</span><br>
+            <span>Vehiculo: {{nv.vehiculo.vehiculo}}</span><br><br>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Observación</mat-label>
+            <input matInput  name="observacion" [(ngModel)]="historial.observaciones" required/>
+          </mat-form-field>
+        </div>
+
+        <button class="btnEli" (click)="cancelarnvehiculo()">Cancelar</button>
+        <span *ngIf="!vernuvehiculo">
+            <button class="btnEdi" (click)="abrirdialogoEditServiciovehiculo(detalleid.vehiculo.cliente.id_persona,detalleid)">Seleccionar vehiculo</button>
+          </span>
+        <span *ngIf="vernuvehiculo">
+            <button type="button" class="btn btn-success" (click)="guardarcambiosVehiculo(detalleid.id_documentodescripcion)">Guardar Cambios</button>
+          </span>
+        <br><br>
+      </mat-card-content>
+      <mat-card-content *ngIf="editgps">
+        <mat-card-title>Cambio de Dispositivo GPS</mat-card-title>
+        <br>
+        <span><strong>Datos del Vehiculo</strong></span><br>
+        <span>ID: {{detalleid.id_documentodescripcion}}</span><br>
+        <span>Placa: {{detalleid.vehiculo.placa}}</span><br>
+        <span>Vehiculo: {{detalleid.vehiculo.vehiculo}}</span><br>
+        <div *ngIf="vernuvegps">
+          <span><strong>GPS a Asignar</strong> </span><br>
+          <div *ngFor="let nv of listadetallen">
+            <span>Imei: {{nv.gps.imei_gps}}</span><br>
+            <span>Modelo: {{nv.gps.modelo.nombre}}</span><br><br>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Observación</mat-label>
+            <input matInput  name="observacion" [(ngModel)]="historial.observaciones" required/>
+          </mat-form-field>
+        </div>
+        <br>
+        <button class="btnEli" (click)="cancelarngps()">Cancelar</button>
+        <span *ngIf="!vernuvegps">
+            <button class="btnEdi" (click)="abrirdialogoEditServiciogps()">Buscar GPS</button>
+          </span>
+        <span *ngIf="vernuvegps">
+            <button class="btnEdi" (click)="guardarcambiosGps(detalleid.id_documentodescripcion)">Guardar Cambios</button>
+          </span>
+        <br><br>
+      </mat-card-content>
+    </div>
+
+      <br><br>
+      <!--Editar hasta aqui-->
   </mat-card-content>
 
 </div>

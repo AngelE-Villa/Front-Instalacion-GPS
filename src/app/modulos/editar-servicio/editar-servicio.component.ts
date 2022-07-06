@@ -41,7 +41,11 @@ export class EditarServicioComponent implements OnInit {
   dataSource: MatTableDataSource<Descripcion>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+
+  displayedColumns1: string[] = ['idh', 'placa', 'vehiculo', 'imei', 'modelo', 'cambio','observacion'];
+  dataSource1: MatTableDataSource<Historial>;
+
+  @ViewChild(MatPaginator) paginator1: MatPaginator;
 
   //Historial
   vehiculoHistorial:Vehiculo=new Vehiculo();
@@ -102,7 +106,6 @@ export class EditarServicioComponent implements OnInit {
 
         this.dataSource = new MatTableDataSource(this.listadetalle);
         this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
 
         let conta=0;
           for (let cli of this.listadetalle){
@@ -115,6 +118,8 @@ export class EditarServicioComponent implements OnInit {
           }
           this.serviceHistorial.getByidCliente(this.cliente.id_persona).subscribe((data1:any)=>{
             this.listadetallehistoriaGet=data1;
+            this.dataSource1 = new MatTableDataSource(this.listadetallehistoriaGet);
+            this.dataSource1.paginator = this.paginator1;
           })
         }
       );
@@ -124,14 +129,6 @@ export class EditarServicioComponent implements OnInit {
     })
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
   seleccionarGps(){
     this.detalleedi=this.detalleid;
