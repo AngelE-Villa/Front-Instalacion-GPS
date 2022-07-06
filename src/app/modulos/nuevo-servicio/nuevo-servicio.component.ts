@@ -304,7 +304,7 @@ export class NuevoServicioComponent implements OnInit {
     )
     return this.newArray;
   }
-  ///------------------------//////
+  ///-------------sss-----------//////
   newArray2 =  [];
   recorreArrayS(){
     this.vehiculosas = this. listavehiculosAsignados .filter(m => m);
