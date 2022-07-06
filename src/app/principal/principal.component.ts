@@ -36,7 +36,7 @@ export class PrincipalComponent implements OnInit {
   rol_us:Rol_Usuario = new Rol_Usuario();
 
 
-  issloading=true;
+  issloading=false;
   usuario:User = new User();
 
 
