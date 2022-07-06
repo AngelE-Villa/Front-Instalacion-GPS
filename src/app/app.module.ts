@@ -25,7 +25,6 @@ import { EditarServicioComponent } from './modulos/editar-servicio/editar-servic
 import { SeleccionPlanComponent } from './modulos/seleccion-plan/seleccion-plan.component';
 import { AsignacionRolesComponent } from './modulos/asignacion-roles/asignacion-roles.component';
 import { RolIngresoComponent } from './modulos/rol-ingreso/rol-ingreso.component';
-import { NavbarVerticalComponent } from './principal/navbar-vertical/navbar-vertical.component';
 
 const routes: Routes = [
   {path:'', component:CuerpoComponent},
@@ -72,7 +71,6 @@ const routes: Routes = [
     SeleccionPlanComponent,
     AsignacionRolesComponent,
     RolIngresoComponent,
-    NavbarVerticalComponent
   ],
   imports: [
     BrowserModule,

@@ -54,7 +54,7 @@ export class NuevoServicioComponent implements OnInit {
   listagps=[];
 
   listavehiculos = [];
-  listavehiculosAsignados = [];
+  listavehiculosAsignados=[];
   listaDetalle:Array<Descripcion>=[];
   accionespdf:Acciones[] = [];
 
@@ -406,6 +406,11 @@ export class NuevoServicioComponent implements OnInit {
         {text: 'UBICACION GPS', fontSize: 13, bold: true, alignment: 'center'},
         {text: '    '},
         {
+          text: 'Education',
+          style: 'header'
+        },
+        this.getEducationObject(this.listavehiculosAsignados),
+        {
           fontSize: 13,
           table: {
             widths: ['50%', '50%'],
@@ -423,6 +428,38 @@ export class NuevoServicioComponent implements OnInit {
     pdf.open();
 
   }
+
+  getEducationObject(educations:Descripcion[]) {
+    return {
+      table: {
+        widths: ['*', '*', '*'],
+        body: [
+          [{
+            text: 'Degree',
+            style: 'tableHeader'
+          },
+            {
+              text: 'College',
+              style: 'tableHeader'
+            },
+            {
+              text: 'Passing Year',
+              style: 'tableHeader'
+            },
+          ],
+          ...educations.map(ed => {
+            return [ed.gps.modelo.nombre, ed.vehiculo.placa, ed.estado];
+          })
+        ]
+      }
+    };
+  }
+
+
+
+
+
+
 
   getBase64ImageFromURL(url: any) {
     return new Promise((resolve, reject) => {
