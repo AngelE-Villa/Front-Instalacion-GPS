@@ -51,109 +51,56 @@
     <small>&copy; 2022 <b>APECS </b> - Todos los Derechos Reservados.</small>
   </div>
 </footer>-->
-<mat-toolbar>
-  <div class="container">
-    <button mat-icon-button (click)="sidenav.toggle()">
-      <mat-icon *ngIf="!sidenav.opened">
-        menu
-      </mat-icon>
-      <mat-icon *ngIf="sidenav.opened">
-        close
-      </mat-icon>
-    </button>
-    COORDENADA
-  </div>
+<header>
+  <mat-toolbar>
+    <div class="container">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened">
+          menu
+        </mat-icon>
+        <mat-icon *ngIf="sidenav.opened">
+          close
+        </mat-icon>
+      </button>
+    </div>
 
+    <!---->
+    <div *ngIf="issloading==true" >
+      <button [matMenuTriggerFor]="perfil" class="btniniciarS">
+        <span>{{rol_us.usuario.nombre}}<mat-icon> person_pin</mat-icon></span>
 
+      </button>
+      <mat-menu #perfil="matMenu">
+        <button mat-menu-item style="text-align: center" [routerLink]="['/rol_ingreso']">Perfil<mat-icon> person_pin</mat-icon></button>
+        <button mat-menu-item style="text-align: center" (click)="cerrarSesion()" >Cerrar Sesión<mat-icon>exit_to_app</mat-icon></button>
+      </mat-menu>
+    </div>
 
-  <!---->
-  <div *ngIf="issloading==true">
-    <button [matMenuTriggerFor]="perfil">
-      <span>{{usuario.nombre}}<mat-icon> person_pin</mat-icon></span>
+    <div *ngIf="issloading==false" >
+      <button class="btniniciarS hover" [routerLink]="['/iniciasesion']" class="btniniciarS">
+        <mat-icon>supervised_user_circle</mat-icon>
+        INICIAR SESION
+      </button>
+    </div>
 
-    </button>
-    <mat-menu #perfil="matMenu">
-      <button mat-menu-item style="text-align: center" [routerLink]="['/rol_ingreso']">Perfil<mat-icon> person_pin</mat-icon></button>
-      <button mat-menu-item style="text-align: center" (click)="cerrarSesion()" >Cerrar Sesión<mat-icon>exit_to_app</mat-icon></button>
-    </mat-menu>
-  </div>
-
-  <div *ngIf="issloading==false" class="mediaUbt">
-    <button class="btniniciarS hover" [routerLink]="['/iniciasesion']">
-      <mat-icon>supervised_user_circle</mat-icon>
-      INICIAR SESION
-    </button>
-  </div>
-
-</mat-toolbar>
-
+  </mat-toolbar>
+</header>
 
 <mat-sidenav-container>
 
-
   <mat-sidenav #sidenav="matSidenav">
-
-    <div style="text-align: center;">
-      <img class="logo" src="https://www.coordenadaec.com/wp-content/uploads/2022/04/LogoCoordenadas.png">
-      <br><br>
-      <mat-divider></mat-divider>
-      <h2 class="text-center">APECS 2022</h2>
-    </div>
-
     <mat-divider></mat-divider>
 
     <div>
-      <h3 *ngIf="isLogged" style="text-align: center;">AA VV</h3>
-
-
-      <a class="nav-link btn mb-3 mt-3" routerLink="/login" style="color: white;" *ngIf="!isLogged">
-        <mat-icon>login</mat-icon>
-        <span>LogIn</span>
-
-      </a>
-      <a class="nav-link btn mb-3 mt-3" style="color: white;" *ngIf="isLogged">
-        <mat-icon>logout</mat-icon>
-        <span>LogOut</span>
-      </a>
-
+      <div class="tool logo">
+        <a [routerLink]="['']" class="btninicio">
+          <span><img src="https://www.coordenadaec.com/wp-content/uploads/2022/04/LogoCoordenadas.png" alt="Coordenada - Tecnología en Geolocalización" /></span>
+        </a>
+        COORDENADA
+      </div>
+      <br><br>
       <mat-divider></mat-divider>
-
-
-      <mat-accordion multi>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon>dashboard</mat-icon>
-              <span>Dashboard</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <button mat-button class="button-accordion" routerLink="/consulta-convocatoria">
-            <mat-icon>description</mat-icon>
-            <span>Ver Convocatorias</span>
-          </button>
-
-          <button mat-button class="button-accordion" routerLink="/consultasppp">
-            <mat-icon>find_in_page</mat-icon>
-            <span> Procesos </span>
-          </button>
-
-
-
-          <button mat-button class="button-accordion" routerLink="/home">
-            <mat-icon>class</mat-icon>
-            <span> Carreras </span>
-          </button>
-
-          <button mat-button class="button-accordion" routerLink="/anexosde-ppp">
-            <mat-icon>file_copy</mat-icon>
-            <span>Anexos PPP </span>
-          </button>
-
-        </mat-expansion-panel>
-      </mat-accordion>
-
-
+      <br>
       <div>
         <mat-accordion multi>
           <mat-expansion-panel>
@@ -266,17 +213,16 @@
     </div>
   </mat-sidenav>
 
-  <mat-sidenav-content class="content mat-elevation-z4">
+  <mat-card-content>
     <router-outlet></router-outlet>
-
-  </mat-sidenav-content>
+  </mat-card-content>
 
 </mat-sidenav-container>
 <footer class="pie-pagina">
   <div class="grupo-2">
     <small>&copy; 2022 <b>APECS </b> - Todos los Derechos Reservados.</small>
   </div>
-</footer>-->
+</footer>
 
 
 

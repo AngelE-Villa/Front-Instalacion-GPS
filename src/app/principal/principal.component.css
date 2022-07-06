@@ -1,78 +1,38 @@
-/*header{
-  position: fixed;
+header{
   left: 0;
   top: 0;
   right: 0;
-  height: 10rem;
-}
-mat-toolbar{
-  background-color: white;
-  height: 6rem;
+  background: #428bca;
 }
 
-
-.btninicio{
-  background-color: transparent;
-  border: transparent;
-}
-.btniniciarSesion{
-  background-color: #2ecc71;
-}
-
-.btniniciarSesion:hover{
-  color: #2ecc60;
-}
 .btniniciarS{
   background-color: transparent;
   border: transparent;
-  font-weight: bold;
-  color: #428bca;
-  font-size: 15px;
+  color: white;
 }
 
-.hover:hover{
-  color: black;
-  cursor: pointer;
-  transition: .5s;
+.btniniciarS:hover{
+  color: lemonchiffon;
 }
+
 
 .logo{
-  padding: 2% 0;
+  text-align: center;
   line-height: 8%;
 }
 
-.logo img{
+.logo img {
   width: 200px;
-  float: left;
 }
 
 
-body{
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  height: auto;
-}
-
-.tool{
-  color: white;
-}
-/*
 footer{
-  position: fixed;
   height: 4rem;
   left: 0;
   right: 0;
   bottom: 0;
 }
-.example-spacer {
-  flex: 1 1 auto;
-}
-.example-button-container {
-  flex: 1 1 auto;
-}
-.botton-header{
-  margin-right: 10px;
-}
+
 .pie-pagina{
   width: 100%;
   background-color: rgb(30,30,30);
@@ -87,92 +47,19 @@ footer{
 .pie-pagina .grupo-2 small{
   font-size: 15px;
 }
-.tmmeda{
-  font-size: 16px;
-}
-
-@media (max-width: 800px) {
-  .medath{
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 700px) {
-  .medath{
-    display: none;
-  }
-  mat-toolbar{
-    height: 8.5rem;
-  }
-  .logo img{
-    margin-top: -50px;
-    width: 200px;
-    margin-left: 5%;
-  }
-  .sep{
-    margin-left: 30px;
-  }
-  .mediaUbt {
-    margin-top: 90px;
-    margin-right: 250px;
-  }
-  body{
-    padding-top: 8rem;
-  }
-}
 
 
-@media (max-width: 600px) {
-  .medath{
-    display: none;
-  }
-  mat-toolbar{
-    height: 8.5rem;
-  }
-
-  .logo img{
-    margin-top: -50px;
-    width: 200px;
-    margin-left: 5%;
-  }
-
-  .sep{
-    margin-left: 20px;
-  }
-
-  .mediaUbt {
-    margin-top: 95px;
-    margin-left: -90px;
-  }
-
-  body{
-    padding-top: 9rem;
-  }
-
-}
-
-@media (max-width: 400px) {
-  .mediaUbt {
-    margin-top: 95px;
-    margin-left: -140px;
-  }
-  .sep{
-    margin-left: 10px;
-  }
-  body{
-    padding-top: 10rem;
-  }
-}*/
 
 mat-toolbar {
   background: #1d3557 ;
   color:white;
 }
+
 mat-sidenav{
   margin: 0;
   width: 303px;
   border-right:none;
-  background: #5F9EA0;
+  background: #35C1E8;
   color:white;
   border-radius: 0;
   padding: 10px;
@@ -185,7 +72,7 @@ mat-sidenav{
 }
 
 .content::-webkit-scrollbar-thumb {
-  background: #1d3557;
+  background: #35C1E8;
   border-radius: 10px;
   border-right: 2px solid white; /*ESPACIO*/
 }
@@ -203,7 +90,7 @@ mat-icon{
 
 
 .content{
-  height: calc(100vh - 98px);
+  height: calc(100vh - 4rem);
   margin: 16px;
   margin-left: 32px;
   border-radius: 9px;
@@ -211,7 +98,7 @@ mat-icon{
 }
 
 mat-sidenav-container{
-  height: calc(100vh - 65px);
+  height: calc(100vh - 4rem);
 }
 
 
@@ -222,7 +109,7 @@ mat-sidenav-container{
   justify-content: initial;
   font-size: 1rem;
   color:white;
-  background: #1177d1;
+  background: #35C1E8;
 }
 
 .divimag{
@@ -239,7 +126,7 @@ img{
 
 mat-expansion-panel {
   width: 100%;
-  background: #5F9EA0;
+  background: #35C1E8;
   color: white;
   border-radius: 0;
   box-shadow: none !important;
@@ -261,7 +148,7 @@ mat-expansion-panel-header {
 }
 
 mat-expansion-panel:hover {
-  background: #579294;
+  background: #3D9CDB;
 }
 
 
@@ -273,5 +160,5 @@ mat-expansion-panel:hover {
 }
 
 a:hover {
-  background: #579294;
+  background: #3D9CDB;
 }
