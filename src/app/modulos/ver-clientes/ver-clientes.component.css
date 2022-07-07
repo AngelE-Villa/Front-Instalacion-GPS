@@ -44,6 +44,10 @@ button{
   cursor: pointer;
   transition: .5s;
 }
+.btncrear{
+  margin-left: 10%;
+  background: #00d084;
+}
 
 @media (max-width: 800px) {
 
