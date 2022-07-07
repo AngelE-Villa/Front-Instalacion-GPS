@@ -358,68 +358,26 @@ export class NuevoServicioComponent implements OnInit {
           }
         },
         {text: '    '},
-        {text: 'SERVICIO', fontSize: 13, bold: true, alignment: 'center'},
         {
-          fontSize: 13,
-          table: {
-            widths: ['100%'],
-            body: [
-
-              ['DESCRIPCION: '],
-                    [
-                      {
-                        stack: [
-                          {
-                            ol: [this.newArray],
-                          },
-
-                       ],
-                    },
-                ],
-
-              ['DETALLE: '],
-              [
-                {
-                  stack: [
-                    {
-                      ol: [this.newArray2],
-                    },
-
-                  ],
-                },
-              ]
-            ]
-          }
-        },
-        {text: '    '},
-        {
-          fontSize: 13,
-          table: {
-            widths: ['100%'],
-            body: [
-              ['OBSERVACIONES: '],
-            ]
-          }
-        },
-
-        {text: '    '},
-        {text: 'UBICACION GPS', fontSize: 13, bold: true, alignment: 'center'},
-        {text: '    '},
-        {
-          text: 'Education',
-          style: 'header'
+          text: 'DETALLE', fontSize: 13, bold: true, alignment: 'center'
         },
         this.getEducationObject(this.listavehiculosAsignados),
-        {
-          fontSize: 13,
-          table: {
-            widths: ['50%', '50%'],
-            body: [
-              [''],
 
-            ]
-          }
-        }
+        {text: '    '},
+        {
+          text: 'OBSERVACIONES', fontSize: 13, bold: true, alignment: 'center'
+        },
+        this.getEducationSObject(this.listavehiculosAsignados),
+        {text: '    '},
+        {
+          columns : [
+            { qr: this.servicio.costo + ', Cliente : ' + this.cliente.nombre, fit : 100 },
+            {
+              text: `(${this.servicio.idplan})`,
+              alignment: 'center',
+            }
+          ]
+        },
 
       ]
     }
@@ -429,26 +387,64 @@ export class NuevoServicioComponent implements OnInit {
 
   }
 
-  getEducationObject(educations:Descripcion[]) {
+  getEducationObject(educations:any[]) {
     return {
       table: {
-        widths: ['*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*'],
         body: [
           [{
-            text: 'Degree',
+            text: 'Placa',
             style: 'tableHeader'
           },
             {
-              text: 'College',
+              text: 'Vehiculo',
               style: 'tableHeader'
             },
             {
-              text: 'Passing Year',
+              text: 'Id Gps',
+              style: 'tableHeader'
+            },
+            {
+              text: 'Imei',
+              style: 'tableHeader'
+            }
+            ,
+            {
+              text: 'Modelo',
+              style: 'tableHeader'
+            },
+
+          ],
+          ...educations.map(ed => {
+            return [ed.vehiculo.placa,ed.vehiculo.vehiculo,ed.gps.id_gps, ed.gps.imei_gps, ed.gps.modelo.nombre];
+          })
+        ]
+      }
+    };
+  }
+
+  getEducationSObject(educations:any[]) {
+    return {
+      table: {
+        widths: ['*','*', '*'],
+        body: [
+          [
+            {
+              text: 'Placa',
+              style: 'tableHeader'
+            },
+            {
+              text: 'Observaciones',
+              style: 'tableHeader'
+            }
+            ,
+            {
+              text: 'Ubicacion',
               style: 'tableHeader'
             },
           ],
           ...educations.map(ed => {
-            return [ed.gps.modelo.nombre, ed.vehiculo.placa, ed.estado];
+            return [ed.vehiculo.placa,ed.observacion,ed.ubicacion];
           })
         ]
       }
