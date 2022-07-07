@@ -21,12 +21,6 @@ export class PrincipalComponent implements OnInit {
   instalador:boolean;
   id_persona:any;
 
-  btnUno=false;
-  btnDos=false;
-  btnTres=false;
-  btnCuatro=false;
-  btnCinco=false;
-
   constructor(private router:Router,
               private roles_userSevice:Rol_UsuarioService,
               public dialog: MatDialog,
@@ -54,6 +48,7 @@ export class PrincipalComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_persona= JSON.parse(sessionStorage['id']);
+    this.id_persona= JSON.parse(sessionStorage['id']);
     this.roles_userSevice.getRol_Us_id_persona(this.id_persona).subscribe((data:any)=>{
         this.listrol=data;
         if (this.listrol.length!=0){
@@ -69,15 +64,6 @@ export class PrincipalComponent implements OnInit {
 
       try {
         if(this.listrol.length==1){
-          this.issloading=true;
-          //this.router.navigate(['']);
-          //-- btns
-          this.btnUno=true;
-          this.btnDos=true;
-          this.btnTres=true;
-          this.btnCuatro=true;
-          this.btnCinco=true;
-          //-- btns-fin
           this.issloading=true;
         }else if(this.listrol.length>1){
           this.issloading=true;
