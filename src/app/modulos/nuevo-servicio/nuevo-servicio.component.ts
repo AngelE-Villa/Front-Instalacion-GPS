@@ -359,7 +359,7 @@ export class NuevoServicioComponent implements OnInit {
         },
         {text: '    '},
         {
-          text: 'DETALLE', fontSize: 13, bold: true, alignment: 'center'
+          text: 'DETALLES', fontSize: 13, bold: true, alignment: 'center'
         },
         this.getEducationObject(this.listavehiculosAsignados),
 
