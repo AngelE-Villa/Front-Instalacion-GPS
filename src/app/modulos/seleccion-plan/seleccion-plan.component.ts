@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import {Modelo} from "../../modelos/Modelo";
 import {Gps} from "../../modelos/Gps";
 import {ModeloService} from "../../servicios/ModeloService";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
@@ -58,6 +59,33 @@ export class SeleccionPlanComponent implements OnInit {
       height: '70%',
       width: '30%',
     });
+  }
+
+  //----------------------
+  //validacion de campos
+  VNuevoPlanFormGroup = new FormGroup({
+
+    nombre_p: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+    costo_p: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    imagen:new FormControl('',Validators.required),
+    descripcion_p:new FormControl('',Validators.required),
+    costo: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    estado_plan:new FormControl('',Validators.required),
+    modelo:new FormControl('',Validators.required),
+
+  });
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.VNuevoPlanFormGroup.controls[controlName].hasError(errorName);
+  }
+  ///cargar imagen
+  cargarImg(e: any) {
+    let img = e.target.files
+    let reader = new FileReader();
+    reader.readAsDataURL(img[0]);
+    reader.onloadend = () => {
+
+      this.plan.imagen = reader.result;
+    }
   }
 
 
