@@ -50,15 +50,18 @@ export class VerServicioClienteComponent implements OnInit {
   monto:any;
 
 
-  datos: Servicio[] = [];
+  datos: Servicio[] =[];
   infodetalle: Descripcion[]= [];
   infodetallePagos: Pagos[]= [];
+
+  listaSevicios:Array<Servicio>=[];
 
   id:any;
   cliente:Cliente=new Cliente();
   servicio:Servicio=new Servicio();
   servicioGet:Servicio=new Servicio();
   detalle:Descripcion;
+  detalles:Descripcion[];
   pago:Pagos=new Pagos();
   pagoGet:Pagos=new Pagos();
   plan:Plan=new Plan();
@@ -87,18 +90,19 @@ export class VerServicioClienteComponent implements OnInit {
   listaServicios(){
     this.id=this.route.snapshot.params['id'];
     if (this.id){
-      this.detalleService.getDescrip().subscribe((data:any)=>{
-        this.detalle=data.find((m)=>{return m.vehiculo.cliente.id_persona==this.id} );
+      this.detalleService.getByidCliente(this.id).subscribe((data:any)=>{
+        console.log(data);
+        this.detalle=data.find((m)=>{return m.vehiculo.cliente.id_persona==this.id});
+        this.detalles=data;
+          this.serviceService.getServiciosCliente(this.detalle.vehiculo.cliente.id_persona).subscribe((data1:any)=>{
+            this.datos=data1;
+            this.cliente=this.detalle.vehiculo.cliente;
+            console.log(this.datos)
+            this.dataSource = new MatTableDataSource(this.datos);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
 
-        this.serviceService.getServices().subscribe((data1:any)=>{
-          this.datos=data1.filter((m)=> m.id_documentoservicio==this.detalle.documentoservicio.id_documentoservicio);
-          console.log(data1)
-          this.servicio=this.datos.find((m)=>{return m.id_documentoservicio==this.detalle.documentoservicio.id_documentoservicio})
-          this.cliente=this.detalle.vehiculo.cliente;
-          this.dataSource = new MatTableDataSource(this.datos);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        });
       })
     }else {
       console.log("Crear")
@@ -106,6 +110,7 @@ export class VerServicioClienteComponent implements OnInit {
   }
 
 
+  //Detalles Del Servicio
   openTempDialog(id:String) {
     this.detalleService.getDescrip().subscribe((value1:any)=>{
       this.infodetalle=value1.filter((m)=> m.documentoservicio.id_documentoservicio==id);
@@ -113,6 +118,7 @@ export class VerServicioClienteComponent implements OnInit {
     this.dialog.open(this.dialogRef);
   }
 
+  //Detalle de los pagos
   openDialogoDetallePagos(id_service:any){
     this.pagoService.getPagosByService(id_service).subscribe(value => {
       this.infodetallePagos=value;
@@ -123,11 +129,13 @@ export class VerServicioClienteComponent implements OnInit {
     })
   }
 
+  //Ventana de Activación
   openTempDialogPagos(id:String) {
     this.servicio.costo=0;
     this.pago.cantidad_p=0;
     this.serviceService.getService(id).subscribe((value1:any)=>{
       this.servicioGet=value1;
+      this.servicio.costo_plan=this.servicioGet.costo_plan;
       console.log(this.servicioGet.idplan)
       this.servicePlan.getPlan(this.servicioGet.idplan).subscribe((value:any)=>{
         this.plan=value;
@@ -137,7 +145,7 @@ export class VerServicioClienteComponent implements OnInit {
     this.dialog.open(this.dialogRefActivacion);
   }
 
-
+  //Activacion del servicio
   activarservicio(){
     let cant= this.pago.cantidad_p/this.servicio.costo_plan;
     let mesmili = ((1000 * 60 * 60 * 24 * 7 * 4)+((1000*60*60*24)*2)) *cant;

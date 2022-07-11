@@ -261,6 +261,7 @@ export class NuevoServicioComponent implements OnInit {
     console.log(this.servicio.fecha_fin_plan)
     let cont=0;
     this.servicio.idplan=this.id_plan;
+    this.servicio.id_cliente=this.cliente.id_persona;
       this.servicioService.crearService(this.servicio).subscribe((data:any)=>{
        this.servicioGet=data;
         for (let des of this.listavehiculosAsignados){

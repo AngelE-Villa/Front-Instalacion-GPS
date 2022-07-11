@@ -17,6 +17,10 @@ export class ServicioService{
     return this.httpClient.get<Servicio[]>(this.base_url);
   }
 
+  getServiciosCliente(idcli:String):Observable<Servicio[]>{
+    return this.httpClient.get<Servicio[]>(this.base_url+"cliente/idcli/"+idcli);
+  }
+
   getService(id:String):Observable<any>{
     return this.httpClient.get(this.base_url+id);
   }

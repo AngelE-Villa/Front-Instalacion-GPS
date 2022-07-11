@@ -11,4 +11,5 @@ export class Servicio{
   costo_plan:any;
   tipo_plan:any;
   fecha_fin_plan:any;
+  id_cliente:any;
 }

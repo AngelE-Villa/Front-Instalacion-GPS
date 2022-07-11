@@ -105,6 +105,7 @@
   <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
 </ng-template>
 
+<!--Activar Plan-->
 <ng-template #dialogRefActivacion >
   <h2>Activaciòn de Servicio</h2>
   <span><Strong>Precio del Plan:</Strong> ${{monto}}</span><br>
@@ -122,7 +123,7 @@
   <br>
   <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
   <button mat-button mat-dialog-close   (click)="activarservicio()" >Activar</button>
-  <button mat-button mat-dialog-close   (click)="openDialogoDetallePagos(servicio.id_documentoservicio)" >Detalle Pagos</button>
+  <button mat-button mat-dialog-close   (click)="openDialogoDetallePagos(servicioGet.id_documentoservicio)" >Detalle Pagos</button>
 </ng-template>
 
 <ng-template #dialogRefdetallePago>
