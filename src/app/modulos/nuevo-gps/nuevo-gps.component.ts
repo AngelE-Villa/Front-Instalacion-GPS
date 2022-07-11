@@ -28,11 +28,27 @@ export class NuevoGpsComponent implements OnInit {
               private servicioPlan:PlanService,
               private router:Router) { }
 
-//--validaciones por categoria----
-  numGpsFormControl = new FormControl('',[Validators.required,Validators.pattern("[0-9]+")]);
-  imei_gpsFormControl = new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]);
-  num_simFormControl = new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]);
 //----------------------------
+  ValidacionGpsFormGroup = new FormGroup({
+    num_gps: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    num_sim: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    imei_gps: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    modelo:new FormControl('',Validators.required),
+  });
+  //-------------------------
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.ValidacionGpsFormGroup.controls[controlName].hasError(errorName);
+  }
+
+
+
+
+
+
+
+
+
+
 
   ngOnInit(): void {
       this.servicioModelo.getModelos().subscribe((data:any)=>{

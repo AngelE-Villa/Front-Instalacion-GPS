@@ -1,47 +1,56 @@
 <br>
 <div class="center">
-<form>
+<form [formGroup]="firstFormGroup">
   <mat-card class="example-card ">
     <mat-card-title class="mediat">Datos Cliente</mat-card-title>
     <ng-template matStepLabel >Datos Cliente</ng-template>
     <mat-form-field appearance="outline" style="width: 30%; margin-left: 5px">
       <mat-label>Cedula</mat-label>
-      <input matInput  name="cedula" [(ngModel)]="cliente.cedula" required/>
+      <input matInput  name="cedula" [(ngModel)]="cliente.cedula"  formControlName="cedula" id="cedula"/>
+      <mat-error *ngIf="hasError('cedula', 'required')">Cedula requerida</mat-error>
+      <mat-error *ngIf="hasError('cedula', 'maxlength')">Tiene más de 10 caracteres</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 50%; margin-left: 5px">
       <mat-label>Nombre</mat-label>
-      <input matInput name="nombre" [(ngModel)]="cliente.nombre"  required/>
+      <input matInput name="nombre" [(ngModel)]="cliente.nombre"  formControlName="nombre" id="nombre"/>
+      <mat-error *ngIf="hasError('nombre', 'required')">Nombre requerido</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 30%; margin-left: 5px">
       <mat-label>Telefono</mat-label>
-      <input matInput  name="telefono" [(ngModel)]="cliente.telefono" required/>
+      <input matInput  name="telefono" [(ngModel)]="cliente.telefono" formControlName="telefono" id="telefono"/>
+      <mat-error *ngIf="hasError('telefono', 'required')">Telefono requerido</mat-error>
+      <mat-error *ngIf="hasError('telefono', 'maxlength')">Tiene más de 10 caracteres</mat-error>
     </mat-form-field>
 
     <mat-form-field  appearance="outline" style="width: 50%; margin-left: 5px">
       <mat-label>Dirección</mat-label>
-      <input matInput  name="direccion" [(ngModel)]="cliente.direccion" required/>
+      <input matInput  name="direccion" [(ngModel)]="cliente.direccion" formControlName="direccion" id="direccion"/>
+      <mat-error *ngIf="hasError('direccion', 'required')">Direccion requerido</mat-error>
     </mat-form-field>
 
     <br>
     <mat-form-field appearance="outline" style="width: 80%">
       <mat-label>Correo</mat-label>
-      <input matInput  name="correo" [(ngModel)]="cliente.correo" required/>
+      <input matInput  name="correo" [(ngModel)]="cliente.correo" formControlName="correo" id="correo"/>
+      <mat-error *ngIf="hasError('correo', 'required')">Correo requerido</mat-error>
     </mat-form-field>
 
     <mat-form-field  appearance="outline" style="width: 40%; margin-left: 5px">
       <mat-label>Contacto</mat-label>
-      <input matInput name="contacto" [(ngModel)]="cliente.contacto" required/>
+      <input matInput name="contacto" [(ngModel)]="cliente.contacto" formControlName="contacto" id="contacto"/>
+      <mat-error *ngIf="hasError('contacto', 'required')">Contacto requerido</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 40%; margin-left: 5px">
       <mat-label>Ciudad</mat-label>
-      <input matInput name="ciudad" [(ngModel)]="cliente.ciudad" required/>
+      <input matInput name="ciudad" [(ngModel)]="cliente.ciudad" formControlName="ciudad" id="ciudad"/>
+      <mat-error *ngIf="hasError('ciudad', 'required')">Ciudad requerido</mat-error>
     </mat-form-field>
     <br>
     <mat-card-actions style="text-align: center">
-      <button  mat-raised-button color="primary"  class="btniniciarSesion" (click)="Guardar()" >GUARDAR</button>
+      <button  mat-raised-button color="primary"  class="btniniciarSesion" (click)="Guardar()" [disabled]="!firstFormGroup.valid">GUARDAR</button>
     </mat-card-actions>
     <br>
   </mat-card>

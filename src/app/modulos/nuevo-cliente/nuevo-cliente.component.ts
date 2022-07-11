@@ -29,14 +29,18 @@ export class NuevoClienteComponent implements OnInit {
 
   //validacion de campos
   firstFormGroup = new FormGroup({
-
     cedula: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
     nombre: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
     direccion: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
     telefono: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
     correo: new FormControl('',[Validators.required, Validators.email]),
+    contacto: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+    ciudad: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
   });
 
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.firstFormGroup.controls[controlName].hasError(errorName);
+  }
 
   constructor(private _formBuilder: FormBuilder,private route:ActivatedRoute,private clienteService:ClienteService, private router:Router) {
     this.id=this.route.snapshot.params['id'];

@@ -46,15 +46,19 @@
   </table>
   <mat-paginator class="center1" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
 </div>
+
 <ng-template #dialogRef >
   <h2> {{titulo}} </h2>
-  <mat-form-field appearance="outline">
-    <mat-label>Nombre</mat-label>
-    <input matInput name="nombre" [(ngModel)]="modelo.nombre" required/>
-  </mat-form-field>
+  <form [formGroup]="validacionModelo">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput name="nombre" [(ngModel)]="modelo.nombre" formControlName="nombre" id="nombre"/>
+      <mat-error *ngIf="hasError('nombre', 'required')">Nombre de modelo requerido</mat-error>
+    </mat-form-field>
+  </form>
   <br>
   <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-button mat-dialog-close (click)="crearModelo()" *ngIf="creating">Guardar</button>
+  <button mat-button mat-dialog-close (click)="crearModelo()" *ngIf="creating" [disabled]="!validacionModelo.valid">Guardar</button>
   <button mat-button mat-dialog-close (click)="editarModelo()" *ngIf="editing">Editar</button>
 </ng-template>
 

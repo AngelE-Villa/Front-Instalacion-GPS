@@ -7,6 +7,7 @@ import {Modelo} from "../../modelos/Modelo";
 import {Acciones} from "../../modelos/Acciones";
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-nuevo-modelo-gps',
@@ -83,6 +84,15 @@ export class NuevoModeloGpsComponent implements OnInit {
         this.titulo="Editar Modelo"
         this.dialog.open(this.dialogRef);
       })
+  }
+  //----------------Validaciones-----------------
+  validacionModelo = new FormGroup({
+    nombre: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+  });
+
+  //---------------------------------------------
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.validacionModelo.controls[controlName].hasError(errorName);
   }
 
   crearModelo(){
