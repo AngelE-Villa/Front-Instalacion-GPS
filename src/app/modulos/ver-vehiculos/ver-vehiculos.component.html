@@ -66,33 +66,40 @@
 </div>
 
 <ng-template #dialogNvehiculo >
+
+  <form [formGroup]="ValidacionVehiculoFormGroup">
   <h2> {{titulo}} </h2>
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Placa</mat-label>
-    <input matInput name="placa"  [(ngModel)]="vehiculo.placa"  required/>
+    <input matInput name="placa" [(ngModel)]="vehiculo.placa" formControlName="placa" id="placa" autocomplete="off"/>
+    <mat-error *ngIf="hasError('placa', 'required')">Placa del Vehiculo <strong>requerido</strong></mat-error>
   </mat-form-field>
   <br>
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Clave</mat-label>
-    <input matInput name="clave" [(ngModel)]="vehiculo.clave" required/>
+    <input type="number" matInput name="clave" [(ngModel)]="vehiculo.clave" formControlName="clave" id="clave" autocomplete="off"/>
+    <mat-error *ngIf="hasError('clave', 'required')">Clave del vehiculo <strong>requerido</strong></mat-error>
   </mat-form-field>
   <br>
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Año</mat-label>
-    <input matInput name="inio" [(ngModel)]="vehiculo.anio" required/>
+    <input type="number" matInput name="anio" [(ngModel)]="vehiculo.anio" formControlName="anio" id="anio" autocomplete="off"/>
+    <mat-error *ngIf="hasError('anio', 'required')">Año <strong>requerido</strong></mat-error>
   </mat-form-field>
   <br>
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Kilometro</mat-label>
-    <input matInput  name="kilometraje" [(ngModel)]="vehiculo.kilometraje" required/>
+    <input type="number" matInput  name="kilometraje" [(ngModel)]="vehiculo.kilometraje" formControlName="kilometraje" id="kilometraje" autocomplete="off"/>
+    <mat-error *ngIf="hasError('kilometraje', 'required')">Kilometraje <strong>requerido</strong></mat-error>
   </mat-form-field>
   <br>
   <mat-form-field appearance="outline" style="width: 100%">
-    <mat-label>Vehiculo</mat-label>
-    <input matInput name="vehiculo" [(ngModel)]="vehiculo.vehiculo" required/>
+    <mat-label> Nombre de Vehiculo</mat-label>
+    <input matInput name="vehiculo_n" [(ngModel)]="vehiculo.vehiculo" formControlName="vehiculo_n" id="vehiculo_n" autocomplete="off"/>
+    <mat-error *ngIf="hasError('vehiculo_n', 'required')">Nombre del vehiculo <strong>requerido</strong></mat-error>
   </mat-form-field>
   <br>
   <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-button mat-dialog-close   (click)="crearVehiculo()" *ngIf="creating"  >Guardar</button>
-
+  <button mat-button mat-dialog-close   (click)="crearVehiculo()" *ngIf="creating" [disabled]="!ValidacionVehiculoFormGroup.valid" >Guardar</button>
+  </form>
 </ng-template>

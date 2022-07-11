@@ -9,6 +9,7 @@ import {Vehiculo} from "../../modelos/Vehiculo";
 import {Servicio} from "../../modelos/Servicio";
 import { MatDialog } from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-ver-vehiculos',
@@ -107,6 +108,21 @@ export class VerVehiculosComponent implements OnInit {
       window.location.reload();
     })
   }
+
+  //----------------------------
+  ValidacionVehiculoFormGroup = new FormGroup({
+    placa: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z0-9]*')]),
+    clave: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    anio:new FormControl('',Validators.required),
+    kilometraje: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
+    vehiculo_n: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+  });
+  //-------------------------
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.ValidacionVehiculoFormGroup.controls[controlName].hasError(errorName);
+  }
+
+
 
 
 }
