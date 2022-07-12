@@ -27,6 +27,10 @@ export class VerGpsComponent implements OnInit {
   constructor(private servicegps:GpsService) { }
 
   ngOnInit(): void {
+    this.ListaGps();
+  }
+
+  ListaGps(){
     this.servicegps.getGps().subscribe((x:any) =>{
       this.listaGps=x
       for (let a of this.listaGps){

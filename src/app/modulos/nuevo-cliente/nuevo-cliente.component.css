@@ -7,13 +7,4 @@
 mat-form-field {
   width: 60%;
 }
-/*colores de bordes y letras*/
-.example-card {
-  border-width: 1px;
-  border-style: solid;
-  border-color:#0e375d;
-}
-.mediat{
-  background: #B847E6;
-  color: white;
-}
+
