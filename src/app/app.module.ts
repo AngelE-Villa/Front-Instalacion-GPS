@@ -25,6 +25,7 @@ import { EditarServicioComponent } from './modulos/editar-servicio/editar-servic
 import { SeleccionPlanComponent } from './modulos/seleccion-plan/seleccion-plan.component';
 import { AsignacionRolesComponent } from './modulos/asignacion-roles/asignacion-roles.component';
 import { RolIngresoComponent } from './modulos/rol-ingreso/rol-ingreso.component';
+import { MesajesEmailComponent } from './modulos/mesajes-email/mesajes-email.component';
 
 const routes: Routes = [
   {path:'', component:CuerpoComponent},
@@ -48,6 +49,7 @@ const routes: Routes = [
   {path:'verservicio/cliente/edit/:id', component:EditarServicioComponent},
   {path:'asignacionroles', component:AsignacionRolesComponent},
   {path:'rol_ingreso', component:RolIngresoComponent},
+  {path:'Mensaje/email', component:MesajesEmailComponent},
 
 ];
 
@@ -72,6 +74,7 @@ const routes: Routes = [
     SeleccionPlanComponent,
     AsignacionRolesComponent,
     RolIngresoComponent,
+    MesajesEmailComponent,
   ],
   imports: [
     BrowserModule,
