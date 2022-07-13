@@ -1,1 +1,57 @@
-<p>mesajes-email works!</p>
+<div class="cuerpo">
+  <div class="container" >
+    <h1>Generar Mensajes Preestablecido</h1>
+    <button mat-raised-button color="primary"  (click)="abrirdialoMessager()">Crear Nuevo Mensaje</button>
+    <ng-template #dialogMessage>
+      <h2> {{titulo}} </h2>
+      <form [formGroup]="validacionMensaje">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Email Emisor</mat-label>
+          <input matInput name="emiMail" [(ngModel)]="mensage.emiMail" formControlName="emiMail" id="emiMail"/>
+          <mat-error *ngIf="hasError('emiMail', 'required')">Email <strong>requerido</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"style="width: 100%;">
+          <mat-label>Tipo de Mensaje</mat-label>
+          <input matInput name="tipoMensaje" [(ngModel)]="mensage.tipoMensaje" formControlName="tipoMensaje" id="tipoMensaje"/>
+          <mat-error *ngIf="hasError('tipoMensaje', 'required')">Tipo de Mensaje <strong>requerido</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"style="width: 100%;">
+          <mat-label>Titulo</mat-label>
+          <input matInput name="title" [(ngModel)]="mensage.title" formControlName="title" id="title"/>
+          <mat-error *ngIf="hasError('title', 'required')">Titulo <strong>requerido</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"style="width: 100%;">
+          <mat-label>Cuerpo del Mensaje</mat-label>
+          <input matInput name="mensaje" [(ngModel)]="mensage.mensaje" formControlName="mensaje" id="mensaje"/>
+          <mat-error *ngIf="hasError('mensaje', 'required')">Cuerpo del Mensaje <strong>requerido</strong></mat-error>
+        </mat-form-field>
+      </form>
+      <br>
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-button mat-dialog-close (click)="crearMensaje()"*ngIf="creating" [disabled]="!validacionMensaje.valid">Guardar</button>
+      <button mat-button mat-dialog-close *ngIf="editing">Editar</button>
+    </ng-template>
+
+  </div>
+
+  <div class="card text-center" *ngFor="let emails of listaEmail">
+    <div class="card-header">{{emails.title}}</div>
+    <div class="card-body">
+      <h3>Email:
+        <p class="card-text">{{emails.emiMail}}</p>
+      </h3>
+      <h3>Tipo:
+        <p class="card-text">{{emails.tipoMensaje}}</p>
+      </h3>
+      <h3> Mensaje:
+        <h5 class="card-title">{{emails.mensaje}}</h5>
+      </h3>
+    </div>
+    <div class="card-footer text-muted">
+
+    </div>
+  </div>
+
+
+</div>
+
