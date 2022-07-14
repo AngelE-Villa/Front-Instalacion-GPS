@@ -26,6 +26,7 @@ import { SeleccionPlanComponent } from './modulos/seleccion-plan/seleccion-plan.
 import { AsignacionRolesComponent } from './modulos/asignacion-roles/asignacion-roles.component';
 import { RolIngresoComponent } from './modulos/rol-ingreso/rol-ingreso.component';
 import { MesajesEmailComponent } from './modulos/mesajes-email/mesajes-email.component';
+import { EditarUserComponent } from './modulos/editar-user/editar-user.component';
 
 const routes: Routes = [
   {path:'', component:CuerpoComponent},
@@ -50,6 +51,7 @@ const routes: Routes = [
   {path:'asignacionroles', component:AsignacionRolesComponent},
   {path:'rol_ingreso', component:RolIngresoComponent},
   {path:'Mensaje/email', component:MesajesEmailComponent},
+  {path:'editaruser', component:EditarUserComponent},
 
 ];
 
@@ -75,6 +77,7 @@ const routes: Routes = [
     AsignacionRolesComponent,
     RolIngresoComponent,
     MesajesEmailComponent,
+    EditarUserComponent,
   ],
   imports: [
     BrowserModule,
