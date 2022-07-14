@@ -111,7 +111,7 @@ export class VerVehiculosComponent implements OnInit {
 
   //----------------------------
   ValidacionVehiculoFormGroup = new FormGroup({
-    placa: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z0-9]*')]),
+    placa: new FormControl('',[Validators.required,Validators.pattern('^[a-zA-Z0-9\\-\\ñÑáéíóúÁÉÍÓÚ., ]*')]),
     clave: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
     anio:new FormControl('',Validators.required),
     kilometraje: new FormControl('',[Validators.required, Validators.maxLength(10),Validators.pattern("[0-9]+")]),
