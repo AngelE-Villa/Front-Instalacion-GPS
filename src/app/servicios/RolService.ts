@@ -9,7 +9,7 @@ import {Modelo} from "../modelos/Modelo";
   providedIn:"root"
 })
 export class RolService{
-  base_url="http://localhost:9898/api/rol/";
+  base_url="http://localhost:9898/rol/";
 
   constructor(private httpClient:HttpClient) {
   }

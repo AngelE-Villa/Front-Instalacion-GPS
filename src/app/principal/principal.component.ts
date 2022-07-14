@@ -52,7 +52,6 @@ export class PrincipalComponent implements OnInit {
     if (this.usuario.token!=null){
       for (let au of this.roles){
         if(au.authority=='ROLE_ADMIN'){
-          console.log('ad')
           this.admin=true;
         }else if(au.authority=='ROLE_INSTALL'){
           this.install=true;
@@ -85,6 +84,8 @@ export class PrincipalComponent implements OnInit {
   cerrarSesion(){
     localStorage.clear();
     sessionStorage.clear();
-    window.location.reload();
+    this.router.navigate(['']).then(value => {
+      window.location.reload();
+    })
   }
 }

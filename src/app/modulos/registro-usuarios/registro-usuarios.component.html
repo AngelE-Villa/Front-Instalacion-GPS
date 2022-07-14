@@ -26,7 +26,6 @@
             <mat-select [(ngModel)]="rol.id" name="rol" formControlName="rol" >
               <mat-option *ngFor="let rol of listaRol" [value]="rol.id" >
                 {{rol.rolNombre}}
-                <span>{{rol.id}}</span>
               </mat-option>
             </mat-select>
           </mat-form-field>
