@@ -17,7 +17,7 @@ import {RolService} from "../../servicios/RolService";
 export class AsignacionRolesComponent implements OnInit {
 
 
-  columnas: string[] = ['id', 'nombre', 'correo','estado','editar','eliminar'];
+  columnas: string[] = ['id', 'nombre', 'correo','rol_us','estado','editar','eliminar'];
 
   columnasPlan: string[] = ['id', 'nombre', 'descripcion','editar','eliminar'];
 
@@ -26,6 +26,8 @@ export class AsignacionRolesComponent implements OnInit {
   dataSource: MatTableDataSource<User>;
 
   dataSourceRol: MatTableDataSource<Rol>;
+
+  ListadoR:Rol[]=[];
 
   datos: User[] = [];
 
@@ -49,14 +51,13 @@ export class AsignacionRolesComponent implements OnInit {
               private rolservicio:RolService) { }
 
   ngOnInit(): void {
-
     this.serviciouser.getUsers().subscribe((x:any) =>{
       this.listaUser=x
+      console.log(x)
       for (let a of this.listaUser){
         this.datos.push(a);
         this.dataSource = new MatTableDataSource<any>(this.datos);
         this.dataSource.paginator = this.paginator;
-
       }
     })
 
@@ -69,12 +70,6 @@ export class AsignacionRolesComponent implements OnInit {
 
       }
     })
-
-
-
-
-
-
 
 
   }
@@ -90,6 +85,14 @@ export class AsignacionRolesComponent implements OnInit {
     this.rolservicio.crearRol(this.rol).subscribe((data:any)=>{
       window.location.reload();
     })
+  }
+
+  obtenerRol(ListadoR: any){
+    console.log(this.ListadoR)
+    this.ListadoR = new Array<any>();
+    for(let rol of ListadoR){
+      this.ListadoR.push(rol);
+    }
   }
 
 }

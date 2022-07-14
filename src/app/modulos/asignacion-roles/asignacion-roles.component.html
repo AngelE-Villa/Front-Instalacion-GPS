@@ -24,11 +24,15 @@
         <td class="media1" mat-cell *matCellDef="let UsersVs"> {{UsersVs.correo}} </td>
       </ng-container>
 
+      <ng-container  matColumnDef="rol_us">
+        <th class="titulo media1" mat-header-cell *matHeaderCellDef>Rol</th>
+        <td class="media1" mat-cell *matCellDef="let UsersVs"> {{obtenerRol(UsersVs.roles)}}<span *ngFor="let r of ListadoR">{{r.rolNombre}}</span></td>
+      </ng-container>
+
       <ng-container  matColumnDef="estado">
         <th class="titulo media1" mat-header-cell *matHeaderCellDef> Estado</th>
         <td class="media1" mat-cell *matCellDef="let UsersVs"> {{UsersVs.estado}} </td>
       </ng-container>
-
 
       <ng-container matColumnDef="editar">
         <th class="titulo" mat-header-cell *matHeaderCellDef> Editar </th>

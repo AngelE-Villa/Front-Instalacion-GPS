@@ -16,7 +16,7 @@ export class UserService{
   }
 
   getUsers():Observable<User[]>{
-    return this.httpClient.get(this.base_url).pipe(map(Response => Response as User[]))
+    return this.httpClient.get<User[]>(this.base_url);
   }
 
   crearUser(user:User){
@@ -30,8 +30,8 @@ export class UserService{
   getUserid(id:any):Observable<User>{
     return this.httpClient.get<User>(this.base_url+id);
   }
-  updateUser(user:User, id:String){
-    return this.httpClient.put(this.base_url+"update-user/"+id, user);
+  updateUser(user:User){
+    return this.httpClient.put(this.base_url+"update-user", user);
   }
 
 }

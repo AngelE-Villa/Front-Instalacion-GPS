@@ -64,8 +64,8 @@ export class EditarUserComponent implements OnInit {
 
   });
 
-  regsitrar(){
-    this.serviciouser.updateUser(this.user,this.id).subscribe((data:any)=>{
+  UpdateUs(){
+    this.serviciouser.updateUser(this.user).subscribe((data:any)=>{
     })
   }
 

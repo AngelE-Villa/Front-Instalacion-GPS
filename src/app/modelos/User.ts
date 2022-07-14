@@ -5,5 +5,5 @@ export class User extends Persona{
   password: any;
   estado: any;
   token:any;
-  roles:Rol[];
+  roles:Rol=new Rol();
 }
