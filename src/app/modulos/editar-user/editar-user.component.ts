@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../modelos/User";
 import {UserService} from "../../servicios/UserService";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Rol} from "../../modelos/Rol";
 import {RolService} from "../../servicios/RolService";
 import {Rol_UsuarioService} from "../../servicios/Rol_UsuarioService";
@@ -18,45 +18,54 @@ export class EditarUserComponent implements OnInit {
   user:User=new User();
   userGet:User=new User();
   rol: Rol = new Rol();
+  //Parametro
+  id:any;
 
   rol_us: Rol_Usuario = new Rol_Usuario();
 
   listaRol:Array<Rol>=[];
 
-  constructor(private rolService:RolService,private servicioRol_us:Rol_UsuarioService,private serviciouser:UserService, private router:Router) { }
+  idpersona:any;
+
+  constructor(private rolService:RolService,
+              private servicioRol_us:Rol_UsuarioService,
+              private serviciouser:UserService,
+              private router:Router,
+              private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.idpersona=this.route.snapshot.params['idpersona'];
+    this.listarRoles();
+    this.listarUser(this.idpersona);
+  }
 
+  listarRoles(){
     this.rolService.getRol().subscribe((data:any)=>{
       this.listaRol=data
       console.log(this.listaRol)
     })
+  }
 
+  listarUser(id:any){
+    this.serviciouser.getUserid(id).subscribe(value => {
+      this.user=value;
+    })
   }
 
   hide = true;
   accion:Boolean=true;
 
   formUser = new FormGroup({
+    nombre: new FormControl('',Validators.required),
+    direccion: new FormControl('',Validators.required),
+    telefono: new FormControl('',Validators.required),
     correo: new FormControl('',[Validators.required, Validators.email]),
     contra: new FormControl('',Validators.required),
-    rol:new FormControl('',Validators.required),
+
   });
 
   regsitrar(){
-    this.user.estado="Activo";
-    this.rol_us.usuario=this.user;
-    this.rol_us.rol=this.rol;
-    console.log(this.rol_us)
-    this.serviciouser.crearUser(this.user).subscribe((data:any)=>{
-      this.userGet=data;
-      this.rol_us.usuario=this.userGet;
-      this.rol_us.rol=this.rol;
-      console.log(this.rol_us)
-      this.servicioRol_us.crearRol_Usuario(this.rol_us).subscribe((value)=>{
-        this.router.navigate(['/asignacionroles'])
-        console.log(value)
-      });
+    this.serviciouser.updateUser(this.user,this.id).subscribe((data:any)=>{
     })
   }
 

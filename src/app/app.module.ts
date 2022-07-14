@@ -51,7 +51,7 @@ const routes: Routes = [
   {path:'asignacionroles', component:AsignacionRolesComponent},
   {path:'rol_ingreso', component:RolIngresoComponent},
   {path:'Mensaje/email', component:MesajesEmailComponent},
-  {path:'editaruser', component:EditarUserComponent},
+  {path:'editaruser/:idpersona', component:EditarUserComponent},
 
 ];
 
