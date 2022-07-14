@@ -4,6 +4,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserService} from "../../servicios/UserService";
 import {User} from "../../modelos/User";
 import {Router} from "@angular/router";
+import {LoginUser} from "../../modelos/LoginUser";
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -12,8 +13,7 @@ import {Router} from "@angular/router";
 })
 export class InicioSesionComponent implements OnInit {
 
-  correoU?:String;
-  pswU?:String;
+  login:LoginUser=new LoginUser();
   user?:User = new User();
 
   constructor(private snackBar: MatSnackBar, private userService:UserService,private router:Router) { }
@@ -32,30 +32,25 @@ export class InicioSesionComponent implements OnInit {
 
 
   iniciarSesion(){
-    this.userService.getUsers().subscribe(value => {
-      if(value.filter(value1 => value1.correo==this.correoU&&value1.password==this.pswU).length==0){
-        this.snackBar.open("Usuario no existe, los credenciales ingresados no se encontraron", "",{
-          duration: 1 * 1000,
-        });
-        this.issloading=false;
-        console.log("Usuario no existe")
-      }else {
-        this.user=value.filter(value1 => value1.correo==this.correoU&&value1.password==this.pswU)[0];
-        if(this.user.correo==this.correoU && this.user.password==this.pswU){
-          sessionStorage.clear;
-          sessionStorage.setItem('user', JSON.stringify(this.user.nombre));
-          sessionStorage.setItem('id', JSON.stringify(this.user.id_persona));
-          this.issloading=true;
-          this.router.navigate(['']).then(() => {
-            window.location.reload();
-          });
-        }else{
-          this.snackBar.open("Las credenciales ingresadas son incorrectas", "",{
-            duration: 1 * 1000,
-          });
-          this.issloading=false;
-        }
+    this.userService.login(this.login).subscribe(value => {
+      if (value){
+        localStorage.clear();
+        sessionStorage.clear();
+        localStorage.setItem('user', JSON.stringify(value));
+        sessionStorage.setItem('AuthToken', JSON.stringify(value.token));
+        sessionStorage.setItem('Autorities', JSON.stringify(value.authorities));
+        this.issloading=true;
+        this.router.navigate(['']).then(() => {
+          window.location.reload();
+        })
       }
+
+    },error => {
+      this.snackBar.open("Las credenciales ingresadas son incorrectas", "",{
+        duration: 1 * 1000,
+      });
+      this.issloading=false;
+      window.location.reload();
     })
   }
 }

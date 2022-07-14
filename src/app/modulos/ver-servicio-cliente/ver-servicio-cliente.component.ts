@@ -48,7 +48,7 @@ export class VerServicioClienteComponent implements OnInit {
 
   title = 'angular-material-dialog-app';
   monto:any;
-
+  costo:any;
 
   datos: Servicio[] =[];
   infodetalle: Descripcion[]= [];
@@ -136,7 +136,7 @@ export class VerServicioClienteComponent implements OnInit {
     this.serviceService.getService(id).subscribe((value1:any)=>{
       this.servicioGet=value1;
       this.servicio.costo_plan=this.servicioGet.costo_plan;
-      console.log(this.servicioGet.idplan)
+      this.servicio.fecha_fin_plan=this.servicioGet.fecha_fin_plan;
       this.servicePlan.getPlan(this.servicioGet.idplan).subscribe((value:any)=>{
         this.plan=value;
         this.monto=this.plan.costo_p-this.servicioGet.costo;
@@ -146,32 +146,35 @@ export class VerServicioClienteComponent implements OnInit {
   }
 
   //Activacion del servicio
-  activarservicio(){
-    let cant= this.pago.cantidad_p/this.servicio.costo_plan;
+  activarservicio(id:any){
+    this.serviceService.getService(id).subscribe((data:any)=>{
+      this.servicioGet=data;
+      this.servicio=this.servicioGet;
+      this.servicio.costo=this.costo;
+    let cant= this.pago.cantidad_p/this.servicioGet.costo_plan;
     let mesmili = ((1000 * 60 * 60 * 24 * 7 * 4)+((1000*60*60*24)*2)) *cant;
-    if(this.servicio.fecha_fin!=null){
+    if(this.servicioGet.fecha_fin!=null){
       console.log("Hay fecha fin")
-      var date=new Date(this.servicio.fecha_fin);
+      var date=new Date(this.servicioGet.fecha_fin);
     }else{
-      var date=new Date(this.servicio.fecha_ds);
+      var date=new Date(this.servicioGet.fecha_ds);
       console.log("No Hay fecha fin")
     }
     this.servicio.fecha_fin = new Date(date.getTime()+mesmili);
 
-    this.servicio.estado="Activo"
-    this.serviceService.getService(this.servicio.id_documentoservicio).subscribe((data:any)=>{
-      this.servicioGet=data;
+      this.servicio.estado="Activo"
+
       this.servicio.costo=Number(this.servicioGet.costo)+Number(this.servicio.costo);
 
       console.log(this.servicio)
 
-      this.serviceService.editarService(this.servicio,this.servicio.id_documentoservicio).subscribe((data:any)=>{
+      this.serviceService.editarService(this.servicio,id).subscribe((datas:any)=>{
         console.log("Actializado el servicio")
-        this.pago.docservice=this.servicio;
+        this.pago.docservice=datas;
         this.pago.fecha_pago=new Date();
         console.log(this.pago)
         if (this.pago.cantidad_p<=0){
-
+          window.location.reload();
         }else{
           this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
             console.log("Pago realizado")

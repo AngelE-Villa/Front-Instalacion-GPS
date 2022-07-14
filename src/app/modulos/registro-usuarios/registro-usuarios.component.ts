@@ -46,12 +46,10 @@ export class RegistroUsuariosComponent implements OnInit {
     this.user.estado="Activo";
     this.rol_us.usuario=this.user;
     this.rol_us.rol=this.rol;
-    console.log(this.rol_us)
     this.serviciouser.crearUser(this.user).subscribe((data:any)=>{
        this.userGet=data;
        this.rol_us.usuario=this.userGet;
        this.rol_us.rol=this.rol;
-       console.log(this.rol_us)
      this.servicioRol_us.crearRol_Usuario(this.rol_us).subscribe((value)=>{
          this.router.navigate(['/asignacionroles'])
          console.log(value)
