@@ -3,6 +3,7 @@ import {User} from "../modelos/User";
 import {map, Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {Cliente} from "../modelos/Cliente";
+import {LoginUser} from "../modelos/LoginUser";
 
 @Injectable({
   providedIn:"root"
@@ -19,7 +20,11 @@ export class UserService{
   }
 
   crearUser(user:User){
-    return this.httpClient.post(this.base_url+"create-user/", user);
+    return this.httpClient.post(this.base_url, user);
+  }
+
+  login(login:LoginUser):Observable<LoginUser>{
+    return this.httpClient.post<LoginUser>(this.base_url+"login/",login);
   }
 
 }

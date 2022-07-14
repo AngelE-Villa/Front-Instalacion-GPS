@@ -294,8 +294,6 @@ export class NuevoServicioComponent implements OnInit {
   }
 
 
-
-
   newArray =  [];
   recorreArray(){
     this.accionespdf = this.listaAcciones.filter(m => m);

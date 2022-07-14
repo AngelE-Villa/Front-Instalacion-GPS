@@ -113,7 +113,7 @@
   <span><strong> Hasta: </strong> {{servicio.fecha_fin_plan | date: 'dd/MM/yyyy' }}</span>
   <br><br>
   <mat-form-field *ngIf="monto!=0">
-    <input matInput placeholder="Pago de Servicio" name="pservice" [(ngModel)]="servicio.costo"  required/>
+    <input matInput placeholder="Pago de Servicio" name="pservice" [(ngModel)]="costo"  required/>
   </mat-form-field>
   <br>
   <mat-form-field>
@@ -122,7 +122,7 @@
   <br>
   <br>
   <button mat-button mat-dialog-close="I am from dialog land...">Close</button>
-  <button mat-button mat-dialog-close   (click)="activarservicio()" >Activar</button>
+  <button mat-button mat-dialog-close   (click)="activarservicio(servicioGet.id_documentoservicio)" >Activar</button>
   <button mat-button mat-dialog-close   (click)="openDialogoDetallePagos(servicioGet.id_documentoservicio)" >Detalle Pagos</button>
 </ng-template>
 

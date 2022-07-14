@@ -22,6 +22,7 @@ export class VerServiciosComponent implements OnInit {
   displayedColumns: string[] = ['id', 'cedula', 'nombre','cant','detalles'];
   // @ts-ignore
   dataSource: MatTableDataSource<Cliente>;
+  contservicios:any;
 
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -33,6 +34,8 @@ export class VerServiciosComponent implements OnInit {
 
   listaClientes:Cliente[] = [];
 
+  listServicios:Servicio[]=[];
+
   constructor(private serviceService:ServicioService,
               private clienteService:ClienteService,
               private detalleService:DescripcionService) {
@@ -41,6 +44,7 @@ export class VerServiciosComponent implements OnInit {
 
   ngOnInit(): void {
     this.listaServicios();
+    this.servicios();
   }
 
   applyFilter(event: Event) {
@@ -84,6 +88,24 @@ export class VerServiciosComponent implements OnInit {
         })
     })
 
+  }
+
+
+  servicios(){
+    this.serviceService.getServices().subscribe(value => {
+      this.listServicios=value;
+    })
+  }
+
+
+  contarServicios(id:String){
+    let cont=0;
+    for (let numser of this.listServicios){
+      if (numser.id_cliente=id){
+        cont++;
+      }
+    }
+    this.contservicios=cont
   }
 }
 

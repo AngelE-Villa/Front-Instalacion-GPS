@@ -1,4 +1,10 @@
-.container{
-  background-image: url("../../../assets/fondo.png");
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(450px,auto));
+  margin: 15px;
+  gap: 15px;
+}
+
+.example-header-image {
   background-size: cover;
 }

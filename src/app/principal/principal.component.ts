@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatSidenav} from "@angular/material/sidenav";
 import {LayoutModule, BreakpointObserver} from '@angular/cdk/layout';
 import Swal from 'sweetalert2';
+import {LoginUser} from "../modelos/LoginUser";
 
 @Component({
   selector: 'app-principal',
@@ -17,21 +18,19 @@ import Swal from 'sweetalert2';
 })
 export class PrincipalComponent implements OnInit {
 
-  admin:boolean;
-  instalador:boolean;
-  id_persona:any;
+  admin=false;
+  install=false;
+
 
   constructor(private router:Router,
               private roles_userSevice:Rol_UsuarioService,
               public dialog: MatDialog,
               private observer: BreakpointObserver) { }
 
-  listrol=[];
-  rol_us:Rol_Usuario = new Rol_Usuario();
-
 
   issloading=false;
-  usuario:User = new User();
+  usuario:LoginUser= new LoginUser();
+  roles=[];
 
 
   dataSourceM:any;
@@ -47,58 +46,44 @@ export class PrincipalComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.id_persona= JSON.parse(sessionStorage['id']);
-    this.id_persona= JSON.parse(sessionStorage['id']);
-    this.roles_userSevice.getRol_Us_id_persona(this.id_persona).subscribe((data:any)=>{
-        this.listrol=data;
-        if (this.listrol.length!=0){
-          let cont=0;
-          for (let rol of this.listrol){
-            if (cont==0){
-              this.rol_us=rol;
-              cont++;
-            }
-          }
-          this.usuario=this.rol_us.usuario.nombre;
+    this.usuario= JSON.parse(localStorage['user']);
+    this.roles= JSON.parse(sessionStorage['Autorities']);
+    console.log(this.usuario.authorities.length)
+    if (this.usuario.token!=null){
+      for (let au of this.roles){
+        if(au.authority=='ROLE_ADMIN'){
+          console.log('ad')
+          this.admin=true;
+        }else if(au.authority=='ROLE_INSTALL'){
+          this.install=true;
         }
-
-      try {
-        if(this.listrol.length==1){
-          this.issloading=true;
-        }else if(this.listrol.length>1){
-          this.issloading=true;
-          //Dioalogo
-          this.titulo="Seleccione su Rol"
-          this.dialog.open(this.dialogRolesUs);
-
-        }
-        else {
-          this.router.navigate(['']);
-          this.issloading=false;
-        }
-      }catch (e){
-        this.issloading=false;
-        console.log("ERROR")
       }
-    });
+      this.issloading=true;
+    }else {
+      this.issloading=false;
+      this.router.navigate([''])
+    }
 
 
   }
 
   ngAfterContentInit() {
+    if (this.admin || this.install){
+      this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+        if (res.matches) {
+          this.sidenav.mode = 'over';
+          this.sidenav.close();
+        } else {
+          this.sidenav.mode = 'side';
+          this.sidenav.open();
+        }
+      });
+    }
 
-    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-      if (res.matches) {
-        this.sidenav.mode = 'over';
-        this.sidenav.close();
-      } else {
-        this.sidenav.mode = 'side';
-        this.sidenav.open();
-      }
-    });
   }
 
   cerrarSesion(){
+    localStorage.clear();
     sessionStorage.clear();
     window.location.reload();
   }

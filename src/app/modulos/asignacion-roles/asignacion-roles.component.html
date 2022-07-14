@@ -90,12 +90,9 @@
   <ng-template #dialogRol >
     <h2> {{titulo}} </h2>
     <mat-form-field>
-      <input matInput placeholder="Nombre" name="rol" [(ngModel)]="rol.nombre" required/>
+      <input matInput placeholder="Nombre" name="rol" [(ngModel)]="rol.rolNombre" required/>
     </mat-form-field>
     <br>
-    <mat-form-field>
-      <input matInput placeholder="Descripcion" name="rol" [(ngModel)]="rol.descripcion" required/>
-    </mat-form-field>
     <br>
     <button mat-button mat-dialog-close>Cancelar</button>
     <button mat-button mat-dialog-close  (click)="crearRol()" *ngIf="creating">Guardar</button>

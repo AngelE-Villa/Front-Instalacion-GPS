@@ -53,7 +53,7 @@
 </footer>-->
 <header>
   <mat-toolbar>
-    <div class="container">
+    <div class="container" *ngIf="admin || install">
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon *ngIf="!sidenav.opened">
           menu
@@ -64,20 +64,24 @@
       </button>
     </div>
 
+    <div class="container" *ngIf="!admin || !install">
+      <div></div>
+    </div>
+
     <!---->
     <div *ngIf="issloading==true" >
       <button [matMenuTriggerFor]="perfil" class="btniniciarS">
-        <span>{{rol_us.usuario.nombre}}<mat-icon> person_pin</mat-icon></span>
+        <span>{{usuario.nombre}}<mat-icon> person_pin</mat-icon></span>
 
       </button>
       <mat-menu #perfil="matMenu">
-        <button mat-menu-item style="text-align: center" [routerLink]="['/rol_ingreso']">Perfil<mat-icon> person_pin</mat-icon></button>
+        <button mat-menu-item style="text-align: center" [routerLink]="['/rol_ingreso']"> Perfil<mat-icon> person_pin</mat-icon></button>
         <button mat-menu-item style="text-align: center" (click)="cerrarSesion()" >Cerrar Sesión<mat-icon>exit_to_app</mat-icon></button>
       </mat-menu>
     </div>
 
-    <div *ngIf="issloading==false" >
-      <button class="btniniciarS hover" [routerLink]="['/iniciasesion']" class="btniniciarS">
+    <div *ngIf="issloading==false" class="sesion">
+      <button style="text-align: right" class="btniniciarS hover" [routerLink]="['/iniciasesion']" class="btniniciarS">
         <mat-icon>supervised_user_circle</mat-icon>
         INICIAR SESION
       </button>
