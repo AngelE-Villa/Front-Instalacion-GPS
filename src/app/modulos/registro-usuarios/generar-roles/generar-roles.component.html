@@ -1,0 +1,30 @@
+<br>
+<mat-card-title style="text-align: center;font-size: 25px"><strong>EDICIÓN DE USUARIOS</strong></mat-card-title>
+<div class="grid">
+  <input type="text" [value]="user.nombre" disabled>
+  <input type="text" [value]="user.telefono" disabled>
+  <input type="text" [value]="user.correo" disabled>
+</div>
+<div class="grid">
+  <mat-card class="example-card grid">
+    <section>
+      <li class="list-group-item" *ngFor="let rol of listaRol">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="rol.check"
+            id="{{ rol.id! }}"
+            (change)="onChange($event, rol)"
+            required
+          />
+          <label class="form-check-label" for="{{ rol.id! }}">
+            {{ rol.rolNombre }}
+          </label>
+        </div>
+      </li>
+    </section>
+  </mat-card>
+  <button (click)="submit()">BOTON</button>
+</div>
+

@@ -36,7 +36,7 @@
 
       <ng-container matColumnDef="editar">
         <th class="titulo" mat-header-cell *matHeaderCellDef> Editar </th>
-        <td mat-cell *matCellDef="let UsersVs"><button [routerLink]="['/editaruser/',UsersVs.id_persona]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
+        <td mat-cell *matCellDef="let UsersVs"><button [routerLink]="['/dar/roles/',UsersVs.id_persona]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
       </ng-container>
 
       <ng-container matColumnDef="eliminar">
@@ -75,7 +75,7 @@
 
       <ng-container matColumnDef="editar">
         <th class="titulo" mat-header-cell *matHeaderCellDef> Editar </th>
-        <td mat-cell *matCellDef="let rols"><button [routerLink]="['/registrousuario',rols]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
+        <td mat-cell *matCellDef="let rols"><button [routerLink]="['/dar/',rols]"><mat-icon class="btnEdi">edit</mat-icon></button></td>
       </ng-container>
 
       <ng-container matColumnDef="eliminar">
