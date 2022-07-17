@@ -6,14 +6,14 @@ table {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px,auto));
   grid-gap: 2%;
-  margin-left: 10%;
+  margin-left: 3%;
   grid-auto-flow: dense;
 }
 
 .center{
-  width: 80%;
+  width: 95%;
   text-align: center;
-  margin: 2% auto;
+  margin: 1% auto;
 }
 
 ng-container{
@@ -146,25 +146,10 @@ button{
     font-weight: bold;
   }
   .center{
-    margin: 10% auto;
+    margin: 2% auto;
   }
 }
 
 .centrarli{
   text-align: center;
-}
-.cabecera{
-  min-height:250px;
-}
-.izquierda{
-  text-align: start;
-  height:50%;
-  float:left;
-  width:50%;
-}
-.derecha{
-  height:50%;
-  float:right;
-  width:50%;
-
 }

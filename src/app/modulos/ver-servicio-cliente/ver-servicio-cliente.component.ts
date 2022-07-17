@@ -14,6 +14,9 @@ import {Pagos} from "../../modelos/Pagos";
 import {PagosService} from "../../servicios/PagosService";
 import {PlanService} from "../../servicios/PlanService";
 import {Plan} from "../../modelos/Plan";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import Swal from "sweetalert2";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -72,7 +75,9 @@ export class VerServicioClienteComponent implements OnInit {
               private detalleService:DescripcionService,
               private acciones:AccionesService,
               private pagoService:PagosService,
-              private servicePlan:PlanService) {
+              private servicePlan:PlanService,
+              private snackBar: MatSnackBar,
+              private toastr: ToastrService) {
 
   }
   ngOnInit(): void {
@@ -147,43 +152,58 @@ export class VerServicioClienteComponent implements OnInit {
 
   //Activacion del servicio
   activarservicio(id:any){
-    this.serviceService.getService(id).subscribe((data:any)=>{
-      this.servicioGet=data;
-      this.servicio=this.servicioGet;
-      this.servicio.costo=this.costo;
-    let cant= this.pago.cantidad_p/this.servicioGet.costo_plan;
-    let mesmili = ((1000 * 60 * 60 * 24 * 7 * 4)+((1000*60*60*24)*2)) *cant;
-    if(this.servicioGet.fecha_fin!=null){
-      console.log("Hay fecha fin")
-      var date=new Date(this.servicioGet.fecha_fin);
-    }else{
-      var date=new Date(this.servicioGet.fecha_ds);
-      console.log("No Hay fecha fin")
-    }
-    this.servicio.fecha_fin = new Date(date.getTime()+mesmili);
-
-      this.servicio.estado="Activo"
-
-      this.servicio.costo=Number(this.servicioGet.costo)+Number(this.servicio.costo);
-
-      console.log(this.servicio)
-
-      this.serviceService.editarService(this.servicio,id).subscribe((datas:any)=>{
-        console.log("Actializado el servicio")
-        this.pago.docservice=datas;
-        this.pago.fecha_pago=new Date();
-        console.log(this.pago)
-        if (this.pago.cantidad_p<=0){
-          window.location.reload();
-        }else{
-          this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
-            console.log("Pago realizado")
-            window.location.reload();
-          })
+      this.serviceService.getService(id).subscribe((data:any)=>{
+        this.servicioGet=data;
+        this.servicio=this.servicioGet;
+        if (this.costo>0){
+          this.servicio.costo=this.costo;
         }
+        let cant= this.pago.cantidad_p/this.servicioGet.costo_plan;
+        let mesmili = ((1000 * 60 * 60 * 24 * 7 * 4)+((1000*60*60*24)*2)) *cant;
+        if(this.servicioGet.fecha_fin!=null){
+          console.log("Hay fecha fin")
+          var date=new Date(this.servicioGet.fecha_fin);
+        }else{
+          var date=new Date(this.servicioGet.fecha_ds);
+          console.log("No Hay fecha fin")
+        }
+        this.servicio.fecha_fin = new Date(date.getTime()+mesmili);
 
+        this.servicio.estado="Activo"
+
+        this.servicio.costo=Number(this.servicioGet.costo)+Number(this.servicio.costo);
+
+        console.log(this.servicio)
+
+        if (this.servicio.fecha_fin_plan>this.servicio.fecha_fin){
+          this.serviceService.editarService(this.servicio,id).subscribe((datas:any)=>{
+            console.log("Actializado el servicio")
+            this.pago.docservice=datas;
+            this.pago.fecha_pago=new Date();
+            console.log(this.pago)
+            if (this.pago.cantidad_p<=0){
+              window.location.reload();
+            }else{
+              this.pagoService.crearPagos(this.pago).subscribe((value:any)=>{
+                console.log("Pago realizado")
+                window.location.reload();
+              })
+            }
+
+          })
+        }else{
+          // @ts-ignore
+          Swal.fire({
+            icon: 'warning',
+            title: 'Error',
+            text: "La fecha maxima a pagar es hasta" +this.servicio.fecha_fin_plan,
+            confirmButtonColor: "#0c3255"
+          })
+          this.toastr.error("La fecha maxima a pagar es hasta" +this.servicio.fecha_fin_plan, 'ERROR', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+        }
       })
-    })
   }
 }
 

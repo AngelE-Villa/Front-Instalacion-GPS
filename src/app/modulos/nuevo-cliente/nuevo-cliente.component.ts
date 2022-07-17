@@ -64,6 +64,7 @@ export class NuevoClienteComponent implements OnInit {
         this.router.navigate(['/verclientes'])
       })
     }else {
+      this.cliente.estado="Activo";
       this.clienteService.crearClient(this.cliente).subscribe(value=>{
         this.router.navigate(['/verclientes'])
       })
